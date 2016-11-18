@@ -8,7 +8,6 @@ using System.Web.Mvc;
 
 
 
-//TODO: Change the namespace here to match your project's name
 namespace CHY_Project.Models
 {
     public class AppRole : IdentityRole

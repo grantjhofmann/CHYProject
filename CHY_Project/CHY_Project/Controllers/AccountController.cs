@@ -1,5 +1,4 @@
-﻿//TODO: Change the using statement here to match your project's name
-using CHY_Project.Models;
+﻿using CHY_Project.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
@@ -7,7 +6,6 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 
-//TODO: Change the namespace here to match your project's name
 namespace CHY_Project.Controllers
 {
     [Authorize]

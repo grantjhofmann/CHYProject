@@ -4,11 +4,9 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Microsoft.Owin.Security.Cookies;
 using Owin;
-
-//TODO: Change the using statement here to match your project's name
 using CHY_Project.Models;
 
-namespace IdentityTemplate
+namespace CHY_Project
 {
     public partial class Startup
     {

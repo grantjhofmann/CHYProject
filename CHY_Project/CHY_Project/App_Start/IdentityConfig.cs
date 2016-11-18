@@ -10,11 +10,9 @@ using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Microsoft.Owin.Security;
-
-//TODO: Change the using statement here to match your project's name
 using CHY_Project.Models;
 
-namespace IdentityTemplate
+namespace CHY_Project
 {
     // Configure the application user manager used in this application. UserManager is defined in ASP.NET Identity and is used by the application.
     public class AppUserManager : UserManager<AppUser>

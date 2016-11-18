@@ -6,11 +6,9 @@ using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 
-//TODO: Change the using statement here to match your project's name
 using CHY_Project.Models;
 
-//TODO: Change the namespace here to match your project's name
-namespace IdentityTemplate.Controllers
+namespace CHY_Project.Controllers
 {
     //TODO: Once you have roles working, uncomment the tag below to limit access to this page
     //[Authorize]
