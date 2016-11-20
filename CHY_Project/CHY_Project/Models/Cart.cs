@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.ComponentModel.DataAnnotations;
+
 
 namespace CHY_Project.Models
 {
@@ -11,6 +13,7 @@ namespace CHY_Project.Models
 
         public virtual List<Product> Products { get; set; }
 
+        [Required]
         public virtual AppUser Customer { get; set; }
     }
 }

@@ -118,7 +118,7 @@ namespace CHY_Project.Controllers
             {
                 //TODO: Add fields to user here so they will be saved to the database
                 //Create a new user with all the properties you need for the class
-                var user = new AppUser { UserName = model.Email, Email = model.Email, FName = model.Fname, LName = model.Lname};
+                var user = new AppUser { UserName = model.Email, Email = model.Email, FName = model.Fname, LName = model.Lname, StreetAddress = model.StreetAddress, City = model.City, ZipCode = model.ZipCode };
 
                 //Add the new user to the database
                 var result = await UserManager.CreateAsync(user, model.Password);

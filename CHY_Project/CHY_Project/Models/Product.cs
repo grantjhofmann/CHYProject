@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.ComponentModel.DataAnnotations;
 
 namespace CHY_Project.Models
 {
@@ -9,6 +10,7 @@ namespace CHY_Project.Models
     {
         public Int32 ProductID { get; set; }
 
+        [Required]
         public Decimal RegularPrice { get; set; }
 
         public Decimal DiscountPrice { get; set; }
