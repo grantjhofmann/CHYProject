@@ -10,7 +10,6 @@ using CHY_Project.Models;
 
 namespace CHY_Project.Controllers
 {
-    //TODO: Restrict by Role
     public class SongsController : Controller
     {
         private AppDbContext db = new AppDbContext();

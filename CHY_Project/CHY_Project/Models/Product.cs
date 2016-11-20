@@ -8,6 +8,7 @@ namespace CHY_Project.Models
 {
     public class Product : Content
     {
+        [Key]
         public Int32 ProductID { get; set; }
 
         [Required]

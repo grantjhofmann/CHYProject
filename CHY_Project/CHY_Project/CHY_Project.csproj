@@ -248,17 +248,17 @@
     <Content Include="Views\Ratings\Details.cshtml" />
     <Content Include="Views\Ratings\Edit.cshtml" />
     <Content Include="Views\Ratings\Index.cshtml" />
-    <Content Include="Views\Songs\Create.cshtml" />
-    <Content Include="Views\Songs\Delete.cshtml" />
-    <Content Include="Views\Songs\Details.cshtml" />
-    <Content Include="Views\Songs\Edit.cshtml" />
-    <Content Include="Views\Songs\Index.cshtml" />
     <Content Include="Views\AppUsers\Create.cshtml" />
     <Content Include="Views\AppUsers\Delete.cshtml" />
     <Content Include="Views\AppUsers\Details.cshtml" />
     <Content Include="Views\AppUsers\Edit.cshtml" />
     <Content Include="Views\AppUsers\Index.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Songs\Create.cshtml" />
+    <Content Include="Views\Songs\Delete.cshtml" />
+    <Content Include="Views\Songs\Details.cshtml" />
+    <Content Include="Views\Songs\Edit.cshtml" />
+    <Content Include="Views\Songs\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
