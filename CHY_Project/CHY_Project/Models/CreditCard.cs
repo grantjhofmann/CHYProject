@@ -11,5 +11,14 @@ namespace CHY_Project.Models
         public Int32 CardNumber { get; set; }
 
         public virtual AppUser Customer { get; set; }
+
+        public Cardtype Cardtype { get; set; }
+    }
+    public enum Cardtype
+    {
+        Visa,
+        MasterCard,
+        AmericanExpress,
+        Discover
     }
 }

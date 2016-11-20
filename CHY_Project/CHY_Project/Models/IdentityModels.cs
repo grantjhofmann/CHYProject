@@ -3,6 +3,8 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
+using System.Collections.Generic;
+using System;
 
 namespace CHY_Project.Models
 {
@@ -11,8 +13,10 @@ namespace CHY_Project.Models
     {
         //TODO: Put any additional fields that you need for your users here
         //For example:
-        //public String FName { get; set; }
-        //public String LName { get; set; }
+        public String FName { get; set; }
+        public String LName { get; set; }
+        //public Int32 CreditCard1 { get; set; }
+
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<AppUser> manager)
         {
@@ -43,5 +47,17 @@ namespace CHY_Project.Models
 
         //Add dbSet for roles
         public DbSet<AppRole> AppRoles { get; set; }
+        public DbSet<Album> Albums { get; set; }
+        public DbSet<Artist> Artists { get; set; }
+        public DbSet<Cart> Carts { get; set; }
+        public DbSet<CreditCard> CreditCards { get; set; }
+        public DbSet<Content> Contents { get; set; }
+        public DbSet<Genre> Genres { get; set; }
+        public DbSet<OrderDetail> OrderDetails { get; set; }
+        public DbSet<Purchase> Purchases { get; set; }
+        public DbSet<Product> Products { get; set; }
+        public DbSet<Rating> Ratings { get; set; }
+        public DbSet<Song> Songs { get; set; }
+
     }
 }

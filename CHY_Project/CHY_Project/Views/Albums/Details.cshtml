@@ -1,0 +1,66 @@
+﻿@model CHY_Project.Models.Album
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Album</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.ProductID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ProductID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.RegularPrice)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RegularPrice)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DiscountPrice)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DiscountPrice)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Featured)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Featured)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AlbumID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AlbumID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AlbumName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AlbumName)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ContentID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
