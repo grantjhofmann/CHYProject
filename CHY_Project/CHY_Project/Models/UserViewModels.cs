@@ -36,6 +36,19 @@ namespace CHY_Project.Models
         public string Lname { get; set; }
 
         [Required]
+        [Display (Name = "Street Address")]
+        public string StreetAddress { get; set; }
+
+        [Required]
+        [Display (Name = "City")]
+        public string City { get; set; }
+
+        [Required]
+        [Display (Name = "ZIP Code")]
+        [DataType(DataType.PostalCode)]
+        public int ZipCode { get; set; }
+
+        [Required]
         [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
         [DataType(DataType.Password)]
         [Display(Name = "Password")]

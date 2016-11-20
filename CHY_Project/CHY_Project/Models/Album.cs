@@ -18,6 +18,6 @@ namespace CHY_Project.Models
 
         //TODO: Find datatype for album art
         //public [DATATYPE] AlbumArt { get; set;}
-
+        //look for image in seed
     }
 }

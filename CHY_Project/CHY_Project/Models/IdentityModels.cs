@@ -15,6 +15,9 @@ namespace CHY_Project.Models
         //For example:
         public String FName { get; set; }
         public String LName { get; set; }
+        public String StreetAddress { get; set; }
+        public String City { get; set; }
+        public Int32 ZipCode { get; set; }
         //public Int32 CreditCard1 { get; set; }
 
 
