@@ -201,6 +201,10 @@
     <Compile Include="Migrations\201611201941401_initialmigration.Designer.cs">
       <DependentUpon>201611201941401_initialmigration.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201611202140567_migration2.cs" />
+    <Compile Include="Migrations\201611202140567_migration2.Designer.cs">
+      <DependentUpon>201611202140567_migration2.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Album.cs" />
     <Compile Include="Models\Artist.cs" />
@@ -273,6 +277,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201611201941401_initialmigration.resx">
       <DependentUpon>201611201941401_initialmigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201611202140567_migration2.resx">
+      <DependentUpon>201611202140567_migration2.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

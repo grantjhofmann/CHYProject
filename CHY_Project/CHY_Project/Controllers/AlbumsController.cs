@@ -51,7 +51,7 @@ namespace CHY_Project.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Contents.Add(album);
+                db.Albums.Add(album);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -111,7 +111,7 @@ namespace CHY_Project.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             Album album = db.Albums.Find(id);
-            db.Contents.Remove(album);
+            db.Albums.Remove(album);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

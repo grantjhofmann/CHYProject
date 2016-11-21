@@ -17,7 +17,7 @@ namespace CHY_Project.Controllers
         // GET: Songs
         public ActionResult Index()
         {
-            return View(db.Contents.ToList());
+            return View(db.Songs.ToList());
         }
 
         // GET: Songs/Details/5
@@ -50,7 +50,7 @@ namespace CHY_Project.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Contents.Add(song);
+                db.Songs.Add(song);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -110,7 +110,7 @@ namespace CHY_Project.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             Song song = db.Songs.Find(id);
-            db.Contents.Remove(song);
+            db.Songs.Remove(song);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

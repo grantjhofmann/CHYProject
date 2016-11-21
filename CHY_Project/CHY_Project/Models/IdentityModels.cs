@@ -54,11 +54,11 @@ namespace CHY_Project.Models
         public DbSet<Artist> Artists { get; set; }
         public DbSet<Cart> Carts { get; set; }
         public DbSet<CreditCard> CreditCards { get; set; }
-        public DbSet<Content> Contents { get; set; }
+        //public DbSet<Content> Contents { get; set; }
         public DbSet<Genre> Genres { get; set; }
         public DbSet<OrderDetail> OrderDetails { get; set; }
         public DbSet<Purchase> Purchases { get; set; }
-        public DbSet<Product> Products { get; set; }
+        //public DbSet<Product> Products { get; set; }
         public DbSet<Rating> Ratings { get; set; }
         public DbSet<Song> Songs { get; set; }
 
