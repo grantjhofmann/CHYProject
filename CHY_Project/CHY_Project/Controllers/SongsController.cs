@@ -50,20 +50,22 @@ namespace CHY_Project.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ContentID,RegularPrice,DiscountPrice,Featured,SongName,Artists,Genres")] Song song, Int32[] Artists, Int32[] Genres)
+        public ActionResult Create([Bind(Include = "ContentID,RegularPrice,DiscountPrice,Featured,SongName")] Song song, Int32[] Artists, Int32[] Genres)
         {
             
             if (Artists != null)
             {
                 foreach (int Id in Artists)
                 {
-                    Artist artist = db.Artists.Find(Id);
+                    
+                    Artist artist = db.Artists.Find(Convert.ToString(Id));
                     song.Artists.Add(artist);
                 }
             }
 
             if (Genres != null)
             {
+                //song.Genres = new List<Genre>();
                 foreach (int Id in Genres)
                 {
                     Genre genre = db.Genres.Find(Id);
@@ -88,28 +90,6 @@ namespace CHY_Project.Controllers
 
                 db.Songs.Add(song);
                 db.SaveChanges();
-                /*
-                Song songtochange = db.Songs.Find(song.SongID);
-                if (Artists != null)
-                {
-                    foreach (int Id in Artists)
-                    {
-                        Artist artist = db.Artists.Find(Id);
-                        songtochange.Artists.Add(artist);
-                    }
-                }
-
-                if (Genres != null)
-                {
-                    foreach (int Id in Genres)
-                    {
-                        Genre genre = db.Genres.Find(Id);
-                        songtochange.Genres.Add(genre);
-                    }
-                }
-                db.Entry(songtochange).State = EntityState.Modified;
-                db.SaveChanges();
-                */
                 return RedirectToAction("Index");
             }
 

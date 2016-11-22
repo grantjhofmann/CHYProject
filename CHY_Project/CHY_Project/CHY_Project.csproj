@@ -217,6 +217,10 @@
     <Compile Include="Migrations\201611220323211_inheritancechange2.Designer.cs">
       <DependentUpon>201611220323211_inheritancechange2.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201611220609445_aaaaaa.cs" />
+    <Compile Include="Migrations\201611220609445_aaaaaa.Designer.cs">
+      <DependentUpon>201611220609445_aaaaaa.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Album.cs" />
     <Compile Include="Models\Artist.cs" />
@@ -301,6 +305,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201611220323211_inheritancechange2.resx">
       <DependentUpon>201611220323211_inheritancechange2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201611220609445_aaaaaa.resx">
+      <DependentUpon>201611220609445_aaaaaa.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

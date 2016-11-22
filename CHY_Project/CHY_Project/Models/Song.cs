@@ -18,8 +18,12 @@ namespace CHY_Project.Models
         [Required]
         public virtual List<Artist> Artists { get; set;}
 
-        public virtual List<Genre> Genres { get; set; }
-
         public virtual Album Album { get; set; }
+
+        public Song()
+        {
+            Genres = new List<Genre>();
+            Artists = new List<Artist>();
+        }
     }
 }
