@@ -8,7 +8,7 @@ namespace CHY_Project.Models
 {
     public class Purchase : Cart
     {
-        public Int32 PurchaseID { get; set; }
+        public String PurchaseID { get; set; }
 
         public virtual CreditCard CreditCard { get; set; }
 

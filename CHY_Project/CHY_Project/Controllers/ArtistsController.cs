@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using CHY_Project.Models;
+using System.Globalization;
 
 namespace CHY_Project.Controllers
 {
@@ -18,11 +19,11 @@ namespace CHY_Project.Controllers
         // GET: Artists
         public ActionResult Index()
         {
-            return View(db.Contents.ToList());
+            return View(db.Artists.ToList());
         }
 
         // GET: Artists/Details/5
-        public ActionResult Details(int? id)
+        public ActionResult Details(string id)
         {
             //TODO: list albums
             if (id == null)
@@ -48,10 +49,15 @@ namespace CHY_Project.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ContentID,ArtistID,ArtistName")] Artist artist)
+        public ActionResult Create([Bind(Include = "ContentID,ArtistName")] Artist artist)
         {
             if (ModelState.IsValid)
             {
+                Guid guidArtistID = Guid.NewGuid();
+                String stringArtistID = guidArtistID.ToString();
+
+                artist.ArtistID = stringArtistID;
+
                 db.Contents.Add(artist);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -109,7 +115,7 @@ namespace CHY_Project.Controllers
         // POST: Artists/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+        public ActionResult DeleteConfirmed(int? id)
         {
             Artist artist = db.Artists.Find(id);
             db.Contents.Remove(artist);
@@ -126,5 +132,39 @@ namespace CHY_Project.Controllers
             base.Dispose(disposing);
         }
         //TODO: create album list for artist
+        public MultiSelectList GetAllAlbums(Artist Artist)
+        {
+            var albumquery = from a in db.Albums
+                             orderby a.AlbumName
+                             select a;
+            List<Album> AllAlbums = albumquery.ToList();
+            List<String> SelectedAlbums = new List<String>();
+
+            foreach (Album a in Artist.Albums)
+            {
+                SelectedAlbums.Add(a.AlbumID);
+            }
+
+            MultiSelectList AllAlbumsList = new MultiSelectList(AllAlbums, "AlbumID", "AlbumName", SelectedAlbums);
+            return AllAlbumsList;
+        }
+
+        //TODO: Integrate selectlist functionality
+        public MultiSelectList GetAllGenres(Artist artist)
+        {
+            var genrequery = from g in db.Genres
+                             orderby g.GenreName
+                             select g;
+            List<Genre> AllGenres = genrequery.ToList();
+            List<Int32> SelectedGenres = new List<Int32>();
+
+            foreach (Genre g in artist.Genres)
+            {
+                SelectedGenres.Add(g.GenreID);
+            }
+
+            MultiSelectList AllGenresList = new MultiSelectList(AllGenres, "GenreID", "GenreName", SelectedGenres);
+            return AllGenresList;
+        }
     }
 }

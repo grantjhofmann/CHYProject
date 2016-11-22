@@ -9,14 +9,16 @@ namespace CHY_Project.Models
     public class Song : Product
     {
         [Key]
-        public Int32 SongID { get; set; }
+        public String SongID { get; set; }
 
         [Required]
+        [Display(Name ="Song Name")]
         public String SongName { get; set; }
 
         [Required]
         public virtual List<Artist> Artists { get; set;}
-        
+
+        public virtual List<Genre> Genres { get; set; }
 
         public virtual Album Album { get; set; }
     }

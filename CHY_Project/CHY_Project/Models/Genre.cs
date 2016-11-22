@@ -9,11 +9,13 @@ namespace CHY_Project.Models
 {
     public class Genre
     {
+
+        [Key]
         public Int32 GenreID { get; set; }
 
         [Required]
         public String GenreName { get; set; }
 
-        public virtual List<Content> Contents { get; set; }
+        public virtual List<Song> Songs { get; set; }
     }
 }

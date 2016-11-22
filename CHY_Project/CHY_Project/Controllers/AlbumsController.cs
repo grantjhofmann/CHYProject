@@ -51,6 +51,15 @@ namespace CHY_Project.Controllers
         {
             if (ModelState.IsValid)
             {
+                Guid guidAlbumProductID = Guid.NewGuid();
+                Guid guidAlbumID = Guid.NewGuid();
+
+                String stringAlbumProductID = guidAlbumProductID.ToString();
+                String stringAlbumID = guidAlbumID.ToString();
+
+                album.ProductID = stringAlbumProductID;
+                album.AlbumID = stringAlbumID;
+
                 db.Contents.Add(album);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -124,7 +133,58 @@ namespace CHY_Project.Controllers
             }
             base.Dispose(disposing);
         }
-        //TODO: make song list method
-        //TODO: make find artist method
+        //TODO: integrate list functionality
+        public MultiSelectList GetAllSongs (Album album)
+        {
+            var songquery = from s in db.Songs
+                            orderby s.SongName
+                            select s;
+            List<Song> AllSongs = songquery.ToList();
+            List<String> SelectedSongs = new List<String>();
+
+            foreach (Song s in album.Songs)
+            {
+                SelectedSongs.Add(s.SongID);
+            }
+
+            MultiSelectList AllSongsList = new MultiSelectList(AllSongs, "SongID", "SongName", SelectedSongs);
+            return AllSongsList;
+        }
+
+        //TODO: integrate list functionality
+        public MultiSelectList GetAllArtists (Album album)
+        {
+            var artistquery = from a in db.Artists
+                              orderby a.ArtistName
+                              select a;
+            List<Artist> AllArtists = artistquery.ToList();
+            List<String> SelectedArtists = new List<string>();
+
+            foreach (Artist a in album.Artists)
+            {
+                SelectedArtists.Add(a.ArtistID);
+            }
+
+            MultiSelectList AllArtistsList = new MultiSelectList(AllArtists, "ArtistID", "ArtistName", SelectedArtists);
+            return AllArtistsList;
+        }
+
+        //TODO: make genre list method
+        public MultiSelectList GetAllGenres(Album album)
+        {
+            var genrequery = from g in db.Genres
+                             orderby g.GenreName
+                             select g;
+            List<Genre> AllGenres = genrequery.ToList();
+            List<Int32> SelectedGenres = new List<Int32>();
+
+            foreach(Genre g in album.Genres)
+            {
+                SelectedGenres.Add(g.GenreID);
+            }
+
+            MultiSelectList AllGenresList = new MultiSelectList(AllGenres, "GenreID", "GenreName", SelectedGenres);
+            return AllGenresList;
+        }
     }
 }

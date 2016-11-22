@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using CHY_Project.Models;
 
+
 namespace CHY_Project.Controllers
 {
     public class GenresController : Controller
@@ -58,7 +59,7 @@ namespace CHY_Project.Controllers
 
             return View(genre);
         }
-
+       
         // GET: Genres/Edit/5
         public ActionResult Edit(int? id)
         {
@@ -126,3 +127,4 @@ namespace CHY_Project.Controllers
         }
     }
 }
+

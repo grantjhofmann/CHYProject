@@ -6,12 +6,11 @@ using System.ComponentModel.DataAnnotations;
 
 namespace CHY_Project.Models
 {
-    public class Product : Content
+    public abstract class Product : Content
     {
         [Key]
-        public Int32 ProductID { get; set; }
+        public String ProductID { get; set; }
 
-        [Required]
         public Decimal RegularPrice { get; set; }
 
         public Decimal DiscountPrice { get; set; }

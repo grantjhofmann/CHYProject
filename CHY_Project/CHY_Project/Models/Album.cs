@@ -8,7 +8,7 @@ namespace CHY_Project.Models
 {
     public class Album : Product
     {
-        public Int32 AlbumID { get; set;}
+        public String AlbumID { get; set;}
 
         [Required]
         [Display(Name ="Album Name")]

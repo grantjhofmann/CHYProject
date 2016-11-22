@@ -4,29 +4,35 @@
     ViewBag.Title = "Details";
 }
 
-<h2>Details</h2>
+<h2>Artist Details</h2>
 
 <div>
-    <h4>Artist</h4>
+    <h4>@Html.DisplayFor(model => model.ArtistName)</h4>
     <hr />
     <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.ArtistID)
-        </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.ArtistID)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.ArtistName)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.ArtistName)
-        </dd>
+        <dt>Genres</dt>
+        @foreach (var genre in Model.Genres)
+        {
+            <dd>@Html.DisplayFor(modelItem => genre.GenreName)</dd>
+        }
 
     </dl>
+    <table class="table table-striped">
+        <tr>
+            <th>
+                Albums
+            </th>
+        </tr>
+
+        @foreach (var item in Model.Albums)
+        {
+            <tr>
+                <td>@Html.DisplayFor(modelItem => item.AlbumName)</td>
+                <td>@Html.DisplayFor(modelItem => item.AlbumArt)</td>
+            </tr>
+        }
+    </table>
 </div>
 <p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.ContentID }) |
