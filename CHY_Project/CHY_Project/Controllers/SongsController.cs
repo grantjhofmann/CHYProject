@@ -50,15 +50,15 @@ namespace CHY_Project.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ContentID,RegularPrice,DiscountPrice,Featured,SongName")] Song song, Int32[] Artists, Int32[] Genres)
+        public ActionResult Create([Bind(Include = "ContentID,RegularPrice,DiscountPrice,Featured,SongName")] Song song, String[] Artists, Int32[] Genres)
         {
             
             if (Artists != null)
             {
-                foreach (int Id in Artists)
+                foreach (string Id in Artists)
                 {
-                    
-                    Artist artist = db.Artists.Find(Convert.ToString(Id));
+                    Artist artist = db.Artists.FirstOrDefault(i => i.ArtistID == Id);
+                    //Artist artist = db.Artists.Find(Convert.ToString(Id));
                     song.Artists.Add(artist);
                 }
             }
@@ -111,6 +111,8 @@ namespace CHY_Project.Controllers
             {
                 return HttpNotFound();
             }
+            ViewBag.AllGenres = GetAllGenres();
+            ViewBag.AllArtists = GetAllArtists();
             return View(song);
         }
 
@@ -119,14 +121,40 @@ namespace CHY_Project.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ContentID,ProductID,RegularPrice,DiscountPrice,Featured,SongID,SongName")] Song song)
+        public ActionResult Edit([Bind(Include = "ContentID,ProductID,RegularPrice,DiscountPrice,Featured,SongID,SongName")] Song song, String[] Artists, Int32[] Genres)
         {
             if (ModelState.IsValid)
             {
+                Song songToChange = db.Songs.Find(song.ContentID);
+                songToChange.Genres.Clear();
+                songToChange.Artists.Clear();
+
+                if(Artists != null)
+                {
+                    foreach (string Id in Artists)
+                    {
+                        Artist artist = db.Artists.FirstOrDefault(i => i.ArtistID == Id);
+                        //Artist artist = db.Artists.Find(Convert.ToString(Id));
+                        song.Artists.Add(artist);
+                    }
+                }
+                if (Genres != null)
+                {
+                    //song.Genres = new List<Genre>();
+                    foreach (int Id in Genres)
+                    {
+                        Genre genre = db.Genres.Find(Id);
+                        song.Genres.Add(genre);
+                    }
+                }
+
+
                 db.Entry(song).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
+            ViewBag.AllGenres = GetAllGenres();
+            ViewBag.AllArtists = GetAllArtists();
             return View(song);
         }
 

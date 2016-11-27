@@ -39,6 +39,9 @@ namespace CHY_Project.Controllers
         // GET: Albums/Create
         public ActionResult Create()
         {
+            ViewBag.AllArtists = GetAllArtists();
+            ViewBag.AllGenres = GetAllGenres();
+            ViewBag.AllSongs = GetAllSongs();
             return View();
         }
 
@@ -47,24 +50,54 @@ namespace CHY_Project.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ContentID,ProductID,RegularPrice,DiscountPrice,Featured,AlbumID,AlbumName")] Album album)
+        public ActionResult Create([Bind(Include = "ContentID,ProductID,RegularPrice,DiscountPrice,Featured,AlbumID,AlbumName")] Album album, String[] Artists, Int32[] Genres, String[] Songs)
         {
+            if(Songs != null)
+            {
+                foreach(string Id in Songs)
+                {
+                    Song song = db.Songs.FirstOrDefault(i => i.SongID == Id);
+                    album.Songs.Add(song);
+                }
+            }
+
+            if (Artists != null)
+            {
+                foreach (string Id in Artists)
+                {
+                    Artist artist = db.Artists.FirstOrDefault(i => i.ArtistID == Id);
+                    //Artist artist = db.Artists.Find(Convert.ToString(Id));
+                    album.Artists.Add(artist);
+                }
+            }
+
+            if (Genres != null)
+            {
+                //song.Genres = new List<Genre>();
+                foreach (int Id in Genres)
+                {
+                    Genre genre = db.Genres.Find(Id);
+                    album.Genres.Add(genre);
+                }
+            }
+            Guid guidAlbumProductID = Guid.NewGuid();
+            Guid guidAlbumID = Guid.NewGuid();
+
+            String stringAlbumProductID = guidAlbumProductID.ToString();
+            String stringAlbumID = guidAlbumID.ToString();
+
+            album.ProductID = stringAlbumProductID;
+            album.AlbumID = stringAlbumID;
             if (ModelState.IsValid)
             {
-                Guid guidAlbumProductID = Guid.NewGuid();
-                Guid guidAlbumID = Guid.NewGuid();
-
-                String stringAlbumProductID = guidAlbumProductID.ToString();
-                String stringAlbumID = guidAlbumID.ToString();
-
-                album.ProductID = stringAlbumProductID;
-                album.AlbumID = stringAlbumID;
 
                 db.Contents.Add(album);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-
+            ViewBag.AllArtists = GetAllArtists();
+            ViewBag.AllGenres = GetAllGenres();
+            ViewBag.AllSongs = GetAllSongs();
             return View(album);
         }
 
@@ -80,6 +113,9 @@ namespace CHY_Project.Controllers
             {
                 return HttpNotFound();
             }
+            ViewBag.AllArtists = GetAllArtists();
+            ViewBag.AllGenres = GetAllGenres();
+            ViewBag.AllSongs = GetAllSongs();
             return View(album);
         }
 
@@ -88,14 +124,45 @@ namespace CHY_Project.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ContentID,ProductID,RegularPrice,DiscountPrice,Featured,AlbumID,AlbumName")] Album album)
+        public ActionResult Edit([Bind(Include = "ContentID,ProductID,RegularPrice,DiscountPrice,Featured,AlbumID,AlbumName")] Album album, String[] Artists, Int32[] Genres, String[] Songs)
         {
             if (ModelState.IsValid)
             {
+                Album albumtochange = db.Albums.Find(album.ContentID);
+
+                if (Songs != null)
+                {
+                    foreach (string Id in Songs)
+                    {
+                        Song song = db.Songs.FirstOrDefault(i => i.SongID == Id);
+                        album.Songs.Add(song);
+                    }
+                }
+                if (Artists != null)
+                {
+                    foreach (string Id in Artists)
+                    {
+                        Artist artist = db.Artists.FirstOrDefault(i => i.ArtistID == Id);
+                        album.Artists.Add(artist);
+                    }
+                }
+                if (Genres != null)
+                {
+                    //song.Genres = new List<Genre>();
+                    foreach (int Id in Genres)
+                    {
+                        Genre genre = db.Genres.Find(Id);
+                        album.Genres.Add(genre);
+                    }
+                }
+
                 db.Entry(album).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
+            ViewBag.AllArtists = GetAllArtists();
+            ViewBag.AllGenres = GetAllGenres();
+            ViewBag.AllSongs = GetAllSongs();
             return View(album);
         }
 
@@ -134,6 +201,15 @@ namespace CHY_Project.Controllers
             base.Dispose(disposing);
         }
         //TODO: integrate list functionality
+        public MultiSelectList GetAllSongs()
+        {
+            var songquery = from s in db.Songs
+                            orderby s.SongName
+                            select s;
+            List<Song> AllSongs = songquery.ToList();
+            MultiSelectList AllSongsList = new MultiSelectList(AllSongs, "SongID", "SongName");
+            return AllSongsList;
+        }
         public MultiSelectList GetAllSongs (Album album)
         {
             var songquery = from s in db.Songs
@@ -152,6 +228,16 @@ namespace CHY_Project.Controllers
         }
 
         //TODO: integrate list functionality
+        public MultiSelectList GetAllArtists()
+        {
+            var artistquery = from a in db.Artists
+                              orderby a.ArtistName
+                              select a;
+            List<Artist> AllArtists = artistquery.ToList();
+
+            MultiSelectList AllArtistsList = new MultiSelectList(AllArtists, "ArtistID", "ArtistName");
+            return AllArtistsList;
+        }
         public MultiSelectList GetAllArtists (Album album)
         {
             var artistquery = from a in db.Artists
@@ -170,6 +256,15 @@ namespace CHY_Project.Controllers
         }
 
         //TODO: make genre list method
+        public MultiSelectList GetAllGenres()
+        {
+            var genrequery = from g in db.Genres
+                             orderby g.GenreName
+                             select g;
+            List<Genre> AllGenres = genrequery.ToList();
+            MultiSelectList AllGenresList = new MultiSelectList(AllGenres, "GenreID", "GenreName");
+            return AllGenresList;
+        }
         public MultiSelectList GetAllGenres(Album album)
         {
             var genrequery = from g in db.Genres

@@ -11,11 +11,11 @@
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.ProductID)
+            @Html.DisplayNameFor(model => model.AlbumName)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.ProductID)
+            @Html.DisplayFor(model => model.AlbumName)
         </dd>
 
         <dt>
@@ -50,15 +50,22 @@
             @Html.DisplayFor(model => model.AlbumID)
         </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.AlbumName)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.AlbumName)
-        </dd>
-
     </dl>
+    <table class="table table-bordered">
+        <tr>
+            <th>
+                Songs
+            </th>
+        </tr>
+        @foreach (var song in Model.Songs)
+            {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => song.SongName)
+                </td>
+            </tr>
+        }
+    </table>
 </div>
 <p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.ContentID }) |

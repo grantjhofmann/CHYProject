@@ -4,18 +4,41 @@
     ViewBag.Title = "Details";
 }
 
-<h2>Details</h2>
+<h2>Song Details</h2>
 
 <div>
-    <h4>Song</h4>
+    <h4>@Html.DisplayFor(model => model.SongName)</h4>
     <hr />
+    <table class="table table-bordered">
+        <tr>
+            <th>
+                Artists
+            </th>
+        </tr>
+        @foreach (var artist in Model.Artists)
+            {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => artist.ArtistName)
+                </td>
+            </tr>
+        }
+    </table>
+
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.ProductID)
+            @Html.DisplayNameFor(model => model.SongName)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.ProductID)
+            @Html.DisplayFor(model => model.SongName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.SongID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SongID)
         </dd>
 
         <dt>
@@ -42,23 +65,23 @@
             @Html.DisplayFor(model => model.Featured)
         </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.SongID)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.SongID)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.SongName)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.SongName)
-        </dd>
 
     </dl>
+    <table class="table table-bordered">
+        <tr>
+            <th>
+                Genres
+            </th>
+        </tr>
+        @foreach (var genre in Model.Genres)
+            {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => genre.GenreName)
+                </td>
+            </tr>
+        }
+    </table>
 </div>
 <p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.ContentID }) |
