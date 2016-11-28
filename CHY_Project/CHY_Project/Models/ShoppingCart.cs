@@ -9,6 +9,8 @@ namespace CHY_Project.Models
 {
     public partial class ShoppingCart
     {
+        //test
+
         AppDbContext storeDB = new AppDbContext();
         string ShoppingCartId { get; set; }
         public const string CartSessionKey = "stringCartID";
