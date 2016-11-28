@@ -194,42 +194,16 @@
     <Compile Include="Controllers\PurchasesController.cs" />
     <Compile Include="Controllers\RatingsController.cs" />
     <Compile Include="Controllers\RoleAdminController.cs" />
+    <Compile Include="Controllers\ShoppingCartController.cs" />
     <Compile Include="Controllers\SongsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201611201941401_initialmigration.cs" />
-    <Compile Include="Migrations\201611201941401_initialmigration.Designer.cs">
-      <DependentUpon>201611201941401_initialmigration.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201611211908536_TryStringGuid.cs" />
-    <Compile Include="Migrations\201611211908536_TryStringGuid.Designer.cs">
-      <DependentUpon>201611211908536_TryStringGuid.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201611220316553_tryabstract.cs" />
-    <Compile Include="Migrations\201611220316553_tryabstract.Designer.cs">
-      <DependentUpon>201611220316553_tryabstract.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201611220320087_inheritancechange.cs" />
-    <Compile Include="Migrations\201611220320087_inheritancechange.Designer.cs">
-      <DependentUpon>201611220320087_inheritancechange.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201611220323211_inheritancechange2.cs" />
-    <Compile Include="Migrations\201611220323211_inheritancechange2.Designer.cs">
-      <DependentUpon>201611220323211_inheritancechange2.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201611220609445_aaaaaa.cs" />
-    <Compile Include="Migrations\201611220609445_aaaaaa.Designer.cs">
-      <DependentUpon>201611220609445_aaaaaa.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201611280411256_miscedits.cs" />
-    <Compile Include="Migrations\201611280411256_miscedits.Designer.cs">
-      <DependentUpon>201611280411256_miscedits.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Album.cs" />
     <Compile Include="Models\Artist.cs" />
     <Compile Include="Models\Cart.cs" />
+    <Compile Include="Models\CartViewModel.cs" />
     <Compile Include="Models\Content.cs" />
     <Compile Include="Models\CreditCard.cs" />
     <Compile Include="Models\Genre.cs" />
@@ -290,6 +264,7 @@
     <Content Include="Views\Purchases\Details.cshtml" />
     <Content Include="Views\Purchases\Edit.cshtml" />
     <Content Include="Views\Purchases\Index.cshtml" />
+    <Content Include="Views\ShoppingCart\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -300,29 +275,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="DAL\" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\201611201941401_initialmigration.resx">
-      <DependentUpon>201611201941401_initialmigration.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201611211908536_TryStringGuid.resx">
-      <DependentUpon>201611211908536_TryStringGuid.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201611220316553_tryabstract.resx">
-      <DependentUpon>201611220316553_tryabstract.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201611220320087_inheritancechange.resx">
-      <DependentUpon>201611220320087_inheritancechange.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201611220323211_inheritancechange2.resx">
-      <DependentUpon>201611220323211_inheritancechange2.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201611220609445_aaaaaa.resx">
-      <DependentUpon>201611220609445_aaaaaa.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201611280411256_miscedits.resx">
-      <DependentUpon>201611280411256_miscedits.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

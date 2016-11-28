@@ -51,7 +51,7 @@ namespace CHY_Project.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ContentID,RegularPrice,DiscountPrice,Featured,AlbumName")] Album album, Int32[] Artists, Int32[] Genres, Int32[] Songs)
+        public ActionResult Create([Bind(Include = "ContentID,RegularPrice,DiscountPrice,Featured,AlbumName,AlbumArt")] Album album, Int32[] Artists, Int32[] Genres, Int32[] Songs)
         {
             //if (ModelState.IsValid)
             //{

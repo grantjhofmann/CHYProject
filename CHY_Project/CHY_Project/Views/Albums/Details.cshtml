@@ -7,14 +7,18 @@
 <h2>Details</h2>
 
 <div>
-    <h4>Album</h4>
+    <h4>Album @Html.DisplayFor(model => model.AlbumName)</h4>
     <hr />
+
+    <img alt="@Model.AlbumName"
+         src="@Model.AlbumArt" />
     <table class="table table-bordered">
         <tr>
             <th>
                 Artists
             </th>
         </tr>
+
         @foreach (var artist in Model.Artists)
             {
             <tr>
@@ -24,6 +28,7 @@
             </tr>
         }
     </table>
+    @Html.ActionLink("Add to cart", "AddToCart", "ShoppingCart", new { id = Model.ProductID }, "")
     <dl class="dl-horizontal">
         <dt>
             @Html.DisplayNameFor(model => model.AlbumName)

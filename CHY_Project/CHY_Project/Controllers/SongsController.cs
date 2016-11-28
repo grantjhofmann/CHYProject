@@ -189,8 +189,15 @@ namespace CHY_Project.Controllers
             {
                 genre.Songs.Remove(song);
             }
-            db.Songs.Remove(song);
+            
 
+            foreach(Artist artist in song.Artists)
+            {
+                artist.Songs.Remove(song);
+            }
+
+
+            db.Songs.Remove(song);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

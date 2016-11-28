@@ -119,6 +119,14 @@ namespace CHY_Project.Controllers
         public ActionResult DeleteConfirmed(int? id)
         {
             Artist artist = db.Artists.Find(id);
+            foreach(Song song in artist.Songs)
+            {
+                song.Artists.Remove(artist);
+            }
+            foreach(Album album in artist.Albums)
+            {
+                album.Artists.Remove(artist);
+            }
             db.Contents.Remove(artist);
             db.SaveChanges();
             return RedirectToAction("Index");

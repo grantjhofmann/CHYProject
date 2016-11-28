@@ -25,8 +25,9 @@ namespace CHY_Project.Models
         {
             return GetCart(controller.HttpContext);
         }
-        public void AddToCart(Product product)
+        public void AddToCart(int id)
         {
+            Product product = storeDB.Products.Find(id);
             // Get the matching cart and album instances
             var cartItem = storeDB.Carts.SingleOrDefault(
                 c => c.stringCartID == ShoppingCartId
@@ -49,8 +50,9 @@ namespace CHY_Project.Models
             // Save changes
             storeDB.SaveChanges();
         }
-        public void RemoveFromCart(int id, Product product)
+        public void RemoveFromCart(int id)
         {
+            Product product = storeDB.Products.Find(id);
             // Get the cart
             var cart = storeDB.Carts.Find(id);
 
