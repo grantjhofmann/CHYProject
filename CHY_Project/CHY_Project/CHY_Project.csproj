@@ -191,6 +191,7 @@
     <Compile Include="Controllers\CartsController.cs" />
     <Compile Include="Controllers\GenresController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\PurchasesController.cs" />
     <Compile Include="Controllers\RatingsController.cs" />
     <Compile Include="Controllers\RoleAdminController.cs" />
     <Compile Include="Controllers\SongsController.cs" />
@@ -221,6 +222,10 @@
     <Compile Include="Migrations\201611220609445_aaaaaa.Designer.cs">
       <DependentUpon>201611220609445_aaaaaa.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201611280411256_miscedits.cs" />
+    <Compile Include="Migrations\201611280411256_miscedits.Designer.cs">
+      <DependentUpon>201611280411256_miscedits.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Album.cs" />
     <Compile Include="Models\Artist.cs" />
@@ -235,6 +240,7 @@
     <Compile Include="Models\Purchase.cs" />
     <Compile Include="Models\Rating.cs" />
     <Compile Include="Models\RoleViewModels.cs" />
+    <Compile Include="Models\ShoppingCart.cs" />
     <Compile Include="Models\Song.cs" />
     <Compile Include="Models\UserViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -279,6 +285,11 @@
     <Content Include="Views\Songs\Details.cshtml" />
     <Content Include="Views\Songs\Edit.cshtml" />
     <Content Include="Views\Songs\Index.cshtml" />
+    <Content Include="Views\Purchases\Create.cshtml" />
+    <Content Include="Views\Purchases\Delete.cshtml" />
+    <Content Include="Views\Purchases\Details.cshtml" />
+    <Content Include="Views\Purchases\Edit.cshtml" />
+    <Content Include="Views\Purchases\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -308,6 +319,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201611220609445_aaaaaa.resx">
       <DependentUpon>201611220609445_aaaaaa.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201611280411256_miscedits.resx">
+      <DependentUpon>201611280411256_miscedits.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

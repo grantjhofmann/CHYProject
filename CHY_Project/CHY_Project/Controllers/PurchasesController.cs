@@ -10,109 +10,107 @@ using CHY_Project.Models;
 
 namespace CHY_Project.Controllers
 {
-    public class CartsController : Controller
+    public class PurchasesController : Controller
     {
-        //TODO: Restrict by Role
         private AppDbContext db = new AppDbContext();
 
-        // GET: Carts
+        // GET: Purchases
         public ActionResult Index()
         {
             return View(db.Carts.ToList());
         }
 
-        // GET: Carts/Details/5
+        // GET: Purchases/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Cart cart = db.Carts.Find(id);
-            if (cart == null)
+            Purchase purchase = db.Purchases.Find(id);
+            if (purchase == null)
             {
                 return HttpNotFound();
             }
-            return View(cart);
+            return View(purchase);
         }
 
-        //TODO: Change this so carts cannot be manually created
-        // GET: Carts/Create
+        // GET: Purchases/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: Carts/Create
+        // POST: Purchases/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "CartID")] Cart cart)
+        public ActionResult Create([Bind(Include = "CartID,PurchaseID,Gift,Date")] Purchase purchase)
         {
             if (ModelState.IsValid)
             {
-                db.Carts.Add(cart);
+                db.Carts.Add(purchase);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            return View(cart);
+            return View(purchase);
         }
 
-        // GET: Carts/Edit/5
+        // GET: Purchases/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Cart cart = db.Carts.Find(id);
-            if (cart == null)
+            Purchase purchase = db.Purchases.Find(id);
+            if (purchase == null)
             {
                 return HttpNotFound();
             }
-            return View(cart);
+            return View(purchase);
         }
 
-        // POST: Carts/Edit/5
+        // POST: Purchases/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "CartID")] Cart cart)
+        public ActionResult Edit([Bind(Include = "CartID,PurchaseID,Gift,Date")] Purchase purchase)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(cart).State = EntityState.Modified;
+                db.Entry(purchase).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(cart);
+            return View(purchase);
         }
 
-        // GET: Carts/Delete/5
+        // GET: Purchases/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Cart cart = db.Carts.Find(id);
-            if (cart == null)
+            Purchase purchase = db.Purchases.Find(id);
+            if (purchase == null)
             {
                 return HttpNotFound();
             }
-            return View(cart);
+            return View(purchase);
         }
 
-        // POST: Carts/Delete/5
+        // POST: Purchases/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Cart cart = db.Carts.Find(id);
-            db.Carts.Remove(cart);
+            Purchase purchase = db.Purchases.Find(id);
+            db.Carts.Remove(purchase);
             db.SaveChanges();
             return RedirectToAction("Index");
         }
@@ -125,6 +123,5 @@ namespace CHY_Project.Controllers
             }
             base.Dispose(disposing);
         }
-
     }
 }
