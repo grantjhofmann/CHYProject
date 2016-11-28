@@ -9,11 +9,11 @@ namespace CHY_Project.Models
 {
     public class Cart
     {
-        
         public Int32 CartID { get; set; }
-        public String stringCartID { get; set; }
+
         public virtual List<Product> Products { get; set; }
 
+        [Required]
         public virtual AppUser Customer { get; set; }
     }
 }
