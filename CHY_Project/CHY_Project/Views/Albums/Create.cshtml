@@ -15,11 +15,12 @@
         <h4>Album</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+       
         <div class="form-group">
-            @Html.LabelFor(model => model.ProductID, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.AlbumName, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.ProductID, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.ProductID, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model.AlbumName, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.AlbumName, "", new { @class = "text-danger" })
             </div>
         </div>
 
@@ -48,20 +49,24 @@
                 </div>
             </div>
         </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.AlbumID, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="form-control">
+            @Html.LabelFor(model => model.Artists, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.AlbumID, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.AlbumID, "", new { @class = "text-danger" })
+                @Html.ListBox("Artists", (MultiSelectList)ViewBag.AllArtists, new { @class = "form-control" })
             </div>
         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.AlbumName, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="form-control">
+            @Html.LabelFor(model => model.Genres, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.AlbumName, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.AlbumName, "", new { @class = "text-danger" })
+                @Html.ListBox("Genres", (MultiSelectList)ViewBag.AllGenres, new { @class = "form-control" })
+            </div>
+        </div>
+
+        <div class="form-control">
+            @Html.LabelFor(model => model.Songs, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.ListBox("Songs", (MultiSelectList)ViewBag.AllSongs, new { @class = "form-control" })
             </div>
         </div>
 

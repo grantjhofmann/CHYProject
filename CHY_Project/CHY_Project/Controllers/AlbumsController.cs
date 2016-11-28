@@ -50,22 +50,23 @@ namespace CHY_Project.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ContentID,ProductID,RegularPrice,DiscountPrice,Featured,AlbumID,AlbumName")] Album album, String[] Artists, Int32[] Genres, String[] Songs)
+        public ActionResult Create([Bind(Include = "ContentID,RegularPrice,DiscountPrice,Featured,AlbumName")] Album album, Int32[] Artists, Int32[] Genres, Int32[] Songs)
         {
             if(Songs != null)
             {
-                foreach(string Id in Songs)
+                foreach(int Id in Songs)
                 {
-                    Song song = db.Songs.FirstOrDefault(i => i.SongID == Id);
+                    Song song = db.Songs.FirstOrDefault(i => i.ContentID == Id);
+                    //Song song = db.Songs.Find(Id);
                     album.Songs.Add(song);
                 }
             }
 
             if (Artists != null)
             {
-                foreach (string Id in Artists)
+                foreach (int Id in Artists)
                 {
-                    Artist artist = db.Artists.FirstOrDefault(i => i.ArtistID == Id);
+                    Artist artist = db.Artists.Find(Id);
                     //Artist artist = db.Artists.Find(Convert.ToString(Id));
                     album.Artists.Add(artist);
                 }
@@ -215,7 +216,7 @@ namespace CHY_Project.Controllers
                             orderby s.SongName
                             select s;
             List<Song> AllSongs = songquery.ToList();
-            MultiSelectList AllSongsList = new MultiSelectList(AllSongs, "SongID", "SongName");
+            MultiSelectList AllSongsList = new MultiSelectList(AllSongs, "ContentID", "SongName");
             return AllSongsList;
         }
         public MultiSelectList GetAllSongs (Album album)
@@ -231,7 +232,7 @@ namespace CHY_Project.Controllers
                 SelectedSongs.Add(s.SongID);
             }
 
-            MultiSelectList AllSongsList = new MultiSelectList(AllSongs, "SongID", "SongName", SelectedSongs);
+            MultiSelectList AllSongsList = new MultiSelectList(AllSongs, "ContentID", "SongName", SelectedSongs);
             return AllSongsList;
         }
 
@@ -243,7 +244,7 @@ namespace CHY_Project.Controllers
                               select a;
             List<Artist> AllArtists = artistquery.ToList();
 
-            MultiSelectList AllArtistsList = new MultiSelectList(AllArtists, "ArtistID", "ArtistName");
+            MultiSelectList AllArtistsList = new MultiSelectList(AllArtists, "ContentID", "ArtistName");
             return AllArtistsList;
         }
         public MultiSelectList GetAllArtists (Album album)
@@ -259,7 +260,7 @@ namespace CHY_Project.Controllers
                 SelectedArtists.Add(a.ArtistID);
             }
 
-            MultiSelectList AllArtistsList = new MultiSelectList(AllArtists, "ArtistID", "ArtistName", SelectedArtists);
+            MultiSelectList AllArtistsList = new MultiSelectList(AllArtists, "ContentID", "ArtistName", SelectedArtists);
             return AllArtistsList;
         }
 
