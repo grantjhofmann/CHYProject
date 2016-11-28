@@ -15,7 +15,7 @@ namespace CHY_Project.Models
         public String AlbumName { get; set; }
 
         //NOTE: Do albums have artists in their own right or do they have artists by virtue of the songs on them?
-        [Required]
+        
         public virtual List<Artist> Artists { get; set; }
 
         public virtual List<Song> Songs { get; set; }

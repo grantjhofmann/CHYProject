@@ -9,6 +9,21 @@
 <div>
     <h4>Album</h4>
     <hr />
+    <table class="table table-bordered">
+        <tr>
+            <th>
+                Artists
+            </th>
+        </tr>
+        @foreach (var artist in Model.Artists)
+            {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => artist.ArtistName)
+                </td>
+            </tr>
+        }
+    </table>
     <dl class="dl-horizontal">
         <dt>
             @Html.DisplayNameFor(model => model.AlbumName)
@@ -54,6 +69,21 @@
             <tr>
                 <td>
                     @Html.DisplayFor(modelItem => song.SongName)
+                </td>
+            </tr>
+        }
+    </table>
+    <table class="table table-bordered">
+        <tr>
+            <th>
+                Genres
+            </th>
+        </tr>
+        @foreach (var genre in Model.Genres)
+            {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => genre.GenreName)
                 </td>
             </tr>
         }

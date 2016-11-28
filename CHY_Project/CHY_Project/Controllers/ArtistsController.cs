@@ -23,7 +23,7 @@ namespace CHY_Project.Controllers
         }
 
         // GET: Artists/Details/5
-        public ActionResult Details(int id)
+        public ActionResult Details(int? id)
         {
             //TODO: list albums
             if (id == null)

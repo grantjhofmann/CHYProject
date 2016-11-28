@@ -143,22 +143,23 @@ namespace CHY_Project.Models
                     UnitPrice = item.Album.Price,
                     Quantity = item.Count
                 };
+                
                 // Set the order total of the shopping cart
-                orderTotal += (item.Count * item.Album.Price);
+                orderTotal += (product.DiscountPrice);
 
-                storeDB.OrderDetails.Add(orderDetail);
+                //storeDB.OrderDetails.Add(orderDetail);
 
             }
             // Set the order's total to the orderTotal count
-            order.Total = orderTotal;
+            //order.Total = orderTotal;
             
             // Save the order
             storeDB.SaveChanges();
             // Empty the shopping cart
             EmptyCart();
             // Return the OrderId as the confirmation number
-            return order.OrderId;
-        }*/
+            //return order.OrderId;
+        } */
         // We're using HttpContextBase to allow access to cookies.
         public string GetCartId(HttpContextBase context)
         {

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.ComponentModel.DataAnnotations;
-
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CHY_Project.Models
 {
@@ -16,7 +16,7 @@ namespace CHY_Project.Models
         [Display(Name ="Artist Name")]
         public String ArtistName { get; set; }
 
-        
+        [ForeignKey("ContentID")]
         public virtual List<Song> Songs { get; set; }
         
         

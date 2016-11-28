@@ -39,6 +39,7 @@ namespace CHY_Project.Controllers
         // GET: Albums/Create
         public ActionResult Create()
         {
+            Album album = new Album();
             ViewBag.AllArtists = GetAllArtists();
             ViewBag.AllGenres = GetAllGenres();
             ViewBag.AllSongs = GetAllSongs();
@@ -52,35 +53,51 @@ namespace CHY_Project.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "ContentID,RegularPrice,DiscountPrice,Featured,AlbumName")] Album album, Int32[] Artists, Int32[] Genres, Int32[] Songs)
         {
-            if(Songs != null)
-            {
-                foreach(int Id in Songs)
-                {
-                    Song song = db.Songs.FirstOrDefault(i => i.ContentID == Id);
-                    //Song song = db.Songs.Find(Id);
-                    album.Songs.Add(song);
-                }
-            }
+            //if (ModelState.IsValid)
+            //{
+                
+            //    db.Albums.Add(album);
+            //    db.SaveChanges();
+            //}
 
             if (Artists != null)
             {
+                album.Artists = new List<Artist>();
                 foreach (int Id in Artists)
                 {
+
                     Artist artist = db.Artists.Find(Id);
+                    
                     //Artist artist = db.Artists.Find(Convert.ToString(Id));
                     album.Artists.Add(artist);
                 }
             }
 
+
             if (Genres != null)
             {
+                album.Genres = new List<Genre>();
                 //song.Genres = new List<Genre>();
                 foreach (int Id in Genres)
                 {
+                    
                     Genre genre = db.Genres.Find(Id);
                     album.Genres.Add(genre);
                 }
             }
+
+            if (Songs != null)
+            {
+                album.Songs = new List<Song>();
+                foreach (int Id in Songs)
+                {
+                    
+                    //Song song = db.Songs.FirstOrDefault(i => i.ContentID == Id);
+                    Song song = db.Songs.Find(Id);
+                    album.Songs.Add(song);
+                }
+            }
+
             Guid guidAlbumProductID = Guid.NewGuid();
             Guid guidAlbumID = Guid.NewGuid();
 
@@ -92,7 +109,7 @@ namespace CHY_Project.Controllers
             if (ModelState.IsValid)
             {
 
-                db.Contents.Add(album);
+                db.Albums.Add(album);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }

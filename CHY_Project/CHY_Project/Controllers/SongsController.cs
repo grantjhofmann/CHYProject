@@ -50,15 +50,16 @@ namespace CHY_Project.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ContentID,RegularPrice,DiscountPrice,Featured,SongName")] Song song, String[] Artists, Int32[] Genres)
+        public ActionResult Create([Bind(Include = "ContentID,RegularPrice,DiscountPrice,Featured,SongName")] Song song, Int32[] Artists, Int32[] Genres)
         {
             
             if (Artists != null)
             {
-                foreach (string Id in Artists)
+                foreach (int Id in Artists)
                 {
-                    Artist artist = db.Artists.FirstOrDefault(i => i.ArtistID == Id);
-                    //Artist artist = db.Artists.Find(Convert.ToString(Id));
+                    //Artist artist = new Artist();
+                   // Artist artist = db.Artists.FirstOrDefault(i => i.ArtistID == Id);
+                    Artist artist = db.Artists.Find(Id);
                     song.Artists.Add(artist);
                 }
             }
@@ -121,7 +122,7 @@ namespace CHY_Project.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ContentID,RegularPrice,DiscountPrice,Featured,SongName")] Song song, String[] Artists, Int32[] Genres)
+        public ActionResult Edit([Bind(Include = "ContentID,RegularPrice,DiscountPrice,Featured,SongName")] Song song, Int32[] Artists, Int32[] Genres)
         {
             if (ModelState.IsValid)
             {
@@ -131,10 +132,10 @@ namespace CHY_Project.Controllers
 
                 if (Artists != null)
                 {
-                    foreach (string Id in Artists)
+                    foreach (int Id in Artists)
                     {
-                        Artist artist = db.Artists.FirstOrDefault(i => i.ArtistID == Id);
-                        //Artist artist = db.Artists.Find(Convert.ToString(Id));
+                        //Artist artist = db.Artists.FirstOrDefault(i => i.ArtistID == Id);
+                        Artist artist = db.Artists.Find(Id);
                         songToChange.Artists.Add(artist);
                     }
                 }
@@ -183,7 +184,13 @@ namespace CHY_Project.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             Song song = db.Songs.Find(id);
+            
+            foreach(Genre genre in song.Genres)
+            {
+                genre.Songs.Remove(song);
+            }
             db.Songs.Remove(song);
+
             db.SaveChanges();
             return RedirectToAction("Index");
         }
@@ -230,7 +237,7 @@ namespace CHY_Project.Controllers
                               select a;
             List<Artist> AllArtists = artistquery.ToList();
 
-            MultiSelectList AllArtistsList = new MultiSelectList(AllArtists, "ArtistID", "ArtistName");
+            MultiSelectList AllArtistsList = new MultiSelectList(AllArtists, "ContentID", "ArtistName");
             return AllArtistsList;
         }
         public MultiSelectList GetAllArtists(Song song)
@@ -239,14 +246,14 @@ namespace CHY_Project.Controllers
                               orderby a.ArtistName
                               select a;
             List<Artist> AllArtists = artistquery.ToList();
-            List<String> SelectedArtists = new List<string>();
+            List<Int32> SelectedArtists = new List<int>();
 
             foreach (Artist a in song.Artists)
             {
-                SelectedArtists.Add(a.ArtistID);
+                SelectedArtists.Add(a.ContentID);
             }
 
-            MultiSelectList AllArtistsList = new MultiSelectList(AllArtists, "ArtistID", "ArtistName", SelectedArtists);
+            MultiSelectList AllArtistsList = new MultiSelectList(AllArtists, "ContentID", "ArtistName", SelectedArtists);
             return AllArtistsList;
         }
     }
