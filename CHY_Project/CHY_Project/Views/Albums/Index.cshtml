@@ -6,13 +6,15 @@
 
 <h2>Index</h2>
 
+<h3> Displaying @ViewBag.AlbumCount of @ViewBag.TotalAlbumCount Results</h3>
+
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.ProductID)
+            @Html.DisplayNameFor(model => model.AlbumName)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.RegularPrice)
@@ -23,19 +25,15 @@
         <th>
             @Html.DisplayNameFor(model => model.Featured)
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.AlbumID)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.AlbumName)
-        </th>
+
+
         <th></th>
     </tr>
 
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.ProductID)
+            @Html.DisplayFor(modelItem => item.AlbumName)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.RegularPrice)
@@ -46,12 +44,8 @@
         <td>
             @Html.DisplayFor(modelItem => item.Featured)
         </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.AlbumID)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.AlbumName)
-        </td>
+
+
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.ContentID }) |
             @Html.ActionLink("Details", "Details", new { id=item.ContentID }) |
