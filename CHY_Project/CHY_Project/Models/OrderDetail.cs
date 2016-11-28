@@ -11,7 +11,7 @@ namespace CHY_Project.Models
     {
         public Int32 OrderDetailID { get; set; }
 
-        [Required]
+        
         public virtual Purchase Purchase { get; set; }
 
         [Required]
