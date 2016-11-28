@@ -23,7 +23,7 @@ namespace CHY_Project.Controllers
         }
 
         // GET: Artists/Details/5
-        public ActionResult Details(string id)
+        public ActionResult Details(int id)
         {
             //TODO: list albums
             if (id == null)
@@ -86,10 +86,11 @@ namespace CHY_Project.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ContentID,ArtistID,ArtistName")] Artist artist)
+        public ActionResult Edit([Bind(Include = "ContentID,ArtistName")] Artist artist)
         {
             if (ModelState.IsValid)
             {
+
                 db.Entry(artist).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");

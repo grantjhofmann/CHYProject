@@ -124,7 +124,7 @@ namespace CHY_Project.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ContentID,ProductID,RegularPrice,DiscountPrice,Featured,AlbumID,AlbumName")] Album album, String[] Artists, Int32[] Genres, String[] Songs)
+        public ActionResult Edit([Bind(Include = "ContentID,RegularPrice,DiscountPrice,Featured,AlbumName")] Album album, String[] Artists, Int32[] Genres, String[] Songs)
         {
             if (ModelState.IsValid)
             {
@@ -135,7 +135,7 @@ namespace CHY_Project.Controllers
                     foreach (string Id in Songs)
                     {
                         Song song = db.Songs.FirstOrDefault(i => i.SongID == Id);
-                        album.Songs.Add(song);
+                        albumtochange.Songs.Add(song);
                     }
                 }
                 if (Artists != null)
@@ -143,7 +143,7 @@ namespace CHY_Project.Controllers
                     foreach (string Id in Artists)
                     {
                         Artist artist = db.Artists.FirstOrDefault(i => i.ArtistID == Id);
-                        album.Artists.Add(artist);
+                        albumtochange.Artists.Add(artist);
                     }
                 }
                 if (Genres != null)
@@ -156,7 +156,15 @@ namespace CHY_Project.Controllers
                     }
                 }
 
-                db.Entry(album).State = EntityState.Modified;
+                //TODO: Uncomment once album art functionality built.
+                //TODO: Add album art as a property above
+                //albumtochange.AlbumArt = album.AlbumArt;
+                albumtochange.RegularPrice = album.RegularPrice;
+                albumtochange.DiscountPrice = album.DiscountPrice;
+                albumtochange.Featured = album.Featured;
+                albumtochange.AlbumName = album.AlbumName;
+
+                db.Entry(albumtochange).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }

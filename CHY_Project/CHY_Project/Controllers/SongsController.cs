@@ -111,8 +111,8 @@ namespace CHY_Project.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.AllGenres = GetAllGenres();
-            ViewBag.AllArtists = GetAllArtists();
+            ViewBag.AllGenres = GetAllGenres(song);
+            ViewBag.AllArtists = GetAllArtists(song);
             return View(song);
         }
 
@@ -121,7 +121,7 @@ namespace CHY_Project.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ContentID,ProductID,RegularPrice,DiscountPrice,Featured,SongID,SongName")] Song song, String[] Artists, Int32[] Genres)
+        public ActionResult Edit([Bind(Include = "ContentID,RegularPrice,DiscountPrice,Featured,SongName")] Song song, String[] Artists, Int32[] Genres)
         {
             if (ModelState.IsValid)
             {
@@ -129,13 +129,13 @@ namespace CHY_Project.Controllers
                 songToChange.Genres.Clear();
                 songToChange.Artists.Clear();
 
-                if(Artists != null)
+                if (Artists != null)
                 {
                     foreach (string Id in Artists)
                     {
                         Artist artist = db.Artists.FirstOrDefault(i => i.ArtistID == Id);
                         //Artist artist = db.Artists.Find(Convert.ToString(Id));
-                        song.Artists.Add(artist);
+                        songToChange.Artists.Add(artist);
                     }
                 }
                 if (Genres != null)
@@ -144,17 +144,21 @@ namespace CHY_Project.Controllers
                     foreach (int Id in Genres)
                     {
                         Genre genre = db.Genres.Find(Id);
-                        song.Genres.Add(genre);
+                        songToChange.Genres.Add(genre);
                     }
                 }
 
+                songToChange.RegularPrice = song.RegularPrice;
+                songToChange.DiscountPrice = song.DiscountPrice;
+                songToChange.Featured = song.Featured;
+                songToChange.SongName = song.SongName;
 
-                db.Entry(song).State = EntityState.Modified;
+                db.Entry(songToChange).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.AllGenres = GetAllGenres();
-            ViewBag.AllArtists = GetAllArtists();
+            ViewBag.AllGenres = GetAllGenres(song);
+            ViewBag.AllArtists = GetAllArtists(song);
             return View(song);
         }
 
@@ -229,7 +233,7 @@ namespace CHY_Project.Controllers
             MultiSelectList AllArtistsList = new MultiSelectList(AllArtists, "ArtistID", "ArtistName");
             return AllArtistsList;
         }
-        public MultiSelectList GetAllArtists(Album album)
+        public MultiSelectList GetAllArtists(Song song)
         {
             var artistquery = from a in db.Artists
                               orderby a.ArtistName
@@ -237,7 +241,7 @@ namespace CHY_Project.Controllers
             List<Artist> AllArtists = artistquery.ToList();
             List<String> SelectedArtists = new List<string>();
 
-            foreach (Artist a in album.Artists)
+            foreach (Artist a in song.Artists)
             {
                 SelectedArtists.Add(a.ArtistID);
             }
