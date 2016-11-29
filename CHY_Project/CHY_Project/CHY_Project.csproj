@@ -273,6 +273,9 @@
     <Content Include="Views\Purchases\Edit.cshtml" />
     <Content Include="Views\Purchases\Index.cshtml" />
     <Content Include="Views\ShoppingCart\Index.cshtml" />
+    <Content Include="Views\Albums\Search.cshtml" />
+    <Content Include="Views\Artists\Search.cshtml" />
+    <Content Include="Views\Songs\Search.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

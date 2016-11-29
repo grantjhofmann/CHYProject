@@ -6,6 +6,8 @@
 
 <h2>Index</h2>
 
+<h3> Displaying @ViewBag.ArtistsCount of @ViewBag.TotalArtistsCount Results</h3>
+
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
@@ -17,17 +19,18 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.ArtistName)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ContentID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.ContentID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.ContentID })
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ArtistName)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.ContentID }) |
+                @Html.ActionLink("Details", "Details", new { id = item.ContentID }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.ContentID })
+            </td>
+        </tr>
+    }
 
 </table>

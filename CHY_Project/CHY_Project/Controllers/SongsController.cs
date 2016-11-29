@@ -18,6 +18,10 @@ namespace CHY_Project.Controllers
         // GET: Songs
         public ActionResult Index()
         {
+            List<Song> AllSongs = db.Songs.ToList();
+
+            ViewBag.SongCount = CountSongs(AllSongs);
+            ViewBag.TotalSongCount = CountSongs(AllSongs);
             return View(db.Songs.ToList());
         }
 
@@ -211,6 +215,58 @@ namespace CHY_Project.Controllers
             base.Dispose(disposing);
         }
 
+
+        //Song Search
+        public ActionResult Search()
+        {
+            ViewBag.AllGenres = GetAllGenres();
+            ViewBag.AllArtists = GetAllArtists();
+            //TODO: Write a get all albums method (?)
+            //ViewBag.AllAlbums = GetAllAlbums();
+            return View();
+        }
+
+        //Search Results
+        public ActionResult SearchResults(string NameSearchString, string ArtistSearchString, string AlbumSearchString, List<Genre> GenresSearched/*, TODO: Add parameter for Rating, once that is set up*/)
+        {
+            List<Song> SelectedSongs = new List<Song>();
+            List<Song> AllSongs = db.Songs.ToList();
+
+            var query = from s in db.Songs
+                        select s;
+
+
+            //NOTE: Ask Katie if this is an "is equal to" or a "contains" search
+            if (NameSearchString != null && NameSearchString != "")
+            {
+                query = query.Where(s => s.SongName.Contains(NameSearchString));
+            }
+
+            if (ArtistSearchString != null && ArtistSearchString != "")
+            {
+                query = query.Where(s => s.Artists.Any(a => a.ArtistName.Contains(ArtistSearchString)));
+            }
+
+            if (AlbumSearchString != null && AlbumSearchString != "")
+            {
+                query = query.Where(s => s.Album.AlbumName.Contains(ArtistSearchString));
+            }
+
+            //TODO: Add genre search
+
+            //TODO: Add rating search once that functionality is live
+
+            //TODO: Add Ascending/Descending sorting for name, artist, rating
+
+            SelectedSongs = query.ToList();
+
+            ViewBag.SongCount = CountSongs(SelectedSongs);
+            ViewBag.TotalSongCount = CountSongs(AllSongs);
+
+            return View("Index", SelectedSongs);
+
+        }
+
         public MultiSelectList GetAllGenres()
         {
             var genrequery = from g in db.Genres
@@ -262,6 +318,21 @@ namespace CHY_Project.Controllers
 
             MultiSelectList AllArtistsList = new MultiSelectList(AllArtists, "ContentID", "ArtistName", SelectedArtists);
             return AllArtistsList;
+        }
+
+        public Int32 CountSongs(List<Song> SongList)
+        {
+            //find list of songs
+            var query = from c in SongList
+                        orderby c.SongID
+                        select c;
+            //execute query and store in list
+            List<Song> countedSongs = query.ToList();
+
+            int songCount = countedSongs.Count();
+
+            return songCount;
+
         }
     }
 }

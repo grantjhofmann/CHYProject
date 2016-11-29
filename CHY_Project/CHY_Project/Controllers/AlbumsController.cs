@@ -17,6 +17,12 @@ namespace CHY_Project.Controllers
         // GET: Albums
         public ActionResult Index()
         {
+
+            List<Album> AllAlbums = db.Albums.ToList();
+            ViewBag.AlbumCount = CountAlbums(AllAlbums);
+            ViewBag.TotalAlbumCount = CountAlbums(AllAlbums);
+
+            
             return View(db.Albums.ToList());
         }
 
@@ -226,7 +232,50 @@ namespace CHY_Project.Controllers
             }
             base.Dispose(disposing);
         }
-        //TODO: integrate list functionality
+
+        //Album Search
+        public ActionResult Search()
+        {
+            ViewBag.AllGenres = GetAllGenres();
+            ViewBag.AllArtists = GetAllArtists();
+            ViewBag.AllSongs = GetAllSongs();
+            return View();
+        }
+
+        //Search Results
+        public ActionResult SearchResults(string NameSearchString, string ArtistSearchString, List<Genre> GenresSearched/*, TODO: Add parameter for Rating, once that is set up*/)
+        {
+            List<Album> SelectedAlbums = new List<Album>();
+            List<Album> AllAlbums = db.Albums.ToList();
+
+            var query = from a in db.Albums
+                        select a;
+
+
+            //NOTE: Ask Katie if this is an "is equal to" or a "contains" search
+            if (NameSearchString != null && NameSearchString != "")
+            {
+                query = query.Where(a => a.AlbumName.Contains(NameSearchString));
+            }
+
+            if (ArtistSearchString != null && ArtistSearchString != "")
+            {
+                query = query.Where(a => a.Artists.Any(ar => ar.ArtistName.Contains(ArtistSearchString)));
+            }
+
+            //TODO: Add genre search
+
+            //TODO: Add rating search once that functionality is live
+
+            //TODO: Add Ascending/Descending for name, artist, rating
+
+            SelectedAlbums = query.ToList();
+
+            ViewBag.AlbumCount = CountAlbums(SelectedAlbums);
+            ViewBag.TotalAlbumCount = CountAlbums(AllAlbums);
+
+            return View("Index", SelectedAlbums);
+        }
         public MultiSelectList GetAllSongs()
         {
             var songquery = from s in db.Songs
@@ -306,6 +355,20 @@ namespace CHY_Project.Controllers
 
             MultiSelectList AllGenresList = new MultiSelectList(AllGenres, "GenreID", "GenreName", SelectedGenres);
             return AllGenresList;
+
+             public Int32 CountAlbums(List<Album> AlbumList)
+        {
+            //find list of albums
+            var query = from c in AlbumList
+                        orderby c.AlbumID
+                        select c;
+            //execute query and store in list
+            List<Album> countedAlbum = query.ToList();
+
+            int albumCount = countedAlbum.Count();
+
+            return albumCount;
         }
+    }
     }
 }

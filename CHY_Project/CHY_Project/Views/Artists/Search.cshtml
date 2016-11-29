@@ -1,0 +1,17 @@
+﻿@using CHY_Project.Controllers
+
+@{
+    ViewBag.Title = "Artist Search";
+}
+
+<h2>Artist Search</h2>
+
+@using (Html.BeginForm("SearchResults", "Artists", FormMethod.Get))
+{
+    <p class="form-group">
+        Artist Name @Html.TextBox("NameSearchString", null, new { @class = "form-control" }) <br />
+
+        <input type="submit" value="Search" class="btn btn-default" />
+        @Html.ActionLink("Show All", "Index", null, new { @class = "btn btn-default" })
+    </p>
+}
