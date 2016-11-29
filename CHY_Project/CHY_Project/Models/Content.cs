@@ -15,5 +15,6 @@ namespace CHY_Project.Models
 
         public virtual List<Rating> Ratings { get; set; }
 
+        public Boolean Featured { get; set; }
     }
 }

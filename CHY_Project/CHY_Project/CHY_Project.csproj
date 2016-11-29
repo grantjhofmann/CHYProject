@@ -199,6 +199,15 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201611290157002_v3.cs" />
+    <Compile Include="Migrations\201611290157002_v3.Designer.cs">
+      <DependentUpon>201611290157002_v3.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201611290202590_featureartists.cs" />
+    <Compile Include="Migrations\201611290202590_featureartists.Designer.cs">
+      <DependentUpon>201611290202590_featureartists.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Album.cs" />
     <Compile Include="Models\Artist.cs" />
     <Compile Include="Models\Cart.cs" />
@@ -274,6 +283,14 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="DAL\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201611290157002_v3.resx">
+      <DependentUpon>201611290157002_v3.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201611290202590_featureartists.resx">
+      <DependentUpon>201611290202590_featureartists.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
