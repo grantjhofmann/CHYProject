@@ -16,6 +16,6 @@ namespace CHY_Project.Models
         [Required]
         public String GenreName { get; set; }
 
-        public virtual List<Song> Songs { get; set; }
+        public virtual List<Content> Contents { get; set; }
     }
 }

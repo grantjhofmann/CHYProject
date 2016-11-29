@@ -207,6 +207,10 @@
     <Compile Include="Migrations\201611290202590_featureartists.Designer.cs">
       <DependentUpon>201611290202590_featureartists.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201611290639340_genrefix.cs" />
+    <Compile Include="Migrations\201611290639340_genrefix.Designer.cs">
+      <DependentUpon>201611290639340_genrefix.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Album.cs" />
     <Compile Include="Models\Artist.cs" />
@@ -293,6 +297,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201611290202590_featureartists.resx">
       <DependentUpon>201611290202590_featureartists.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201611290639340_genrefix.resx">
+      <DependentUpon>201611290639340_genrefix.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

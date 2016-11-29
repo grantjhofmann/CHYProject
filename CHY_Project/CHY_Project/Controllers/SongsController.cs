@@ -191,7 +191,7 @@ namespace CHY_Project.Controllers
             
             foreach(Genre genre in song.Genres)
             {
-                genre.Songs.Remove(song);
+                genre.Contents.Remove(song);
             }
             
 
