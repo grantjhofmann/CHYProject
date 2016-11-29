@@ -1,19 +1,27 @@
 ﻿@using CHY_Project.Controllers
+@model CHY_Project.Models.Album
 
 @{
-    ViewBag.Title = "Artist Search";
+    ViewBag.Title = "Album Search";
 }
 
 <h2>Album Search</h2>
 
-@using (Html.BeginForm("SearchResults", "Artists", FormMethod.Get))
+@using (Html.BeginForm("SearchResults", "Albums", FormMethod.Get))
 {
 <p class="form-group">
         Album Title @Html.TextBox("NameSearchString", null, new { @class = "form-control" }) <br />
-        Artist @Html.ActionLink("Show All", "Index", null, new { @class = "btn btn-default" }) <br />
+        Artist @Html.TextBox("ArtistSearchString", null, new { @class = "form-control" }) <br />
         Song @Html.TextBox("SongSearchString", null, new { @class = "form-control" }) <br />
+
+        <div class="form-control">
+            @Html.LabelFor(model => model.Genres, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.ListBox("SelectedGenres", (MultiSelectList)ViewBag.AllGenres, new { @class = "form-control" })
+            </div>
+        </div>
 
         <input type="submit" value="Search" class="btn btn-default" />
         @Html.ActionLink("Show All", "Index", null, new { @class = "btn btn-default" })
-    </p>
+</p>
 }

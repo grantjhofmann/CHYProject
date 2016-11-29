@@ -1,4 +1,5 @@
 ﻿@using CHY_Project.Controllers
+@model CHY_Project.Models.Song
 
 @{
     ViewBag.Title = "Song Search";
@@ -12,6 +13,13 @@
         Song Title @Html.TextBox("NameSearchString", null, new { @class = "form-control" }) <br />
         Artist @Html.TextBox("ArtistSearchString", null, new { @class = "form-control" }) <br />
         Album @Html.TextBox("AlbumSearchString", null, new { @class = "form-control" }) <br />
+
+        <div class="form-control">
+            @Html.LabelFor(model => model.Genres, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.ListBox("SelectedGenres", (MultiSelectList)ViewBag.AllGenres, new { @class = "form-control" })
+            </div>
+        </div>
 
         <input type="submit" value="Search" class="btn btn-default" />
         @Html.ActionLink("Show All", "Index", null, new { @class = "btn btn-default" })
