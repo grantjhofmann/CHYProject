@@ -170,8 +170,9 @@ namespace CHY_Project.Controllers
             else
             {
                 cart.Products.Remove(product);
+                db.Entry(cart).State = EntityState.Modified;
                 db.SaveChanges();
-                return View("Index");
+                return RedirectToAction("Index");
             }
         }
 
@@ -190,9 +191,50 @@ namespace CHY_Project.Controllers
             else
             {
                 cart.Products.Clear();
-                return View("Index");
+                db.Entry(cart).State = EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("Index");
             }
 
+        }
+        //GET
+        public ActionResult Checkout(int id)
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult Checkout ([Bind(Include = "CreditCard,Gift,Recipient")] Purchase purchase)
+        {
+            string userid = User.Identity.GetUserId();
+            AppUser currentuser = db.Users.Find(userid);
+            Cart cart = db.Carts.FirstOrDefault(c => c.Customer == currentuser);
+            
+            purchase.Customer = cart.Customer;
+            purchase.Date = DateTime.Today.Date;
+            purchase.Products = cart.Products;
+            if(purchase.Gift == false)
+            {
+                purchase.Recipient = currentuser;
+            }
+
+
+            
+        }
+
+        public Decimal cartTotal ()
+        {
+            string userid = User.Identity.GetUserId();
+            AppUser currentuser = db.Users.Find(userid);
+            Cart cart = db.Carts.FirstOrDefault(c => c.Customer == currentuser);
+            decimal total;
+            total = 0;
+            foreach (Product product in cart.Products)
+            {
+                total += product.DiscountPrice; ;
+            }
+
+            return total;
         }
     }
 }
