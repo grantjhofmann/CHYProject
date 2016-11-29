@@ -265,6 +265,15 @@ namespace CHY_Project.Controllers
             return AllAlbumsList;
         }
 
+        public MultiSelectList GetAllGenres()
+        {
+            var genrequery = from g in db.Genres
+                             orderby g.GenreName
+                             select g;
+            List<Genre> AllGenres = genrequery.ToList();
+            MultiSelectList AllGenresList = new MultiSelectList(AllGenres, "GenreID", "GenreName");
+            return AllGenresList;
+        }
 
         //TODO: Integrate selectlist functionality
         public MultiSelectList GetAllGenres()
