@@ -4,6 +4,8 @@ namespace CHY_Project.Migrations
     using System.Data.Entity;
     using System.Data.Entity.Migrations;
     using System.Linq;
+    using System.Collections.Generic;
+    using CHY_Project.Models;
 
     internal sealed class Configuration : DbMigrationsConfiguration<CHY_Project.Models.AppDbContext>
     {
@@ -12,7 +14,7 @@ namespace CHY_Project.Migrations
             AutomaticMigrationsEnabled = false;
         }
 
-        protected override void Seed(CHY_Project.Models.AppDbContext context)
+        protected override void Seed(CHY_Project.Models.AppDbContext db)
         {
             var genres = new List<Genre>
             {
@@ -1155,6 +1157,7 @@ namespace CHY_Project.Migrations
             db.Songs.AddOrUpdate(s => s.Album.AlbumName, song57);
             db.SaveChanges();
 
+            Song song61 = new Song();
             song61.SongName = "Don't Know Nothing";
             db.Songs.AddOrUpdate(s => s.SongName, song61);
             db.SaveChanges();
@@ -1612,21 +1615,12 @@ namespace CHY_Project.Migrations
             Artist artist = db.Artists.SingleOrDefault(a => a.ArtistName == artistName);
             artist.Genres.Add(genre);
         }
-        void AddOrUpdateSongGenre(AppDbContext db, string songName, string artistName, string genreName)
+        void AddOrUpdateSongGenre(AppDbContext db, string songName, string genreName)
         {
-
             Genre genre = db.Genres.SingleOrDefault(g => g.GenreName == genreName);
-
-            var songs = from s in db.Songs
-                        select s;
-            songs = songs.Where(s => s.Artists.Any(g => g.ArtistName == artistName) & s.SongName == songName);
-
-            Song song = songs;
-
-            //Song song = db.Songs.Where(s => s.Artists.Any(a => a.ArtistName.Contains(artistName)));
+            Song song = db.Songs.SingleOrDefault(s => s.SongName == songName);
             song.Genres.Add(genre);
 
         }
     }
     }
-}
