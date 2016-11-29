@@ -55,7 +55,7 @@ namespace CHY_Project.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ContentID,RegularPrice,DiscountPrice,Featured,SongName")] Song song, Int32[] Artists, Int32[] Genres)
+        public ActionResult Create([Bind(Include = "ContentID,RegularPrice,DiscountPrice,Featured,SongName")] Song song, Int32[] Artists, Int32[] Genres, Album album)
         {
             
             if (Artists != null)
@@ -78,7 +78,7 @@ namespace CHY_Project.Controllers
                     song.Genres.Add(genre);
                 }
             }
-            
+
             Guid songproductGUID = Guid.NewGuid();
             String stringsongproductGUID = songproductGUID.ToString();
 

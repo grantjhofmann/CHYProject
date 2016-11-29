@@ -92,6 +92,8 @@ namespace CHY_Project.Controllers
                 }
             }
 
+            //TODO: Add logic to make sure a song can only be added to one album
+
             if (Songs != null)
             {
                 album.Songs = new List<Song>();
@@ -264,6 +266,8 @@ namespace CHY_Project.Controllers
                 query = query.Where(a => a.Artists.Any(ar => ar.ArtistName.Contains(ArtistSearchString)));
             }
 
+            SelectedAlbums = query.ToList();
+
             List<Album> AlbumsInGenre;
             if (SelectedGenres != null)
             {
@@ -286,7 +290,7 @@ namespace CHY_Project.Controllers
 
             //TODO: Add Ascending/Descending for name, artist, rating
 
-            SelectedAlbums = query.ToList();
+
 
             ViewBag.AlbumCount = CountAlbums(SelectedAlbums);
             ViewBag.TotalAlbumCount = CountAlbums(AllAlbums);

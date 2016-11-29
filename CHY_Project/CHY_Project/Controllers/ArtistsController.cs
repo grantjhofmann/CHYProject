@@ -53,7 +53,7 @@ namespace CHY_Project.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ContentID,ArtistName")] Artist artist)
+        public ActionResult Create([Bind(Include = "ContentID,ArtistName")] Artist artist, Int32[] Genres)
         {
             if (ModelState.IsValid)
             {
@@ -61,6 +61,18 @@ namespace CHY_Project.Controllers
                 String stringArtistID = guidArtistID.ToString();
 
                 artist.ArtistID = stringArtistID;
+
+                //TODO: Add Genre functionality to Artists, per the project specs
+
+                //if (Genres != null)
+                //{
+                //    //song.Genres = new List<Genre>();
+                //    foreach (int Id in Genres)
+                //    {
+                //        Genre genre = db.Genres.Find(Id);
+                //        artist.Genres.Add(genre);
+                //    }
+                //}
 
                 db.Contents.Add(artist);
                 db.SaveChanges();
@@ -158,7 +170,9 @@ namespace CHY_Project.Controllers
         }
 
         //Search Results
-        public ActionResult SearchResults(string NameSearchString, Int32 [] SelectedGenres/*, TODO: Add parameter for Rating, once that is set up*/)
+        //TODO: Figure out why Artist Search won't work: Additional information: There is no ViewData item of type 'IEnumerable<SelectListItem>' that has the key 'SelectedGenres'.
+
+        public ActionResult SearchResults(string NameSearchString, Int32[] SelectedGenres/*, TODO: Add parameter for Rating, once that is set up*/)
         {
             List<Artist> SelectedArtists = new List<Artist>();
             List<Artist> AllArtists = db.Artists.ToList();
@@ -167,12 +181,12 @@ namespace CHY_Project.Controllers
                         select a;
 
 
-            //NOTE: Ask Katie if this is an "is equal to" or a "contains" search
             if (NameSearchString != null && NameSearchString != "")
             {
                 query = query.Where(a => a.ArtistName.Contains(NameSearchString));
             }
 
+            SelectedArtists = query.ToList();
 
             List<Artist> ArtistInGenre;
             if (SelectedGenres != null)
@@ -196,10 +210,11 @@ namespace CHY_Project.Controllers
 
             //TODO: Add ascending/descening for name, rating
 
-            SelectedArtists = query.ToList();
+
 
             ViewBag.ArtistCount = CountArtists(SelectedArtists);
             ViewBag.TotalArtistCount = CountArtists(AllArtists);
+            ViewBag.AllGenres = GetAllGenres();
 
             return View("Index", SelectedArtists);
 
@@ -221,6 +236,16 @@ namespace CHY_Project.Controllers
 
             MultiSelectList AllAlbumsList = new MultiSelectList(AllAlbums, "AlbumID", "AlbumName", SelectedAlbums);
             return AllAlbumsList;
+        }
+
+        public MultiSelectList GetAllGenres()
+        {
+            var genrequery = from g in db.Genres
+                             orderby g.GenreName
+                             select g;
+            List<Genre> AllGenres = genrequery.ToList();
+            MultiSelectList AllGenresList = new MultiSelectList(AllGenres, "GenreID", "GenreName");
+            return AllGenresList;
         }
 
         //TODO: Integrate selectlist functionality
