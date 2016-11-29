@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using CHY_Project.Models;
 using System.Globalization;
+using LinqKit;
 
 namespace CHY_Project.Controllers
 {
@@ -227,7 +228,7 @@ namespace CHY_Project.Controllers
         }
 
         //Search Results
-        public ActionResult SearchResults(string NameSearchString, string ArtistSearchString, string AlbumSearchString, List<Genre> GenresSearched/*, TODO: Add parameter for Rating, once that is set up*/)
+        public ActionResult SearchResults(string NameSearchString, string ArtistSearchString, string AlbumSearchString, Int32 [] SelectedGenres/*, TODO: Add parameter for Rating, once that is set up*/)
         {
             List<Song> SelectedSongs = new List<Song>();
             List<Song> AllSongs = db.Songs.ToList();
@@ -235,8 +236,6 @@ namespace CHY_Project.Controllers
             var query = from s in db.Songs
                         select s;
 
-
-            //NOTE: Ask Katie if this is an "is equal to" or a "contains" search
             if (NameSearchString != null && NameSearchString != "")
             {
                 query = query.Where(s => s.SongName.Contains(NameSearchString));
@@ -249,19 +248,38 @@ namespace CHY_Project.Controllers
 
             if (AlbumSearchString != null && AlbumSearchString != "")
             {
-                query = query.Where(s => s.Album.AlbumName.Contains(ArtistSearchString));
+                query = query.Where(s => s.Album.AlbumName.Contains(AlbumSearchString));
             }
-
-            //TODO: Add genre search
-
-            //TODO: Add rating search once that functionality is live
-
-            //TODO: Add Ascending/Descending sorting for name, artist, rating
 
             SelectedSongs = query.ToList();
 
+            //TODO: Add rating search once that functionality is live
+            
+            List<Song> SongsInGenre;
+            if (SelectedGenres != null)
+            {
+                foreach (int id in SelectedGenres)
+                {
+                    Genre genre = db.Genres.Find(id);
+
+                    SongsInGenre = query.Where(s => s.Genres.Any(g => g.GenreID.Equals(id))).ToList();
+                    foreach (Song s in SongsInGenre)
+                    {
+                        if (SelectedSongs.Contains(s) == false)
+                        {
+                            SelectedSongs.Add(s);
+                        }
+                    }
+                }
+            }
+            
+
+            //TODO: Add Ascending/Descending sorting for name, artist, rating
+
+
             ViewBag.SongCount = CountSongs(SelectedSongs);
             ViewBag.TotalSongCount = CountSongs(AllSongs);
+            ViewBag.AllGenres = GetAllGenres();
 
             return View("Index", SelectedSongs);
 

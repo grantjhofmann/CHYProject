@@ -158,7 +158,7 @@ namespace CHY_Project.Controllers
         }
 
         //Search Results
-        public ActionResult SearchResults(string NameSearchString, List<Genre> GenresSearched/*, TODO: Add parameter for Rating, once that is set up*/)
+        public ActionResult SearchResults(string NameSearchString, Int32 [] SelectedGenres/*, TODO: Add parameter for Rating, once that is set up*/)
         {
             List<Artist> SelectedArtists = new List<Artist>();
             List<Artist> AllArtists = db.Artists.ToList();
@@ -173,7 +173,24 @@ namespace CHY_Project.Controllers
                 query = query.Where(a => a.ArtistName.Contains(NameSearchString));
             }
 
-            //TODO: Add genre search
+
+            List<Artist> ArtistInGenre;
+            if (SelectedGenres != null)
+            {
+                foreach (int id in SelectedGenres)
+                {
+                    Genre genre = db.Genres.Find(id);
+
+                    ArtistInGenre = query.Where(a => a.Genres.Any(g => g.GenreID.Equals(id))).ToList();
+                    foreach (Artist a in ArtistInGenre)
+                    {
+                        if (SelectedArtists.Contains(a) == false)
+                        {
+                            SelectedArtists.Add(a);
+                        }
+                    }
+                }
+            }
 
             //TODO: Add rating search once that functionality is live
 

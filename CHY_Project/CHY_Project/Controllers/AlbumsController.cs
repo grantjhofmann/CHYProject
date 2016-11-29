@@ -172,7 +172,7 @@ namespace CHY_Project.Controllers
                 }
                 if (Genres != null)
                 {
-                    //song.Genres = new List<Genre>();
+                    album.Genres = new List<Genre>();
                     foreach (int Id in Genres)
                     {
                         Genre genre = db.Genres.Find(Id);
@@ -244,7 +244,7 @@ namespace CHY_Project.Controllers
         }
 
         //Search Results
-        public ActionResult SearchResults(string NameSearchString, string ArtistSearchString, List<Genre> GenresSearched/*, TODO: Add parameter for Rating, once that is set up*/)
+        public ActionResult SearchResults(string NameSearchString, string ArtistSearchString, Int32[] SelectedGenres/*, TODO: Add parameter for Rating, once that is set up*/)
         {
             List<Album> SelectedAlbums = new List<Album>();
             List<Album> AllAlbums = db.Albums.ToList();
@@ -264,7 +264,23 @@ namespace CHY_Project.Controllers
                 query = query.Where(a => a.Artists.Any(ar => ar.ArtistName.Contains(ArtistSearchString)));
             }
 
-            //TODO: Add genre search
+            List<Album> AlbumsInGenre;
+            if (SelectedGenres != null)
+            {
+                foreach (int id in SelectedGenres)
+                {
+                    Genre genre = db.Genres.Find(id);
+
+                    AlbumsInGenre = query.Where(a => a.Genres.Any(g => g.GenreID.Equals(id))).ToList();
+                    foreach (Album a in AlbumsInGenre)
+                    {
+                        if (SelectedAlbums.Contains(a) == false)
+                        {
+                            SelectedAlbums.Add(a);
+                        }
+                    }
+                }
+            }
 
             //TODO: Add rating search once that functionality is live
 
