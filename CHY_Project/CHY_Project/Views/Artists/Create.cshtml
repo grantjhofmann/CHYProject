@@ -23,6 +23,12 @@
                 @Html.ValidationMessageFor(model => model.ArtistName, "", new { @class = "text-danger" })
             </div>
         </div>
+        <div class="form-control">
+            @Html.LabelFor(model => model.Genres, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.ListBox("Genres", (MultiSelectList)ViewBag.AllGenres, new { @class = "form-control" })
+            </div>
+        </div>
         <div class="form-group">
             @Html.LabelFor(model => model.Featured, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">

@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using CHY_Project.Models;
+using Microsoft.AspNet.Identity;
 
 namespace CHY_Project.Controllers
 {
@@ -126,5 +127,72 @@ namespace CHY_Project.Controllers
             base.Dispose(disposing);
         }
 
+        public ActionResult AddtoCart(int id)
+        {
+            string userid = User.Identity.GetUserId();
+            AppUser currentuser = db.Users.Find(userid);
+            Product product = db.Products.Find(id);
+            Cart cart = db.Carts.FirstOrDefault(c => c.Customer == currentuser);
+            if (cart == null)
+            {
+                cart = new Cart();
+                cart.Customer = currentuser;
+                cart.Products = new List<Product>();
+                cart.Products.Add(product);
+            }
+            else
+            {
+                if (cart.Products.Contains(product))
+                {
+                    ViewBag.Error = "Product is already in your cart";
+                }
+                else
+                {
+                    cart.Products.Add(product);
+                }
+            }
+            db.SaveChanges();
+            return RedirectToAction("Index");
+        }
+
+        public ActionResult RemoveFromCart(int id)
+        {
+            string userid = User.Identity.GetUserId();
+            AppUser currentuser = db.Users.Find(userid);
+            Product product = db.Products.Find(id);
+            Cart cart = db.Carts.FirstOrDefault(c => c.Customer == currentuser);
+
+            if (cart == null)
+            {
+                return View("Error");
+            }
+
+            else
+            {
+                cart.Products.Remove(product);
+                db.SaveChanges();
+                return View("Index");
+            }
+        }
+
+        public ActionResult ClearCart(int id)
+        {
+            string userid = User.Identity.GetUserId();
+            AppUser currentuser = db.Users.Find(userid);
+            Product product = db.Products.Find(id);
+            Cart cart = db.Carts.FirstOrDefault(c => c.Customer == currentuser);
+
+            if (cart == null)
+            {
+                return View("Error");
+            }
+
+            else
+            {
+                cart.Products.Clear();
+                return View("Index");
+            }
+
+        }
     }
 }

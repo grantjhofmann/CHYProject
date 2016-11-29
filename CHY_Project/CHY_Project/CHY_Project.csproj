@@ -51,6 +51,10 @@
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="LinqKit, Version=1.1.8.0, Culture=neutral, PublicKeyToken=bc217f8844052a91, processorArchitecture=MSIL">
+      <HintPath>..\packages\LinqKit.1.1.8.0\lib\net452\LinqKit.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.AspNet.Identity.Core, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.2.1\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
       <Private>True</Private>
@@ -194,7 +198,6 @@
     <Compile Include="Controllers\PurchasesController.cs" />
     <Compile Include="Controllers\RatingsController.cs" />
     <Compile Include="Controllers\RoleAdminController.cs" />
-    <Compile Include="Controllers\ShoppingCartController.cs" />
     <Compile Include="Controllers\SongsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -215,7 +218,6 @@
     <Compile Include="Models\Album.cs" />
     <Compile Include="Models\Artist.cs" />
     <Compile Include="Models\Cart.cs" />
-    <Compile Include="Models\CartViewModel.cs" />
     <Compile Include="Models\Content.cs" />
     <Compile Include="Models\CreditCard.cs" />
     <Compile Include="Models\Genre.cs" />
@@ -226,7 +228,6 @@
     <Compile Include="Models\Purchase.cs" />
     <Compile Include="Models\Rating.cs" />
     <Compile Include="Models\RoleViewModels.cs" />
-    <Compile Include="Models\ShoppingCart.cs" />
     <Compile Include="Models\Song.cs" />
     <Compile Include="Models\UserViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -276,7 +277,6 @@
     <Content Include="Views\Purchases\Details.cshtml" />
     <Content Include="Views\Purchases\Edit.cshtml" />
     <Content Include="Views\Purchases\Index.cshtml" />
-    <Content Include="Views\ShoppingCart\Index.cshtml" />
     <Content Include="Views\Albums\Search.cshtml" />
     <Content Include="Views\Artists\Search.cshtml" />
     <Content Include="Views\Songs\Search.cshtml" />

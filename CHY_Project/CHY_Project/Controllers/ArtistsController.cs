@@ -45,6 +45,7 @@ namespace CHY_Project.Controllers
         // GET: Artists/Create
         public ActionResult Create()
         {
+            ViewBag.AllGenres = GetAllGenres();
             return View();
         }
 
@@ -53,8 +54,19 @@ namespace CHY_Project.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ContentID,ArtistName")] Artist artist)
+        public ActionResult Create([Bind(Include = "ContentID,ArtistName")] Artist artist, Int32[] Genres)
         {
+            if (Genres != null)
+            {
+                artist.Genres = new List<Genre>();
+                //song.Genres = new List<Genre>();
+                foreach (int Id in Genres)
+                {
+                    Genre genre = db.Genres.Find(Id);
+                    artist.Genres.Add(genre);
+                }
+            }
+
             if (ModelState.IsValid)
             {
                 Guid guidArtistID = Guid.NewGuid();
@@ -66,7 +78,7 @@ namespace CHY_Project.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-
+            ViewBag.AllGenres = GetAllGenres();
             return View(artist);
         }
 
@@ -82,6 +94,7 @@ namespace CHY_Project.Controllers
             {
                 return HttpNotFound();
             }
+            ViewBag.AllGenres = GetAllGenres(artist);
             return View(artist);
         }
 
@@ -90,12 +103,26 @@ namespace CHY_Project.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ContentID,ArtistName")] Artist artist)
+        public ActionResult Edit([Bind(Include = "ContentID,ArtistName,Featured")] Artist artist, Int32[] Genres)
         {
             if (ModelState.IsValid)
             {
+                Artist artisttochange = db.Artists.Find(artist.ContentID);
+                artisttochange.Genres.Clear();
+                if (Genres != null)
+                {
+                    artist.Genres = new List<Genre>();
+                    //song.Genres = new List<Genre>();
+                    foreach (int Id in Genres)
+                    {
+                        Genre genre = db.Genres.Find(Id);
+                        artisttochange.Genres.Add(genre);
+                    }
+                }
+                artisttochange.ArtistName = artist.ArtistName;
+                artisttochange.Featured = artist.Featured;
 
-                db.Entry(artist).State = EntityState.Modified;
+                db.Entry(artisttochange).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -207,6 +234,16 @@ namespace CHY_Project.Controllers
         }
 
         //TODO: Integrate selectlist functionality
+        public MultiSelectList GetAllGenres()
+        {
+            var genrequery = from g in db.Genres
+                             orderby g.GenreName
+                             select g;
+            List<Genre> AllGenres = genrequery.ToList();
+          
+            MultiSelectList AllGenresList = new MultiSelectList(AllGenres, "GenreID", "GenreName");
+            return AllGenresList;
+        }
         public MultiSelectList GetAllGenres(Artist artist)
         {
             var genrequery = from g in db.Genres

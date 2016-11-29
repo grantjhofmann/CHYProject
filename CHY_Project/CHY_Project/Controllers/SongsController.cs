@@ -70,6 +70,7 @@ namespace CHY_Project.Controllers
 
             if (Genres != null)
             {
+
                 //song.Genres = new List<Genre>();
                 foreach (int Id in Genres)
                 {
@@ -276,6 +277,7 @@ namespace CHY_Project.Controllers
             MultiSelectList AllGenresList = new MultiSelectList(AllGenres, "GenreID", "GenreName");
             return AllGenresList;
         }
+
         public MultiSelectList GetAllGenres(Song song)
         {
             var genrequery = from g in db.Genres

@@ -64,6 +64,31 @@ namespace CHY_Project.Models
 
     public class ChangePasswordViewModel
     {
+        [EmailAddress]
+        [Display(Name = "Email")]
+        public string Email { get; set; }
+
+        [Required]
+        [Display(Name = "First Name")]
+        public string Fname { get; set; }
+
+        [Required]
+        [Display(Name = "Last Name")]
+        public string Lname { get; set; }
+
+        [Required]
+        [Display(Name = "Street Address")]
+        public string StreetAddress { get; set; }
+
+        [Required]
+        [Display(Name = "City")]
+        public string City { get; set; }
+
+        [Required]
+        [Display(Name = "ZIP Code")]
+        [DataType(DataType.PostalCode)]
+        public int ZipCode { get; set; }
+
         [Required]
         [DataType(DataType.Password)]
         [Display(Name = "Current password")]
