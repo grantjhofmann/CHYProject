@@ -9,6 +9,7 @@
 <div>
     <h4>@Html.DisplayFor(model => model.SongName)</h4>
     <hr />
+    @Html.ActionLink("Add to cart", "AddToCart", "ShoppingCart", new { id = Model.ContentID }, "")
     <table class="table table-bordered">
         <tr>
             <th>

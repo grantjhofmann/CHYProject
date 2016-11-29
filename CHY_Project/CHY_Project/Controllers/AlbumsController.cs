@@ -148,7 +148,7 @@ namespace CHY_Project.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ContentID,RegularPrice,DiscountPrice,Featured,AlbumName")] Album album, String[] Artists, Int32[] Genres, String[] Songs)
+        public ActionResult Edit([Bind(Include = "ContentID,RegularPrice,DiscountPrice,Featured,AlbumName,AlbumArt")] Album album, String[] Artists, Int32[] Genres, String[] Songs)
         {
             if (ModelState.IsValid)
             {
@@ -187,6 +187,7 @@ namespace CHY_Project.Controllers
                 albumtochange.DiscountPrice = album.DiscountPrice;
                 albumtochange.Featured = album.Featured;
                 albumtochange.AlbumName = album.AlbumName;
+                albumtochange.AlbumArt = album.AlbumArt;
 
                 db.Entry(albumtochange).State = EntityState.Modified;
                 db.SaveChanges();
@@ -348,13 +349,14 @@ namespace CHY_Project.Controllers
             List<Genre> AllGenres = genrequery.ToList();
             List<Int32> SelectedGenres = new List<Int32>();
 
-            foreach(Genre g in album.Genres)
+            foreach (Genre g in album.Genres)
             {
                 SelectedGenres.Add(g.GenreID);
             }
 
             MultiSelectList AllGenresList = new MultiSelectList(AllGenres, "GenreID", "GenreName", SelectedGenres);
             return AllGenresList;
+        }
 
              public Int32 CountAlbums(List<Album> AlbumList)
         {
@@ -371,4 +373,4 @@ namespace CHY_Project.Controllers
         }
     }
     }
-}
+
