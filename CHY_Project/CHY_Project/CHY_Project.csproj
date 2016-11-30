@@ -194,7 +194,6 @@
     <Compile Include="Controllers\PurchasesController.cs" />
     <Compile Include="Controllers\RatingsController.cs" />
     <Compile Include="Controllers\RoleAdminController.cs" />
-    <Compile Include="Controllers\ShoppingCartController.cs" />
     <Compile Include="Controllers\SongsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -215,11 +214,16 @@
     <Compile Include="Migrations\201611300304244_cartlistsforproducts.Designer.cs">
       <DependentUpon>201611300304244_cartlistsforproducts.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201611301953571_creditcardfix.cs" />
+    <Compile Include="Migrations\201611301953571_creditcardfix.Designer.cs">
+      <DependentUpon>201611301953571_creditcardfix.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Album.cs" />
     <Compile Include="Models\Artist.cs" />
     <Compile Include="Models\Cart.cs" />
     <Compile Include="Models\CartViewModel.cs" />
+    <Compile Include="Models\CheckoutViewModel.cs" />
     <Compile Include="Models\Content.cs" />
     <Compile Include="Models\CreditCard.cs" />
     <Compile Include="Models\Genre.cs" />
@@ -230,7 +234,6 @@
     <Compile Include="Models\Purchase.cs" />
     <Compile Include="Models\Rating.cs" />
     <Compile Include="Models\RoleViewModels.cs" />
-    <Compile Include="Models\ShoppingCart.cs" />
     <Compile Include="Models\Song.cs" />
     <Compile Include="Models\UserViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -284,6 +287,8 @@
     <Content Include="Views\Artists\Search.cshtml" />
     <Content Include="Views\Songs\Search.cshtml" />
     <Content Include="Views\Carts\UserDetails.cshtml" />
+    <Content Include="Views\Carts\_CheckoutCartSummaryPartial.cshtml" />
+    <Content Include="Views\Carts\_CheckOutFinalizePurchasePartial.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -307,6 +312,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201611300304244_cartlistsforproducts.resx">
       <DependentUpon>201611300304244_cartlistsforproducts.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201611301953571_creditcardfix.resx">
+      <DependentUpon>201611301953571_creditcardfix.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

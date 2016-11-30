@@ -2,6 +2,7 @@
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
@@ -11,6 +12,9 @@ namespace CHY_Project.Controllers
     [Authorize]
     public class AccountController : Controller
     {
+
+        private AppDbContext db = new AppDbContext();
+
         public enum ManageMessageId
         {
             AddPhoneSuccess,
@@ -120,6 +124,7 @@ namespace CHY_Project.Controllers
                 //Create a new user with all the properties you need for the class
                 var user = new AppUser { UserName = model.Email, Email = model.Email, FName = model.Fname, LName = model.Lname, StreetAddress = model.StreetAddress, City = model.City, ZipCode = model.ZipCode };
 
+
                 //Add the new user to the database
                 var result = await UserManager.CreateAsync(user, model.Password);
 
@@ -128,10 +133,75 @@ namespace CHY_Project.Controllers
                 // --OR--
                 //await UserManager.AddToRoleAsync(user.Id, "Employee"); //adds user to role called "Employee"
 
+
+
                 if (result.Succeeded) //user was created successfully
                 {
                     //sign the user in
                     await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+                    string username = User.Identity.GetUserName();
+                    AppUser currentuser = db.Users.FirstOrDefault(c => c.UserName == username);
+                    CreditCard creditcard1 = new CreditCard
+                    {
+                        CardNumber = model.CreditCard1,
+                        Customer = currentuser
+                    };
+
+                    if (model.CreditCard1.Length == 15)
+                    {
+                        creditcard1.Cardtype = Cardtype.AmericanExpress;
+                    }
+
+                    else if (model.CreditCard1.StartsWith("54"))
+                    {
+                        creditcard1.Cardtype = Cardtype.MasterCard;
+                    }
+
+                    else if (model.CreditCard1.StartsWith("4"))
+                    {
+                        creditcard1.Cardtype = Cardtype.Visa;
+                    }
+
+                    else if (model.CreditCard1.StartsWith("6"))
+                    {
+                        creditcard1.Cardtype = Cardtype.Discover;
+                    }
+
+                    if (ModelState.IsValid)
+                    {
+                        db.CreditCards.Add(creditcard1);
+                        db.SaveChanges();
+                    }
+                    if (model.CreditCard2 != null)
+                    {
+                        CreditCard creditcard2 = new CreditCard
+                        {
+                            CardNumber = model.CreditCard2,
+                            Customer = currentuser
+                        };
+
+                        if (model.CreditCard1.Length == 15)
+                        {
+                            creditcard1.Cardtype = Cardtype.AmericanExpress;
+                        }
+
+                        else if (model.CreditCard1.StartsWith("54"))
+                        {
+                            creditcard1.Cardtype = Cardtype.MasterCard;
+                        }
+
+                        else if (model.CreditCard1.StartsWith("4"))
+                        {
+                            creditcard1.Cardtype = Cardtype.Visa;
+                        }
+
+                        else if (model.CreditCard1.StartsWith("6"))
+                        {
+                            creditcard1.Cardtype = Cardtype.Discover;
+                        }
+                        db.CreditCards.Add(creditcard2);
+                        db.SaveChanges();
+                    }
 
                     //send them to the home page
                     return RedirectToAction("Index", "Home");
@@ -140,6 +210,7 @@ namespace CHY_Project.Controllers
                 //if there was a problem, add the error messages to what we will display
                 AddErrors(result);
             }
+
 
             // If we got this far, something failed, redisplay form
             return View(model);

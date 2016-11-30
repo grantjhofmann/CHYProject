@@ -228,7 +228,7 @@ namespace CHY_Project.Controllers
         }
 
         [HttpPost]
-        public ActionResult Checkout ([Bind(Include = "CreditCard,Gift,Recipient")] Purchase purchase)
+        public ActionResult Checkout ([Bind(Include = "CreditCard,Gift")] Purchase purchase, String recipientemail)
         {
             string username = User.Identity.GetUserName();
             AppUser currentuser = db.Users.FirstOrDefault(c => c.UserName == username);
@@ -237,11 +237,17 @@ namespace CHY_Project.Controllers
             purchase.Customer = cart.Customer;
             purchase.Date = DateTime.Today.Date;
             purchase.Products = cart.Products;
+
             if(purchase.Gift == false)
             {
                 purchase.Recipient = currentuser;
             }
 
+            else
+            {
+                AppUser recipient = db.Users.FirstOrDefault(x => x.Email == recipientemail);
+                purchase.Recipient = recipient;
+            }
 
             if (ModelState.IsValid)
             {

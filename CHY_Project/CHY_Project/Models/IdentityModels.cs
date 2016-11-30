@@ -18,6 +18,8 @@ namespace CHY_Project.Models
         public String StreetAddress { get; set; }
         public String City { get; set; }
         public Int32 ZipCode { get; set; }
+        public CreditCard CreditCard1 { get; set; }
+        public CreditCard CreditCard2 { get; set; }
         //public Int32 CreditCard1 { get; set; }
 
 

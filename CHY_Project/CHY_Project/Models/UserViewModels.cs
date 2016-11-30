@@ -48,6 +48,14 @@ namespace CHY_Project.Models
         [DataType(DataType.PostalCode)]
         public int ZipCode { get; set; }
 
+        [Required (ErrorMessage = "At least one credit card must be provided to create an account")]
+        [Display (Name = "Credit Card")]
+        public string CreditCard1 { get; set; }
+
+
+        [Display(Name = "Optional additional Credit Card")]
+        public string CreditCard2 { get; set; }
+
         [Required]
         [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
         [DataType(DataType.Password)]

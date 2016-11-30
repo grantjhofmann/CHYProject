@@ -11,9 +11,9 @@ namespace CHY_Project.Models
         public Int32 CreditCardID { get; set; }
 
         [Required]
-        public Int32 CardNumber { get; set; }
+        public String CardNumber { get; set; }
 
-        [Required]
+        
         public virtual AppUser Customer { get; set; }
 
         [Required]
