@@ -11,11 +11,6 @@
     <hr />
     <dl class="dl-horizontal">
 
-        <dt>Genres</dt>
-        @foreach (var genre in Model.Genres)
-        {
-            <dd>@Html.DisplayFor(modelItem => genre.GenreName)</dd>
-        }
         <dt>
             @Html.DisplayNameFor(model => model.Featured)
         </dt>

@@ -179,8 +179,7 @@ namespace CHY_Project.Controllers
         //Artist Search
         public ActionResult Search()
         {
-            //TODO: write getallgenres
-            //ViewBag.AllGenres = GetAllGenres();
+            ViewBag.AllGenres = GetAllGenres();
             //TODO: write getallartists
             //ViewBag.AllArtists = GetAllArtists();
             //TODO: Write a get all albums method (?)
@@ -235,8 +234,8 @@ namespace CHY_Project.Controllers
 
 
 
-            ViewBag.ArtistCount = CountArtists(SelectedArtists);
-            ViewBag.TotalArtistCount = CountArtists(AllArtists);
+            ViewBag.ArtistsCount = CountArtists(SelectedArtists);
+            ViewBag.TotalArtistsCount = CountArtists(AllArtists);
             ViewBag.AllGenres = GetAllGenres();
 
             return View("Index", SelectedArtists);

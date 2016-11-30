@@ -278,8 +278,6 @@ namespace CHY_Project.Controllers
                 }
             }
 
-
-
             //TODO: Add Ascending/Descending sorting for name, artist, rating
 
 

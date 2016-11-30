@@ -256,7 +256,6 @@ namespace CHY_Project.Controllers
 
             var qtest = query;
 
-            //NOTE: Ask Katie if this is an "is equal to" or a "contains" search
             if (NameSearchString != null && NameSearchString != "")
             {
                 query = query.Where(a => a.AlbumName.Contains(NameSearchString));
@@ -271,6 +270,8 @@ namespace CHY_Project.Controllers
             {
                 SelectedAlbums = query.ToList();
             }
+
+            //TODO: Add rating search once that functionality is live
 
             List<Album> AlbumsInGenre;
             if (SelectedGenres != null)
@@ -289,8 +290,6 @@ namespace CHY_Project.Controllers
                     }
                 }
             }
-
-            //TODO: Add rating search once that functionality is live
 
             //TODO: Add Ascending/Descending for name, artist, rating
 
