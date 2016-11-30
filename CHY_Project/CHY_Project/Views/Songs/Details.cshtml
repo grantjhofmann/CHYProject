@@ -42,16 +42,19 @@
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.RegularPrice)
+            $@Html.DisplayFor(model => model.RegularPrice)
         </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.DiscountPrice)
-        </dt>
+        @if (Model.DiscountPrice < Model.RegularPrice)
+        {
+            <dt>
+                @Html.DisplayNameFor(model => model.DiscountPrice)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.DiscountPrice)
-        </dd>
+            <dd>
+                $@Html.DisplayFor(model => model.DiscountPrice)
+            </dd>
+        }
 
         <dt>
             @Html.DisplayNameFor(model => model.Featured)
@@ -74,9 +77,12 @@
             <td>
                 @Html.DisplayFor(model => model.Album.AlbumName)
             </td>
+            @if (Model.Album != null)
+            {
             <td>
                 @Html.ActionLink("Details", "Details", "Albums", new { id = Model.Album.ContentID }, null)
             </td>
+            }
         </tr>
     </table>
 

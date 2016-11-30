@@ -24,7 +24,7 @@
             @Html.DisplayNameFor(model => model.Artists.First().ArtistName)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.RegularPrice)
+            Price
         </th>
 
     </tr>
@@ -45,7 +45,7 @@
                 }
 
             <td>
-                @Html.DisplayFor(modelItem => item.RegularPrice)
+                $@Html.DisplayFor(modelItem => item.DiscountPrice)
             </td>
 
             <td>

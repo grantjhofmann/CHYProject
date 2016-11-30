@@ -43,16 +43,19 @@
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.RegularPrice)
+            $@Html.DisplayFor(model => model.RegularPrice)
         </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.DiscountPrice)
-        </dt>
+        @if (Model.DiscountPrice < Model.RegularPrice)
+        {
+            <dt>
+                @Html.DisplayNameFor(model => model.DiscountPrice)
+            </dt>
+            <dd>
+                $@Html.DisplayFor(model => model.DiscountPrice)
+            </dd>
+        }
 
-        <dd>
-            $@Html.DisplayFor(model => model.DiscountPrice)
-        </dd>
 
 
     </dl>
