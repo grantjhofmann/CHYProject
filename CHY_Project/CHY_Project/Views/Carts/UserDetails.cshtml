@@ -1,0 +1,34 @@
+﻿@model CHY_Project.Models.Cart
+
+@{
+    ViewBag.Title = "UserDetails";
+}
+
+<h2>UserDetails</h2>
+
+<div>
+    <h4>Cart</h4>
+    <hr />
+    <dl class="dl-horizontal">
+    </dl>
+    <table class="table table-striped">
+        <tr>
+            <th>
+                Items
+            </th>
+        </tr>
+
+        @foreach (var item in Model.Products)
+        {
+            <tr>
+                <td>@Html.DisplayFor(modelItem => item.ProductID)</td>
+                <td>@Html.DisplayFor(modelItem => item.DiscountPrice)</td>
+                <td>@Html.ActionLink("Remove from Cart", "RemoveFromCart", new { id = Html.DisplayFor(modelItem => item.ContentID) })</td>
+            </tr>
+        }
+    </table>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.CartID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

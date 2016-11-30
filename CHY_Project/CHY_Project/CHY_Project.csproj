@@ -44,11 +44,11 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+      <HintPath>..\packages\EntityFramework.6.1.2\lib\net45\EntityFramework.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <HintPath>..\packages\EntityFramework.6.1.2\lib\net45\EntityFramework.SqlServer.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.AspNet.Identity.Core, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -211,6 +211,10 @@
     <Compile Include="Migrations\201611290639340_genrefix.Designer.cs">
       <DependentUpon>201611290639340_genrefix.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201611300304244_cartlistsforproducts.cs" />
+    <Compile Include="Migrations\201611300304244_cartlistsforproducts.Designer.cs">
+      <DependentUpon>201611300304244_cartlistsforproducts.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Album.cs" />
     <Compile Include="Models\Artist.cs" />
@@ -276,10 +280,10 @@
     <Content Include="Views\Purchases\Details.cshtml" />
     <Content Include="Views\Purchases\Edit.cshtml" />
     <Content Include="Views\Purchases\Index.cshtml" />
-    <Content Include="Views\ShoppingCart\Index.cshtml" />
     <Content Include="Views\Albums\Search.cshtml" />
     <Content Include="Views\Artists\Search.cshtml" />
     <Content Include="Views\Songs\Search.cshtml" />
+    <Content Include="Views\Carts\UserDetails.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -300,6 +304,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201611290639340_genrefix.resx">
       <DependentUpon>201611290639340_genrefix.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201611300304244_cartlistsforproducts.resx">
+      <DependentUpon>201611300304244_cartlistsforproducts.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

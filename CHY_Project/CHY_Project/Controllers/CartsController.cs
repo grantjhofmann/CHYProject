@@ -37,6 +37,26 @@ namespace CHY_Project.Controllers
             return View(cart);
         }
 
+        public ActionResult UserDetails()
+        {
+
+
+            string userid = User.Identity.GetUserId();
+            AppUser currentuser = db.Users.Find(userid);
+            
+            Cart cart = db.Carts.FirstOrDefault(c => c.Customer.Id == currentuser.Id);
+
+            if (cart == null)
+            {
+                cart = new Cart();
+                cart.Products = new List<Product>();
+                db.Carts.Add(cart);
+                db.SaveChanges();
+            }
+
+            return View(cart);
+        }
+
         //TODO: Change this so carts cannot be manually created
         // GET: Carts/Create
         public ActionResult Create()
@@ -133,7 +153,7 @@ namespace CHY_Project.Controllers
             string userid = User.Identity.GetUserId();
             AppUser currentuser = db.Users.Find(userid);
             Product product = db.Products.Find(id);
-            Cart cart = db.Carts.FirstOrDefault(c => c.Customer == currentuser);
+            Cart cart = db.Carts.FirstOrDefault(c => c.Customer.Id == currentuser.Id);
             if (cart == null)
             {
                 cart = new Cart();
@@ -153,7 +173,7 @@ namespace CHY_Project.Controllers
                 }
             }
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("UserDetails");
         }
 
         public ActionResult RemoveFromCart(int id)
@@ -161,7 +181,7 @@ namespace CHY_Project.Controllers
             string userid = User.Identity.GetUserId();
             AppUser currentuser = db.Users.Find(userid);
             Product product = db.Products.Find(id);
-            Cart cart = db.Carts.FirstOrDefault(c => c.Customer == currentuser);
+            Cart cart = db.Carts.FirstOrDefault(c => c.Customer.Id == currentuser.Id);
 
             if (cart == null)
             {
@@ -182,7 +202,7 @@ namespace CHY_Project.Controllers
             string userid = User.Identity.GetUserId();
             AppUser currentuser = db.Users.Find(userid);
             Product product = db.Products.Find(id);
-            Cart cart = db.Carts.FirstOrDefault(c => c.Customer == currentuser);
+            Cart cart = db.Carts.FirstOrDefault(c => c.Customer.Id == currentuser.Id);
 
             if (cart == null)
             {
@@ -199,9 +219,13 @@ namespace CHY_Project.Controllers
 
         }
         //GET
-        public ActionResult Checkout(int id)
+        public ActionResult Checkout()
         {
-            return View();
+            string userid = User.Identity.GetUserId();
+            AppUser currentuser = db.Users.Find(userid);
+            Cart cart = db.Carts.FirstOrDefault(c => c.Customer.Id == currentuser.Id);
+            ViewBag.totalcost = cartTotal();
+            return View(cart);
         }
 
         [HttpPost]
@@ -209,8 +233,8 @@ namespace CHY_Project.Controllers
         {
             string userid = User.Identity.GetUserId();
             AppUser currentuser = db.Users.Find(userid);
-            Cart cart = db.Carts.FirstOrDefault(c => c.Customer == currentuser);
-            
+            Cart cart = db.Carts.FirstOrDefault(c => c.Customer.Id == currentuser.Id);
+
             purchase.Customer = cart.Customer;
             purchase.Date = DateTime.Today.Date;
             purchase.Products = cart.Products;
@@ -218,6 +242,24 @@ namespace CHY_Project.Controllers
             {
                 purchase.Recipient = currentuser;
             }
+
+
+            if (ModelState.IsValid)
+            {
+                db.Purchases.Add(purchase);
+                db.SaveChanges();
+            }
+
+            foreach(Product product in cart.Products)
+            {
+                OrderDetail orderdetail = new OrderDetail();
+
+                orderdetail.Product = product;
+                orderdetail.ExtendedPrice = product.DiscountPrice;
+                orderdetail.Purchase = purchase;
+            }
+
+
 
             return View();
             
@@ -227,7 +269,7 @@ namespace CHY_Project.Controllers
         {
             string userid = User.Identity.GetUserId();
             AppUser currentuser = db.Users.Find(userid);
-            Cart cart = db.Carts.FirstOrDefault(c => c.Customer == currentuser);
+            Cart cart = db.Carts.FirstOrDefault(c => c.Customer.Id == currentuser.Id);
             decimal total;
             total = 0;
             foreach (Product product in cart.Products)

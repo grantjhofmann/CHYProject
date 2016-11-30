@@ -28,7 +28,7 @@
             </tr>
         }
     </table>
-    @Html.ActionLink("Add to cart", "AddToCart", "ShoppingCart", new { id = Model.ProductID }, "")
+    @Html.ActionLink("Add to Cart", "AddtoCart", "Carts", new { id = Model.ContentID }, null)
     <dl class="dl-horizontal">
         <dt>
             @Html.DisplayNameFor(model => model.AlbumName)
