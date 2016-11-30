@@ -30,7 +30,9 @@
         {
             <tr>
                 <td>@Html.DisplayFor(modelItem => item.AlbumName)</td>
-                <td>@Html.DisplayFor(modelItem => item.AlbumArt)</td>
+                <td>
+                    @Html.ActionLink("Details", "Details", "Albums", new { id = item.ContentID }, null)
+                </td>
             </tr>
         }
     </table>
@@ -46,6 +48,9 @@
         {
             <tr>
                 <td>@Html.DisplayFor(modelItem => item.SongName)</td>
+                <td>
+                    @Html.ActionLink("Details", "Details", "Songs", new { id = item.ContentID }, null)
+                </td>
             </tr>
         }
     </table>

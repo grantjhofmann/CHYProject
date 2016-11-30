@@ -63,10 +63,13 @@
             </th>
         </tr>
         @foreach (var song in Model.Songs)
-            {
+        {
             <tr>
                 <td>
                     @Html.DisplayFor(modelItem => song.SongName)
+                </td>
+                <td>
+                    @Html.ActionLink("Details", "Details", "Songs", new { id = song.ContentID}, null)
                 </td>
             </tr>
         }

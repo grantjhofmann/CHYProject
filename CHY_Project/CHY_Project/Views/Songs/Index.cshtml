@@ -20,13 +20,12 @@
             @Html.DisplayNameFor(model => model.SongName)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.RegularPrice)
+            @Html.DisplayNameFor(model => model.Artists.First().ArtistName)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.DiscountPrice)
+            @Html.DisplayNameFor(model => model.RegularPrice)
         </th>
 
-        <th></th>
     </tr>
 
     @foreach (var item in Model)
@@ -35,12 +34,18 @@
             <td>
                 @Html.DisplayFor(modelItem => item.SongName)
             </td>
+            @foreach (var artist in item.Artists)
+            {
+                <td>
+                    @Html.DisplayFor(modelItem => artist.ArtistName)
+               </td>
+
+            }
             <td>
                 @Html.DisplayFor(modelItem => item.RegularPrice)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DiscountPrice)
-            </td>
+
+
 
             <td>
                 @Html.ActionLink("Edit", "Edit", new { id = item.ContentID }) |
@@ -50,5 +55,4 @@
             </td>
         </tr>
     }
-
 </table>

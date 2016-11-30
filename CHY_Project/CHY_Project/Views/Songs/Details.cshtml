@@ -63,6 +63,23 @@
 
 
     </dl>
+
+    <table class="table table-striped">
+        <tr>
+            <th>
+                Album
+            </th>
+        </tr>
+        <tr>
+            <td>
+                @Html.DisplayFor(model => model.Album.AlbumName)
+            </td>
+            <td>
+                @Html.ActionLink("Details", "Details", "Albums", new { id = Model.Album.ContentID }, null)
+            </td>
+        </tr>
+    </table>
+
     <table class="table table-bordered">
         <tr>
             <th>
