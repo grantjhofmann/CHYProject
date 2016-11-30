@@ -189,6 +189,7 @@
     <Compile Include="Controllers\AppUsersController.cs" />
     <Compile Include="Controllers\ArtistsController.cs" />
     <Compile Include="Controllers\CartsController.cs" />
+    <Compile Include="Messaging\Email.cs" />
     <Compile Include="Controllers\GenresController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\PurchasesController.cs" />
@@ -299,6 +300,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="DAL\" />
+    <Folder Include="Views\Email\" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201611290157002_v3.resx">

@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using CHY_Project.Messaging;
 
 namespace CHY_Project.Controllers
 {
@@ -202,6 +203,9 @@ namespace CHY_Project.Controllers
                         db.CreditCards.Add(creditcard2);
                         db.SaveChanges();
                     }
+
+                    //Send a congratulatory email
+                    EmailMessaging.SendEmail(user.Email, "Welcome to Longhorn Music - Group 13!","Thank you for signing up with Longhorn Music. You are now a registered user.");
 
                     //send them to the home page
                     return RedirectToAction("Index", "Home");
