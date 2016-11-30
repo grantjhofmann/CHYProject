@@ -199,13 +199,17 @@ namespace CHY_Project.Controllers
             var query = from a in db.Artists
                         select a;
 
+            var qtest = query;
 
             if (NameSearchString != null && NameSearchString != "")
             {
                 query = query.Where(a => a.ArtistName.Contains(NameSearchString));
             }
 
-            SelectedArtists = query.ToList();
+            if (qtest != query)
+            {
+                SelectedArtists = query.ToList();
+            }
 
             List<Artist> ArtistInGenre;
             if (SelectedGenres != null)

@@ -254,6 +254,7 @@ namespace CHY_Project.Controllers
             var query = from a in db.Albums
                         select a;
 
+            var qtest = query;
 
             //NOTE: Ask Katie if this is an "is equal to" or a "contains" search
             if (NameSearchString != null && NameSearchString != "")
@@ -266,7 +267,10 @@ namespace CHY_Project.Controllers
                 query = query.Where(a => a.Artists.Any(ar => ar.ArtistName.Contains(ArtistSearchString)));
             }
 
-            SelectedAlbums = query.ToList();
+            if (qtest != query)
+            {
+                SelectedAlbums = query.ToList();
+            }
 
             List<Album> AlbumsInGenre;
             if (SelectedGenres != null)
