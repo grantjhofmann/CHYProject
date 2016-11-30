@@ -20,6 +20,19 @@
             </div>
         </div>
 
+    <div class="form-group">
+        Sort By
+        <div class="form-check">
+            @Html.RadioButton("SelectedSort", AlbumsController.AlbumSort.Name, true, new { @class = "form-check-input" }) Name
+        </div>
+        <div class="form-check">
+            @Html.RadioButton("SelectedSort", AlbumsController.AlbumSort.Artist, new { @class = "form-check-input" }) Artist
+        </div>
+        <div class="form-check">
+            @Html.RadioButton("SelectedSort", SongsController.SongSort.Rating, new { @class = "form-check-input" }) Rating
+        </div>
+    </div>
+
         <input type="submit" value="Search" class="btn btn-default" />
         @Html.ActionLink("Show All", "Index", null, new { @class = "btn btn-default" })
 </p>

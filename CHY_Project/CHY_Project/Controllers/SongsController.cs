@@ -280,16 +280,14 @@ namespace CHY_Project.Controllers
                 }
             }
 
-            //TODO: Add Ascending/Descending sorting for Album and Artist
-
             switch (SelectedSort)
             {
                 case SongSort.Name:
                     SelectedSongs = SelectedSongs.OrderBy(s => s.SongName).ToList(); break;
                 case SongSort.Artist:
                     SelectedSongs = SelectedSongs.OrderBy(s=>s.Artists.First().ArtistName).ToList(); break;
-                    //TODO: Add rating case once that funtionality is live
-                    //case SongSort.Rating:
+                //TODO: Add song sort by rating case once that funtionality is live
+                //case SongSort.Rating:
                     //; break;
             }
 

@@ -7,6 +7,9 @@
 <h2>Songs</h2>
 
 <h3> Displaying @ViewBag.SongCount of @ViewBag.TotalSongCount Results</h3>
+<p>
+@Html.ActionLink("Search Songs", "Search", null, new { @class = "btn btn-default" })
+</p>
 
 <p>
     @Html.ActionLink("Create New", "Create")
@@ -21,9 +24,6 @@
         </th>
         <th>
             @Html.DisplayNameFor(model => model.DiscountPrice)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Featured)
         </th>
 
         <th></th>
@@ -40,9 +40,6 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.DiscountPrice)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Featured)
             </td>
 
             <td>

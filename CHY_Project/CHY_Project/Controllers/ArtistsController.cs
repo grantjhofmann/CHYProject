@@ -13,6 +13,9 @@ namespace CHY_Project.Controllers
 {
     public class ArtistsController : Controller
     {
+
+        public enum ArtistSort { Name, Rating }
+
         //TODO: Restrict by Role
         private AppDbContext db = new AppDbContext();
 
@@ -62,8 +65,6 @@ namespace CHY_Project.Controllers
                 String stringArtistID = guidArtistID.ToString();
 
                 artist.ArtistID = stringArtistID;
-
-                //TODO: Add Genre functionality to Artists, per the project specs
 
                 if (Genres != null)
                 {
@@ -180,17 +181,11 @@ namespace CHY_Project.Controllers
         public ActionResult Search()
         {
             ViewBag.AllGenres = GetAllGenres();
-            //TODO: write getallartists
-            //ViewBag.AllArtists = GetAllArtists();
-            //TODO: Write a get all albums method (?)
-            //ViewBag.AllAlbums = GetAllAlbums();
             return View();
         }
 
-        //Search Results
-        //TODO: Figure out why Artist Search won't work: Additional information: There is no ViewData item of type 'IEnumerable<SelectListItem>' that has the key 'SelectedGenres'.
 
-        public ActionResult SearchResults(string NameSearchString, Int32[] SelectedGenres/*, TODO: Add parameter for Rating, once that is set up*/)
+        public ActionResult SearchResults(string NameSearchString, Int32[] SelectedGenres, ArtistSort SelectedSort/*, TODO: Add parameter for Rating, once that is set up*/)
         {
             List<Artist> SelectedArtists = new List<Artist>();
             List<Artist> AllArtists = db.Artists.ToList();
@@ -232,6 +227,14 @@ namespace CHY_Project.Controllers
 
             //TODO: Add ascending/descening for name, rating
 
+            switch (SelectedSort)
+            {
+                case ArtistSort.Name:
+                    SelectedArtists = SelectedArtists.OrderBy(s => s.ArtistName).ToList(); break;
+                //TODO: Add song sort by rating case once that funtionality is live
+                //case SongSort.Rating:
+                    //; break;
+            }
 
 
             ViewBag.ArtistsCount = CountArtists(SelectedArtists);

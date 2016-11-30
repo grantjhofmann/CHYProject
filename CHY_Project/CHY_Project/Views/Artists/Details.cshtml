@@ -35,6 +35,21 @@
         }
     </table>
 
+    <table class="table table-striped">
+        <tr>
+            <th>
+                Songs
+            </th>
+        </tr>
+
+        @foreach (var item in Model.Songs)
+        {
+            <tr>
+                <td>@Html.DisplayFor(modelItem => item.SongName)</td>
+            </tr>
+        }
+    </table>
+
     <table class="table table-bordered">
         <tr>
             <th>
