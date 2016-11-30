@@ -26,6 +26,23 @@
         </div>
 
         <div class="form-group">
+            @Html.LabelFor(model => model.Featured, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <div class="checkbox">
+                    @Html.EditorFor(model => model.Featured)
+                    @Html.ValidationMessageFor(model => model.Featured, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+
+        <div class="form-control">
+            @Html.LabelFor(model => model.Genres, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.ListBox("Genres", (MultiSelectList)ViewBag.AllGenres, new { @class = "form-control" })
+            </div>
+        </div>
+
+        <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <input type="submit" value="Save" class="btn btn-default" />
             </div>

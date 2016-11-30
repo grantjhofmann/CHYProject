@@ -39,6 +39,22 @@
             </tr>
         }
     </table>
+
+    <table class="table table-bordered">
+        <tr>
+            <th>
+                Genres
+            </th>
+        </tr>
+        @foreach (var genre in Model.Genres)
+            {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => genre.GenreName)
+                </td>
+            </tr>
+        }
+    </table>
 </div>
 <p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.ContentID }) |
