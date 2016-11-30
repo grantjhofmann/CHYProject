@@ -27,8 +27,10 @@
             </tr>
         }
     </table>
+
 </div>
 <p>
+    @Html.ActionLink("Clear All", "ClearCart") |
     @Html.ActionLink("Edit", "Edit", new { id = Model.CartID }) |
     @Html.ActionLink("Back to List", "Index")
 </p>
