@@ -235,6 +235,7 @@
     <Compile Include="Models\Rating.cs" />
     <Compile Include="Models\RoleViewModels.cs" />
     <Compile Include="Models\Song.cs" />
+    <Compile Include="Models\SongViewModel.cs" />
     <Compile Include="Models\UserViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
