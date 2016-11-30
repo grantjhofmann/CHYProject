@@ -24,21 +24,6 @@
             @Html.DisplayFor(model => model.Featured)
         </dd>
     </dl>
-    <table class="table table-bordered">
-        <tr>
-            <th>
-                Genres
-            </th>
-        </tr>
-        @foreach (var genre in Model.Genres)
-            {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => genre.GenreName)
-                </td>
-            </tr>
-        }
-    </table>
     <table class="table table-striped">
         <tr>
             <th>
@@ -51,7 +36,6 @@
             <tr>
                 <td>@Html.DisplayFor(modelItem => item.AlbumName)</td>
                 <td>@Html.DisplayFor(modelItem => item.AlbumArt)</td>
-                @Html.ActionLink("Add to cart", "AddToCart", "Cart", new { id = item.ContentID }, "")
             </tr>
         }
     </table>

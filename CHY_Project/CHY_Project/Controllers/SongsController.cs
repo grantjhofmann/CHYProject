@@ -8,7 +8,6 @@ using System.Web;
 using System.Web.Mvc;
 using CHY_Project.Models;
 using System.Globalization;
-using LinqKit;
 
 namespace CHY_Project.Controllers
 {
@@ -55,7 +54,7 @@ namespace CHY_Project.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ContentID,RegularPrice,DiscountPrice,Featured,SongName")] Song song, Int32[] Artists, Int32[] Genres, Album album)
+        public ActionResult Create([Bind(Include = "ContentID,RegularPrice,DiscountPrice,Featured,SongName")] Song song, Int32[] Artists, Int32[] Genres)
         {
             
             if (Artists != null)
@@ -79,7 +78,7 @@ namespace CHY_Project.Controllers
                     song.Genres.Add(genre);
                 }
             }
-
+            
             Guid songproductGUID = Guid.NewGuid();
             String stringsongproductGUID = songproductGUID.ToString();
 
@@ -229,13 +228,15 @@ namespace CHY_Project.Controllers
         }
 
         //Search Results
-        public ActionResult SearchResults(string NameSearchString, string ArtistSearchString, string AlbumSearchString, Int32 [] SelectedGenres/*, TODO: Add parameter for Rating, once that is set up*/)
+        public ActionResult SearchResults(string NameSearchString, string ArtistSearchString, string AlbumSearchString, Int32[] SelectedGenres/*, TODO: Add parameter for Rating, once that is set up*/)
         {
             List<Song> SelectedSongs = new List<Song>();
             List<Song> AllSongs = db.Songs.ToList();
 
             var query = from s in db.Songs
                         select s;
+
+            var qtest = query;
 
             if (NameSearchString != null && NameSearchString != "")
             {
@@ -252,10 +253,13 @@ namespace CHY_Project.Controllers
                 query = query.Where(s => s.Album.AlbumName.Contains(AlbumSearchString));
             }
 
-            SelectedSongs = query.ToList();
+            if (qtest != query)
+            {
+                SelectedSongs = query.ToList();
+            }
 
             //TODO: Add rating search once that functionality is live
-            
+
             List<Song> SongsInGenre;
             if (SelectedGenres != null)
             {
@@ -273,7 +277,8 @@ namespace CHY_Project.Controllers
                     }
                 }
             }
-            
+
+
 
             //TODO: Add Ascending/Descending sorting for name, artist, rating
 

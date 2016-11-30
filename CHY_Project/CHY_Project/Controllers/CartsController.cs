@@ -127,6 +127,7 @@ namespace CHY_Project.Controllers
             base.Dispose(disposing);
         }
 
+
         public ActionResult AddtoCart(int id)
         {
             string userid = User.Identity.GetUserId();
@@ -218,7 +219,7 @@ namespace CHY_Project.Controllers
                 purchase.Recipient = currentuser;
             }
 
-
+            return View();
             
         }
 
@@ -236,5 +237,6 @@ namespace CHY_Project.Controllers
 
             return total;
         }
+
     }
 }
