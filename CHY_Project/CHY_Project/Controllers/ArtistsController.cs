@@ -185,7 +185,7 @@ namespace CHY_Project.Controllers
         }
 
 
-        public ActionResult SearchResults(string NameSearchString, Int32[] SelectedGenres, ArtistSort SelectedSort/*, TODO: Add parameter for Rating, once that is set up*/)
+        public ActionResult SearchResults(string NameSearchString, Int32[] SelectedGenres, ArtistSort SelectedSort, SongsController.SortOrder SelectedSortOrder/*, TODO: Add parameter for Rating, once that is set up*/)
         {
             List<Artist> SelectedArtists = new List<Artist>();
             List<Artist> AllArtists = db.Artists.ToList();
@@ -205,6 +205,8 @@ namespace CHY_Project.Controllers
                 SelectedArtists = query.ToList();
             }
 
+            //TODO: Add rating search once that functionality is live
+
             List<Artist> ArtistInGenre;
             if (SelectedGenres != null)
             {
@@ -223,9 +225,10 @@ namespace CHY_Project.Controllers
                 }
             }
 
-            //TODO: Add rating search once that functionality is live
-
-            //TODO: Add ascending/descening for name, rating
+            if (SelectedArtists.Count == 0)
+            {
+                SelectedArtists = db.Artists.ToList();
+            }
 
             switch (SelectedSort)
             {
@@ -236,6 +239,14 @@ namespace CHY_Project.Controllers
                     //; break;
             }
 
+            switch (SelectedSortOrder)
+            {
+                case SongsController.SortOrder.Ascending:
+                    SelectedArtists = SelectedArtists; break;
+
+                case SongsController.SortOrder.Descending:
+                    SelectedArtists.Reverse(); break;
+            }
 
             ViewBag.ArtistsCount = CountArtists(SelectedArtists);
             ViewBag.TotalArtistsCount = CountArtists(AllArtists);

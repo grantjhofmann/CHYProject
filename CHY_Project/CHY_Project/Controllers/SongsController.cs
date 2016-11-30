@@ -14,6 +14,7 @@ namespace CHY_Project.Controllers
     public class SongsController : Controller
     {
         public enum SongSort { Name, Artist, Rating}
+        public enum SortOrder { Ascending, Descending}
 
         private AppDbContext db = new AppDbContext();
 
@@ -230,7 +231,7 @@ namespace CHY_Project.Controllers
         }
 
         //Search Results
-        public ActionResult SearchResults(string NameSearchString, string ArtistSearchString, string AlbumSearchString, Int32[] SelectedGenres, SongSort SelectedSort/*, TODO: Add parameter for Rating, once that is set up*/)
+        public ActionResult SearchResults(string NameSearchString, string ArtistSearchString, string AlbumSearchString, Int32[] SelectedGenres, SongSort SelectedSort, SortOrder SelectedSortOrder/*, TODO: Add parameter for Rating, once that is set up*/)
         {
             List<Song> SelectedSongs = new List<Song>();
             List<Song> AllSongs = db.Songs.ToList();
@@ -279,6 +280,10 @@ namespace CHY_Project.Controllers
                     }
                 }
             }
+            if (SelectedSongs.Count == 0)
+            {
+                SelectedSongs = db.Songs.ToList();
+            }
 
             switch (SelectedSort)
             {
@@ -291,6 +296,14 @@ namespace CHY_Project.Controllers
                     //; break;
             }
 
+            switch (SelectedSortOrder)
+            {
+                case SortOrder.Ascending:
+                    SelectedSongs = SelectedSongs; break;
+
+                case SortOrder.Descending:
+                    SelectedSongs.Reverse(); break;
+            }
 
             ViewBag.SongCount = CountSongs(SelectedSongs);
             ViewBag.TotalSongCount = CountSongs(AllSongs);

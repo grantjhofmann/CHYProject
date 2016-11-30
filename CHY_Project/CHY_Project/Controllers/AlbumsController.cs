@@ -248,7 +248,7 @@ namespace CHY_Project.Controllers
         }
 
         //Search Results
-        public ActionResult SearchResults(string NameSearchString, string ArtistSearchString, Int32[] SelectedGenres, AlbumSort SelectedSort/*, TODO: Add parameter for Rating, once that is set up*/)
+        public ActionResult SearchResults(string NameSearchString, string ArtistSearchString, Int32[] SelectedGenres, AlbumSort SelectedSort, SongsController.SortOrder SelectedSortOrder/*, TODO: Add parameter for Rating, once that is set up*/)
         {
             List<Album> SelectedAlbums = new List<Album>();
             List<Album> AllAlbums = db.Albums.ToList();
@@ -306,6 +306,14 @@ namespace CHY_Project.Controllers
                     //; break;
             }
 
+            switch (SelectedSortOrder)
+            {
+                case SongsController.SortOrder.Ascending:
+                    SelectedAlbums = SelectedAlbums; break;
+
+                case SongsController.SortOrder.Descending:
+                    SelectedAlbums.Reverse(); break;
+            }
 
             ViewBag.AlbumCount = CountAlbums(SelectedAlbums);
             ViewBag.TotalAlbumCount = CountAlbums(AllAlbums);
