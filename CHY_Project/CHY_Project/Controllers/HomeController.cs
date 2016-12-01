@@ -14,51 +14,60 @@ namespace CHY_Project.Controllers
         // GET: Home
         public ActionResult Index()
         {
-            List<FeaturedContentViewModel> FArtists = new List<FeaturedContentViewModel>();
-            List<Artist> FeaturedArtists = db.Artists.Where(a => a.Featured == true).ToList();
-            
-            foreach (var artist in FeaturedArtists)
-            {
-                FeaturedContentViewModel featuredArtist = new FeaturedContentViewModel();
-                featuredArtist.ArtistName = artist.ArtistName;
+            //List<FeaturedContentViewModel> FContent = new List<FeaturedContentViewModel>();
 
-                FArtists.Add(featuredArtist);
-            }
+            //List<Artist> FeaturedArtists = db.Artists.Where(a => a.Featured == true).ToList();
 
-            List<FeaturedContentViewModel> FSongs = new List<FeaturedContentViewModel>();
-            List<Song> FeaturedSongs = db.Songs.Where(s => s.Featured == true).ToList();
+            //foreach (var artist in FeaturedArtists)
+            //{
+            //    FeaturedContentViewModel featuredArtist = new FeaturedContentViewModel();
+            //    featuredArtist.ArtistName = artist.ArtistName;
 
-            foreach (var song in FeaturedSongs)
-            {
-                FeaturedContentViewModel featuredSong = new FeaturedContentViewModel();
-                featuredSong.ArtistName = song.SongName;
+            //    FContent.Add(featuredArtist);
+            //}
 
-                FArtists.Add(featuredSong);
-            }
+            //List<Song> FeaturedSongs = db.Songs.Where(s => s.Featured == true).ToList();
 
-            List<FeaturedContentViewModel> FAlbums = new List<FeaturedContentViewModel>();
-            List<Album> FeaturedAlbums = db.Albums.Where(a => a.Featured == true).ToList();
+            //foreach (var song in FeaturedSongs)
+            //{
+            //    FeaturedContentViewModel featuredSong = new FeaturedContentViewModel();
+            //    featuredSong.ArtistName = song.SongName;
 
-            foreach (var album in FeaturedAlbums)
-            {
-                FeaturedContentViewModel featuredAlbum = new FeaturedContentViewModel();
-                featuredAlbum.AlbumName = album.AlbumName;
+            //    FContent.Add(featuredSong);
+            //}
 
-                FArtists.Add(featuredAlbum);
-            }
-            //List<Song> FeaturedSongs;
-            //var query2 = db.Songs.Where(s => s.Featured == true);
+            //List<Album> FeaturedAlbums = db.Albums.Where(a => a.Featured == true).ToList();
 
-            //FeaturedSongs = query2.ToList();
+            //foreach (var album in FeaturedAlbums)
+            //{
+            //    FeaturedContentViewModel featuredAlbum = new FeaturedContentViewModel();
+            //    featuredAlbum.AlbumName = album.AlbumName;
 
-            //ViewBag.FeaturedSongs = FeaturedSongs;
+            //    FContent.Add(featuredAlbum);
+            //}
 
-            //List<Album> FeaturedAlbums;
-            //var query3 = db.Albums.Where(c => c.Featured == true);
 
-            //FeaturedAlbums = query3.ToList();
+            List<Song> FeaturedSongs;
+            var query = db.Songs.Where(s => s.Featured == true);
 
-            //ViewBag.FeaturedAlbums = FeaturedAlbums;
+            FeaturedSongs = query.ToList();
+
+            ViewBag.FeaturedSongs = FeaturedSongs;
+
+            List<Album> FeaturedAlbums;
+            var query2 = db.Albums.Where(c => c.Featured == true);
+
+            FeaturedAlbums = query2.ToList();
+
+            ViewBag.FeaturedAlbums = FeaturedAlbums;
+
+            List<Artist> FeaturedArtists;
+            var query3 = db.Artists.Where(c => c.Featured == true);
+
+            FeaturedArtists = query3.ToList();
+
+            ViewBag.FeaturedArtists = FeaturedArtists;
+
             return View();
         }
     }

@@ -1,16 +1,69 @@
-﻿@model IEnumerable<CHY_Project.Models.FeaturedContentViewModel>
+﻿@*@model IEnumerable<CHY_Project.Models.FeaturedContentVewModel>*@
+@using CHY_Project.Models;
 
 @{
     ViewBag.Title = "Index";
+
+    var list = ViewBag.FeaturedSongs as List<Song>;
+    var list2 = ViewBag.FeaturedAlbums as List<Album>;
+    var list3 = ViewBag.FeaturedArtists as List<Artist>;
 }
 
 <h2>Welcome to Longhorn Music</h2>
 
-Featured Content:
+<th>
+    Featured Songs:
+</th>
+<table class="table">
 
-@foreach (var item in Model)
-{
-    @Html.DisplayFor(modelItem => item.ArtistName)
-    @Html.DisplayFor(modelItem => item.SongName)
-    @Html.DisplayFor(modelItem => item.AlbumName)
-}
+
+    @foreach (var item in list)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(c => item.SongName)
+            </td>
+            <td>
+                @Html.ActionLink("Details", "Details", "Songs", new { id = item.ContentID }, null)
+            </td>
+        </tr>
+    }
+</table>
+
+<th>
+    Featured Albums:
+</th>
+<table class="table">
+
+    @foreach (var item in list2)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(c => item.AlbumName)
+            </td>
+            <td>
+                @Html.ActionLink("Details", "Details", "Albums", new { id = item.ContentID }, null)
+            </td>
+        </tr>
+    }
+</table>
+
+<th>
+    Featured Artists:
+</th>
+<table class="table">
+
+
+
+    @foreach (var item in list3)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(c => item.ArtistName)
+            </td>
+            <td>
+                @Html.ActionLink("Details", "Details", "Artists", new { id = item.ContentID }, null)
+            </td>
+        </tr>
+    }
+</table>
