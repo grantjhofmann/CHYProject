@@ -37,12 +37,19 @@
             </td>
 
 
-                @foreach (var artist in item.Artists)
-                {
-                        <td>
-                            @Html.DisplayFor(modelItem => artist.ArtistName)
-                        </td>
-                }
+            @*@foreach (var artist in item.Artists)
+            {
+                <td>
+                    @Html.DisplayFor(modelItem => artist.ArtistName)
+                </td>
+
+            }*@
+
+            @*NOTE: I changed this to the below so that it didn't mess up formatting by having a list of artists in one field. We can change it back if need be.*@
+
+            <td>
+                @Html.DisplayFor(modelItem => item.Artists.First().ArtistName)
+            </td>
 
             <td>
                 $@Html.DisplayFor(modelItem => item.DiscountPrice)

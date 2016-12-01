@@ -1,6 +1,16 @@
-﻿
+﻿@model IEnumerable<CHY_Project.Models.FeaturedContentViewModel>
+
 @{
     ViewBag.Title = "Index";
 }
 
 <h2>Welcome to Longhorn Music</h2>
+
+Featured Content:
+
+@foreach (var item in Model)
+{
+    @Html.DisplayFor(modelItem => item.ArtistName)
+    @Html.DisplayFor(modelItem => item.SongName)
+    @Html.DisplayFor(modelItem => item.AlbumName)
+}

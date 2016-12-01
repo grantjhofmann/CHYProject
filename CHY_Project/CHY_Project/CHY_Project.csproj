@@ -219,6 +219,10 @@
     <Compile Include="Migrations\201611301953571_creditcardfix.Designer.cs">
       <DependentUpon>201611301953571_creditcardfix.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201612010155501_hecker.cs" />
+    <Compile Include="Migrations\201612010155501_hecker.Designer.cs">
+      <DependentUpon>201612010155501_hecker.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Album.cs" />
     <Compile Include="Models\AlbumViewModel.cs" />
@@ -227,6 +231,7 @@
     <Compile Include="Models\CheckoutViewModel.cs" />
     <Compile Include="Models\Content.cs" />
     <Compile Include="Models\CreditCard.cs" />
+    <Compile Include="Models\FeaturedContentViewModel.cs" />
     <Compile Include="Models\Genre.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\IdentityRoles.cs" />
@@ -321,6 +326,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201611301953571_creditcardfix.resx">
       <DependentUpon>201611301953571_creditcardfix.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201612010155501_hecker.resx">
+      <DependentUpon>201612010155501_hecker.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

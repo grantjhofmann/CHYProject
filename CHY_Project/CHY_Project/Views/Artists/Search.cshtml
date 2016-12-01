@@ -29,6 +29,16 @@
             </div>
         </div>
 
+        <div class="form-group">
+            Order
+            <div class="form-check">
+                @Html.RadioButton("SelectedSortOrder", SongsController.SortOrder.Ascending, true, new { @class = "form-check-input" }) Ascending
+            </div>
+            <div class="form-check">
+                @Html.RadioButton("SelectedSortOrder", SongsController.SortOrder.Descending, new { @class = "form-check-input" }) Descending
+            </div>
+        </div>
+
         <input type="submit" value="Search" class="btn btn-default" />
         @Html.ActionLink("Show All", "Index", null, new { @class = "btn btn-default" })
     </p>

@@ -13,13 +13,14 @@ namespace CHY_Project.Models
         [Required]
         public virtual AppUser Customer { get; set; }
 
-        [Required (ErrorMessage = "You must comment on why you gave this rating")]
-        public String Comment { get; set; }
+        //[Required (ErrorMessage = "You must comment on why you gave this rating")]
+        //public String Comment { get; set; }
 
         //TODO: Finalize decision on Starcount datatype
         public enum Stars { one, two, three, four, five }
 
         [Required (ErrorMessage ="You must actually give a rating to submit.")]
+        [Range(1,5, ErrorMessage = "Your rating must be a whole number between one and five.")]
         public Stars Starcount { get; set; }
 
         [Required]
