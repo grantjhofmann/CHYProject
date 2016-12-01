@@ -1,8 +1,11 @@
-﻿@model CHY_Project.Models.AlbumViewModel
+﻿
 @using CHY_Project.Models
 
-@{ var m = ViewBag.AlbumViewModels as List<AlbumViewModel>;
-    ViewBag.Title = "_AlbumsList"}
+@{ 
+    var m = new List<AlbumViewModel>();
+    m = ViewBag.AlbumViewModels as List<AlbumViewModel>;
+    ViewBag.Title = "_AlbumsList";
+}
 
 <p>Full Albums</p>
     @foreach (var item in m)

@@ -1,7 +1,13 @@
 ﻿@model CHY_Project.Models.Cart
+@using CHY_Project.Models
 
 @{
     ViewBag.Title = "UserDetails";
+    var m = new List<AlbumViewModel>();
+    m = ViewBag.AlbumViewModel as List<AlbumViewModel>;
+    var s = new List<SongViewModel>();
+    s = ViewBag.SongViewModel as List<SongViewModel>;
+
 }
 
 <h2>UserDetails</h2>
@@ -9,29 +15,78 @@
 <div>
     <h4>Cart</h4>
     <hr />
-    @Html.Partial("_AlbumList")
-    <br />
-    @Html.Partial("_SongList")
-    <dl class="dl-horizontal">
-    </dl>
-    <table class="table table-striped">
-        <tr>
-            <th>
-                Items
-            </th>
-        </tr>
-
-        @foreach (var item in Model.Products)
+    @foreach (var item in m)
+    {
+        
+        <table class="table-striped">
+            <tr><th>Album:</th></tr>
+            
+                <tr>
+                @foreach (var artist in item.Artists)
+                {
+                    <td>@Html.DisplayFor(modelItem => artist.ArtistName)</td>
+                }
+                </tr>
+                <tr>
+                <td>
+                    <b>@Html.DisplayFor(modelItem => item.AlbumName)</b> 
+                    | $@Html.DisplayFor(modelItem => item.DiscountPrice), usually $@Html.DisplayFor(modelItem => item.RegularPrice)
+                    </td>
+                    </tr>
+                 <tr>
+                    <td>
+                    @Html.ActionLink("Details", "Details", new { id = item.id }) |
+                    @Html.ActionLink("Remove from Cart", "RemoveFromCart", new { id = Html.DisplayFor(modelItem => item.id) })
+                
+                </td>
+                </tr>
+            
+        @foreach (var song in item.Songs)
         {
             <tr>
-                <td>@Html.DisplayFor(modelItem => item.ProductID)</td>
-                <td>@Html.DisplayFor(modelItem => item.DiscountPrice)</td>
-                <td>@Html.ActionLink("Remove from Cart", "RemoveFromCart", new { id = Html.DisplayFor(modelItem => item.ContentID) })</td>
+                <td>@Html.DisplayFor(modelitem => song.SongName)</td>
+
+
             </tr>
         }
-    </table>
+            </table>
+    }
+
+    <br />
+
+
+        @foreach (var thing in s)
+        {
+            <table class="table-striped">
+                <tr>
+                    <th>Individual Song:</th>
+                </tr>
+                <tr>
+                    @foreach (var songartist in thing.Artists)
+                    {
+                        <td>@Html.DisplayFor(modelItem => songartist.ArtistName)</td>
+                    }
+                </tr>
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => thing.SongName)
+                    </td>
+                    <td> $@Html.DisplayFor(modelItem => thing.DiscountPrice), usually $@Html.DisplayFor(modelItem => thing.RegularPrice)
+                        </tr>
+                <tr>
+                    <td>
+                        @Html.ActionLink("Details", "Details", new { id = thing.id }) |
+                        @Html.ActionLink("Remove from Cart", "RemoveFromCart", new { id = Html.DisplayFor(modelItem => thing.id) })
+                    </td>
+                </tr>
+
+                
+            </table>
+        }
 
 </div>
+
+<br /><br />
 <p>
     @Html.ActionLink("Clear All", "ClearCart") |
     @Html.ActionLink("Edit", "Edit", new { id = Model.CartID }) |

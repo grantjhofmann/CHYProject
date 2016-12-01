@@ -53,6 +53,44 @@ namespace CHY_Project.Controllers
                 db.SaveChanges();
             }
 
+            //differentiate between songs and albums
+            List<AlbumViewModel> AlbumViewModels = new List<AlbumViewModel>();
+            List<SongViewModel> SongViewModels = new List<SongViewModel>();
+
+            foreach (Product modelproduct in cart.Products)
+            {
+                Album album = db.Albums.FirstOrDefault(x => x.ProductID == modelproduct.ProductID);
+
+                if (album == null)
+                {
+                    Song song = db.Songs.FirstOrDefault(x => x.ProductID == modelproduct.ProductID);
+                    SongViewModel songviewmodel = new SongViewModel();
+                    songviewmodel.id = song.ContentID;
+                    songviewmodel.Album = song.Album;
+                    songviewmodel.RegularPrice = song.RegularPrice;
+                    songviewmodel.DiscountPrice = song.DiscountPrice;
+                    songviewmodel.SongName = song.SongName;
+                    songviewmodel.Artists = song.Artists;
+                    SongViewModels.Add(songviewmodel);
+
+                }
+
+                else
+                {
+                    AlbumViewModel albumviewmodel = new AlbumViewModel();
+                    albumviewmodel.id = album.ContentID;
+                    albumviewmodel.AlbumName = album.AlbumName;
+                    albumviewmodel.AlbumArt = album.AlbumArt;
+                    albumviewmodel.Artists = album.Artists;
+                    albumviewmodel.DiscountPrice = album.DiscountPrice;
+                    albumviewmodel.RegularPrice = album.RegularPrice;
+                    albumviewmodel.Songs = album.Songs;
+
+                    AlbumViewModels.Add(albumviewmodel);
+                }
+            }
+            ViewBag.SongViewModel = SongViewModels;
+            ViewBag.AlbumViewModel = AlbumViewModels;
             return View(cart);
         }
 
@@ -174,44 +212,6 @@ namespace CHY_Project.Controllers
             }
             db.SaveChanges();
 
-            //differentiate between songs and albums
-            List<AlbumViewModel> AlbumViewModels = new List<AlbumViewModel>();
-            List<SongViewModel> SongViewModels = new List<SongViewModel>();
-
-            foreach (Product modelproduct in cart.Products)
-            {
-                Album album = db.Albums.FirstOrDefault(x => x.ProductID == modelproduct.ProductID);
-
-                if (album == null)
-                {
-                    Song song = db.Songs.FirstOrDefault(x => x.ProductID == modelproduct.ProductID);
-                    SongViewModel songviewmodel = new SongViewModel();
-                    songviewmodel.id = song.ContentID;
-                    songviewmodel.Album = song.Album;
-                    songviewmodel.RegularPrice = song.RegularPrice;
-                    songviewmodel.DiscountPrice = song.DiscountPrice;
-                    songviewmodel.SongName = song.SongName;
-
-                    SongViewModels.Add(songviewmodel);
-
-                }
-
-                else
-                {
-                    AlbumViewModel albumviewmodel = new AlbumViewModel();
-                    albumviewmodel.id = album.ContentID;
-                    albumviewmodel.AlbumName = album.AlbumName;
-                    albumviewmodel.AlbumArt = album.AlbumArt;
-                    albumviewmodel.Artists = album.Artists;
-                    albumviewmodel.DiscountPrice = album.DiscountPrice;
-                    albumviewmodel.RegularPrice = album.RegularPrice;
-                    albumviewmodel.Songs = album.Songs;
-
-                    AlbumViewModels.Add(albumviewmodel);
-                }
-            }
-            ViewBag.SongViewModel = SongViewModels;
-            ViewBag.AlbumViewModel = AlbumViewModels;
             return RedirectToAction("UserDetails");
         }
 
