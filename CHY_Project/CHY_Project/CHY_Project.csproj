@@ -223,6 +223,10 @@
     <Compile Include="Migrations\201612010155501_hecker.Designer.cs">
       <DependentUpon>201612010155501_hecker.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201612010439051_SongModelFix.cs" />
+    <Compile Include="Migrations\201612010439051_SongModelFix.Designer.cs">
+      <DependentUpon>201612010439051_SongModelFix.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Album.cs" />
     <Compile Include="Models\AlbumViewModel.cs" />
@@ -329,6 +333,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201612010155501_hecker.resx">
       <DependentUpon>201612010155501_hecker.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201612010439051_SongModelFix.resx">
+      <DependentUpon>201612010439051_SongModelFix.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

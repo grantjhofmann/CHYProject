@@ -381,5 +381,33 @@ namespace CHY_Project.Controllers
             return songCount;
 
         }
+        //public ActionResult AddReview(int id)
+        //{
+        //    string username = User.Identity.GetUserName();
+        //    AppUser currentuser = db.Users.FirstOrDefault(c => c.UserName == username);
+        //    Rating rating = db.Rating.FirstOrDefault(c => c.Customer.UserName == currentuser.UserName);
+        //    //Cart cart = db.Carts.FirstOrDefault(c => c.Customer.UserName == currentuser.UserName);
+        //    if (rating == null)
+        //    {
+        //        rating = new Rating();
+        //        cart.Customer = currentuser;
+        //        cart.Products = new List<Product>();
+        //        cart.Products.Add(product);
+        //        db.Carts.Add(cart);
+        //    }
+        //    else
+        //    {
+        //        if (cart.Products.Contains(product))
+        //        {
+        //            ViewBag.Error = "Product is already in your cart";
+        //        }
+        //        else
+        //        {
+        //            cart.Products.Add(product);
+        //        }
+        //    }
+        //    db.SaveChanges();
+
+        //}
     }
 }

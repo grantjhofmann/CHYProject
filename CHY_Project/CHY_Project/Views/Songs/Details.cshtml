@@ -101,6 +101,25 @@
             </tr>
         }
     </table>
+    @Html.ActionLink("Review This Song", "AddReview", "Songs", new { id = Model.ContentID }, null)
+    <table class="table table-bordered">
+        <tr>
+            <th>
+                Reviews
+            </th>
+        </tr>
+        @foreach (var rating in Model.Ratings)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => rating.Stars)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => rating.Comment)
+                </td>
+            </tr>
+        }
+    </table>
 </div>
 <p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.ContentID }) |
