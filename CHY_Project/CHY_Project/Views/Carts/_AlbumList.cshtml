@@ -1,0 +1,33 @@
+﻿@model CHY_Project.Models.AlbumViewModel
+@using CHY_Project.Models
+
+@{ var m = ViewBag.AlbumViewModels as List<AlbumViewModel>;
+    ViewBag.Title = "_AlbumsList"}
+
+<p>Full Albums</p>
+    @foreach (var item in m)
+    {
+        <table class="table-striped">
+            <tr>
+                <th>@Html.DisplayFor(modelItem => item.AlbumName) | 
+                @Html.ActionLink("Details", "Details", new { id = item.id }) |
+                @Html.ActionLink("Remove from Cart", "RemoveFromCart", new { id = Html.DisplayFor(modelItem => item.id) })</th>
+            </tr>
+            @foreach (var song in item.Songs)
+            {
+            <tr>
+                <td>@Html.DisplayFor(modelitem => song.SongName)</td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DiscountPrice) down from @Html.DisplayFor(modelitem => song.RegularPrice)
+                   
+                </td>
+
+            </tr>
+            }
+
+
+        </table>
+     }
+
+
+

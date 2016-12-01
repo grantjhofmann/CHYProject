@@ -1,0 +1,65 @@
+﻿@model CHY_Project.Models.CheckoutViewModel
+
+@{
+    ViewBag.Title = "Checkout";
+}
+
+
+
+<h2>Checkout</h2>
+
+
+@using (Html.BeginForm())
+{
+    @Html.EditorForModel()
+    <button type="submit">OK</button>
+
+<p>
+    Cart Summary
+</p>
+<table class="table">
+    <tr>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model.Products)
+    {
+        <tr>
+            <td>@Html.DisplayFor(modelItem => item.ProductID)</td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.DiscountPrice)
+                
+                @Html.ActionLink("Remove from Cart", "RemoveFromCart", new { id = Html.DisplayFor(modelItem => item.ContentID) })
+            </td>
+
+        </tr>
+    }
+</table>
+
+<div class="form-group">
+    @Html.LabelFor(model => model.Gift, htmlAttributes: new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        <div class="checkbox">
+            @Html.EditorFor(model => model.Gift)
+            @Html.ValidationMessageFor(model => model.Gift, "", new { @class = "text-danger" })
+        </div>
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(model => model.RecipientEmail, htmlAttributes: new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @Html.EditorFor(model => model.RecipientEmail, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(model => model.RecipientEmail, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(model => model.CreditCard, htmlAttributes: new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @Html.DropDownList("CreditCard", new SelectList(ViewBag.CreditCards, "CreditCardID", "CardNumber"))
+    </div>
+</div>
+}
+

@@ -8,8 +8,10 @@ namespace CHY_Project.Models
 {
     public class CheckoutViewModel
     {
+        [Display (Name = "Choose a Credit Card from your account to use.")]
+        public CreditCard CreditCard { get; set; }
 
-        public String CardNumber { get; set; }
+
         public List<Product> Products { get; set; }
 
         [Display (Name = "Is this a gift for someone? If so, check yes and give the recipient's email address below:")]

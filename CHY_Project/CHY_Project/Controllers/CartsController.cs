@@ -146,7 +146,7 @@ namespace CHY_Project.Controllers
             base.Dispose(disposing);
         }
 
-
+        //Add to cart
         public ActionResult AddtoCart(int id)
         {
             string username = User.Identity.GetUserName();
@@ -173,6 +173,45 @@ namespace CHY_Project.Controllers
                 }
             }
             db.SaveChanges();
+
+            //differentiate between songs and albums
+            List<AlbumViewModel> AlbumViewModels = new List<AlbumViewModel>();
+            List<SongViewModel> SongViewModels = new List<SongViewModel>();
+
+            foreach (Product modelproduct in cart.Products)
+            {
+                Album album = db.Albums.FirstOrDefault(x => x.ProductID == modelproduct.ProductID);
+
+                if (album == null)
+                {
+                    Song song = db.Songs.FirstOrDefault(x => x.ProductID == modelproduct.ProductID);
+                    SongViewModel songviewmodel = new SongViewModel();
+                    songviewmodel.id = song.ContentID;
+                    songviewmodel.Album = song.Album;
+                    songviewmodel.RegularPrice = song.RegularPrice;
+                    songviewmodel.DiscountPrice = song.DiscountPrice;
+                    songviewmodel.SongName = song.SongName;
+
+                    SongViewModels.Add(songviewmodel);
+
+                }
+
+                else
+                {
+                    AlbumViewModel albumviewmodel = new AlbumViewModel();
+                    albumviewmodel.id = album.ContentID;
+                    albumviewmodel.AlbumName = album.AlbumName;
+                    albumviewmodel.AlbumArt = album.AlbumArt;
+                    albumviewmodel.Artists = album.Artists;
+                    albumviewmodel.DiscountPrice = album.DiscountPrice;
+                    albumviewmodel.RegularPrice = album.RegularPrice;
+                    albumviewmodel.Songs = album.Songs;
+
+                    AlbumViewModels.Add(albumviewmodel);
+                }
+            }
+            ViewBag.SongViewModel = SongViewModels;
+            ViewBag.AlbumViewModel = AlbumViewModels;
             return RedirectToAction("UserDetails");
         }
 
@@ -223,8 +262,21 @@ namespace CHY_Project.Controllers
             string username = User.Identity.GetUserName();
             AppUser currentuser = db.Users.FirstOrDefault(c => c.UserName == username);
             Cart cart = db.Carts.FirstOrDefault(c => c.Customer.UserName == currentuser.UserName);
+
+            CheckoutViewModel checkout = new CheckoutViewModel();
+
+            List <CreditCard> CreditCards = new List<CreditCard>();
+
+            CreditCards.Add(currentuser.CreditCard1);
+            CreditCards.Add(currentuser.CreditCard2);
+
+            ViewBag.CreditCards = CreditCards;
+
+            checkout.Products = cart.Products;
+
+            
             ViewBag.totalcost = cartTotal();
-            return View(cart);
+            return View(checkout);
         }
 
         [HttpPost]

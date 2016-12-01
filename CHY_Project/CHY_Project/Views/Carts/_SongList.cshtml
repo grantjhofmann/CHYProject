@@ -1,0 +1,27 @@
+﻿@model CHY_Project.Models.SongViewModel
+@using CHY_Project.Models
+
+@{ var m = ViewBag.SongViewModels as List<SongViewModel>;
+    ViewBag.Title = "_SongList"}
+
+<p>Individual Songs</p>
+
+@foreach (var item in m)
+{
+    <table class="table-striped">
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.SongName) |
+            @Html.ActionLink("Details", "Details", new { id = item.id }) |
+            @Html.ActionLink("Remove from Cart", "RemoveFromCart", new { id = Html.DisplayFor(modelItem => item.id) })
+        </td>
+    </tr>
+
+
+</table>
+}
+
+
+
+
+

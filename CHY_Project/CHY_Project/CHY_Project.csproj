@@ -221,6 +221,7 @@
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Album.cs" />
+    <Compile Include="Models\AlbumViewModel.cs" />
     <Compile Include="Models\Artist.cs" />
     <Compile Include="Models\Cart.cs" />
     <Compile Include="Models\CheckoutViewModel.cs" />
@@ -235,6 +236,7 @@
     <Compile Include="Models\Rating.cs" />
     <Compile Include="Models\RoleViewModels.cs" />
     <Compile Include="Models\Song.cs" />
+    <Compile Include="Models\SongViewModel.cs" />
     <Compile Include="Models\UserViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -289,6 +291,9 @@
     <Content Include="Views\Carts\UserDetails.cshtml" />
     <Content Include="Views\Carts\_CheckoutCartSummaryPartial.cshtml" />
     <Content Include="Views\Carts\_CheckOutFinalizePurchasePartial.cshtml" />
+    <Content Include="Views\Carts\Checkout.cshtml" />
+    <Content Include="Views\Carts\_AlbumList.cshtml" />
+    <Content Include="Views\Carts\_SongList.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
