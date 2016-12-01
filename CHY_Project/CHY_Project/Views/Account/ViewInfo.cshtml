@@ -1,0 +1,41 @@
+﻿@model CHY_Project.Models.AppUser
+
+@{
+    ViewBag.Title = "ViewInfo";
+}
+
+<h2>ViewInfo</h2>
+
+<d1 class="dl-horizontal">
+    <dt>
+    @Html.LabelFor(m => m.FName, new { @class = "col-md-2 control-label" })
+    </dt>
+    <dd>
+        @Html.DisplayFor(m => m.FName)
+    </dd>
+
+    <dt>@Html.LabelFor(m => m.LName, new { @class = "col-md-2 control-label" })</dt>
+    <dd>@Html.DisplayFor(m => m.LName)</dd>
+
+    <dt>@Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })</dt>
+    <dd>@Html.DisplayFor(m => m.Email)</dd>
+
+    <dt>@Html.LabelFor(m => m.StreetAddress, new { @class = "col-md-2 control-label" })</dt>
+    <dd>@Html.DisplayFor(m => m.StreetAddress)</dd>
+
+    <dt>@Html.LabelFor(m => m.City, new { @class = "col-md-2 control-label" })</dt>
+    <dd>@Html.DisplayFor(m => m.City)</dd>
+
+    <dt>@Html.LabelFor(m => m.ZipCode, new { @class = "col-md-2 control-label" })</dt>
+    <dd>@Html.DisplayFor(m => m.ZipCode)</dd>
+
+    <dt>@Html.LabelFor(m => m.CreditCards[1], new { @class = "col-md-2 control-label" })</dt>
+    <dd>@Html.DisplayFor(m => m.CreditCards[1].CardNumber)</dd>
+
+    <dt>@Html.LabelFor(m => m.CreditCards[2], new { @class = "col-md-2 control-label" })</dt>
+    <dd>@Html.DisplayFor(m => m.CreditCards[2].CardNumber)</dd>
+
+
+</d1>
+
+@Html.ActionLink("Return to Account Manager", "Index", null, new { @class = "btn btn-default" })

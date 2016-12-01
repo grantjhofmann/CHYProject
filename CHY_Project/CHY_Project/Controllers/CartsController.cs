@@ -305,8 +305,8 @@ namespace CHY_Project.Controllers
 
             List <CreditCard> CreditCards = new List<CreditCard>();
 
-            CreditCards.Add(currentuser.CreditCard1);
-            CreditCards.Add(currentuser.CreditCard2);
+            CreditCards.Add(currentuser.CreditCards[1]);
+            CreditCards.Add(currentuser.CreditCards[2]);
 
             ViewBag.CreditCards = CreditCards;
 

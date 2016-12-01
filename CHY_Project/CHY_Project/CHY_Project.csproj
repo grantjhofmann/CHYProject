@@ -223,6 +223,10 @@
     <Compile Include="Migrations\201612010155501_hecker.Designer.cs">
       <DependentUpon>201612010155501_hecker.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201612011733359_wowacreditcard.cs" />
+    <Compile Include="Migrations\201612011733359_wowacreditcard.Designer.cs">
+      <DependentUpon>201612011733359_wowacreditcard.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Album.cs" />
     <Compile Include="Models\AlbumViewModel.cs" />
@@ -297,6 +301,7 @@
     <Content Include="Views\Carts\_AlbumList.cshtml" />
     <Content Include="Views\Carts\_SongList.cshtml" />
     <Content Include="Views\Account\EditInfo.cshtml" />
+    <Content Include="Views\Account\ViewInfo.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -327,6 +332,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201612010155501_hecker.resx">
       <DependentUpon>201612010155501_hecker.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201612011733359_wowacreditcard.resx">
+      <DependentUpon>201612011733359_wowacreditcard.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
