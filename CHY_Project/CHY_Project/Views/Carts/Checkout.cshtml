@@ -1,7 +1,12 @@
 ﻿@model CHY_Project.Models.CheckoutViewModel
+@using CHY_Project.Models
 
 @{
     ViewBag.Title = "Checkout";
+    var m = new List<AlbumViewModel>();
+    m = ViewBag.AlbumViewModel as List<AlbumViewModel>;
+    var s = new List<SongViewModel>();
+    s = ViewBag.SongViewModel as List<SongViewModel>;
 }
 
 
@@ -12,54 +17,126 @@
 @using (Html.BeginForm())
 {
     @Html.EditorForModel()
-    <button type="submit">OK</button>
+    
 
-<p>
-    Cart Summary
-</p>
-<table class="table">
-    <tr>
-        <th></th>
-    </tr>
+    <h4>Cart Summary</h4>
+    <hr />
+    <body>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Gift, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <div class="checkbox">
+                    @Html.EditorFor(model => model.Gift) <br />
+                    @Html.ValidationMessageFor(model => model.Gift, "", new { @class = "text-danger" }) <br />
 
-    @foreach (var item in Model.Products)
-    {
-        <tr>
-            <td>@Html.DisplayFor(modelItem => item.ProductID)</td>
-
-            <td>
-                @Html.DisplayFor(modelItem => item.DiscountPrice)
-                
-                @Html.ActionLink("Remove from Cart", "RemoveFromCart", new { id = Html.DisplayFor(modelItem => item.ContentID) })
-            </td>
-
-        </tr>
-    }
-</table>
-
-<div class="form-group">
-    @Html.LabelFor(model => model.Gift, htmlAttributes: new { @class = "control-label col-md-2" })
-    <div class="col-md-10">
-        <div class="checkbox">
-            @Html.EditorFor(model => model.Gift)
-            @Html.ValidationMessageFor(model => model.Gift, "", new { @class = "text-danger" })
+                </div>
+            </div>
         </div>
-    </div>
-</div>
 
-<div class="form-group">
-    @Html.LabelFor(model => model.RecipientEmail, htmlAttributes: new { @class = "control-label col-md-2" })
-    <div class="col-md-10">
-        @Html.EditorFor(model => model.RecipientEmail, new { htmlAttributes = new { @class = "form-control" } })
-        @Html.ValidationMessageFor(model => model.RecipientEmail, "", new { @class = "text-danger" })
-    </div>
-</div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.RecipientEmail, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.RecipientEmail, new { htmlAttributes = new { @class = "form-control" } })<br />
+                @Html.ValidationMessageFor(model => model.RecipientEmail, "", new { @class = "text-danger" })
+            </div>
+        </div>
 
-<div class="form-group">
-    @Html.LabelFor(model => model.CreditCard, htmlAttributes: new { @class = "control-label col-md-2" })
-    <div class="col-md-10">
-        @Html.DropDownList("CreditCard", new SelectList(ViewBag.CreditCards, "CreditCardID", "CardNumber"))
-    </div>
-</div>
+        <br />
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.CreditCard, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("CreditCard", new SelectList(ViewBag.CreditCards, "CreditCardID", "CardNumber"))
+            </div>
+        </div>
+        <br />
+        <div class="body-content">
+            @foreach (var item in m)
+            {
+
+                <table class="table">
+                    <tr><th>Album:</th></tr>
+
+                    <tr>
+                        @foreach (var artist in item.Artists)
+                        {
+                            <td>@Html.DisplayFor(modelItem => artist.ArtistName)</td>
+                        }
+                    </tr>
+                    <tr>
+                        <td>
+                            <b>@Html.DisplayFor(modelItem => item.AlbumName)</b>
+                            | $@Html.DisplayFor(modelItem => item.DiscountPrice), usually $@Html.DisplayFor(modelItem => item.RegularPrice)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            @Html.ActionLink("Details", "Details", new { id = item.id }) |
+                            @Html.ActionLink("Remove from Cart", "RemoveFromCart", new { id = Html.DisplayFor(modelItem => item.id) })
+
+                        </td>
+                    </tr>
+
+                    @foreach (var song in item.Songs)
+                    {
+                        <tr>
+                            <td>@Html.DisplayFor(modelitem => song.SongName)</td>
+
+
+                        </tr>
+                    }
+                </table>
+            }
+
+            <br />
+
+
+            @foreach (var thing in s)
+            {
+                <table class="table">
+                    <tr>
+                        <th>Individual Song:</th>
+                    </tr>
+                    <tr>
+                        @foreach (var songartist in thing.Artists)
+                        {
+                            <td>@Html.DisplayFor(modelItem => songartist.ArtistName)</td>
+                        }
+                    </tr>
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => thing.SongName)
+                        </td>
+                        <td> $@Html.DisplayFor(modelItem => thing.DiscountPrice), usually $@Html.DisplayFor(modelItem => thing.RegularPrice)
+                    </tr>
+                    <tr>
+                        <td>
+                            @Html.ActionLink("Details", "Details", new { id = thing.id }) |
+                            @Html.ActionLink("Remove from Cart", "RemoveFromCart", new { id = Html.DisplayFor(modelItem => thing.id) })
+                        </td>
+                    </tr>
+
+
+                </table>
+            }
+            <br /><br />
+            <br />
+            <table class="table">
+                <tr>
+                    <td>SUBTOTAL: </td>
+                    <td>$@ViewBag.subtotal</td>
+                </tr>
+                <tr>
+                    <td>TAX: </td>
+                    <td>$@ViewBag.tax</td>
+                </tr>
+                <tr>
+                    <td>TOTAL: </td>
+                    <td>$@ViewBag.total</td>
+                </tr>
+            </table>
+        </div>
+        <div class="btn"><button type="submit">PURCHASE</button></div>
+    </body>
 }
 

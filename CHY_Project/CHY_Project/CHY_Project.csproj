@@ -293,8 +293,6 @@
     <Content Include="Views\Artists\Search.cshtml" />
     <Content Include="Views\Songs\Search.cshtml" />
     <Content Include="Views\Carts\UserDetails.cshtml" />
-    <Content Include="Views\Carts\_CheckoutCartSummaryPartial.cshtml" />
-    <Content Include="Views\Carts\_CheckOutFinalizePurchasePartial.cshtml" />
     <Content Include="Views\Carts\Checkout.cshtml" />
     <Content Include="Views\Carts\_AlbumList.cshtml" />
     <Content Include="Views\Carts\_SongList.cshtml" />

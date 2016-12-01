@@ -84,9 +84,10 @@
             </table>
         }
     <br /><br />
-    <b>SUBTOTAL: $@ViewBag.Subtotal</b>
+    <b>SUBTOTAL: $@ViewBag.subtotal</b>
 </div>
 
+@Html.ActionLink("Proceed to Checkout","Checkout")
 <br /><br />
 <p>
     @Html.ActionLink("Clear All", "ClearCart") |

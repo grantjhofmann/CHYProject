@@ -316,6 +316,8 @@ namespace CHY_Project.Controllers
             ViewBag.total = total();
             ViewBag.subtotal = subtotal();
             return View(checkout);
+
+            //TODO: make this not suck
         }
 
         [HttpPost]
@@ -391,7 +393,7 @@ namespace CHY_Project.Controllers
 
             decimal tax = subtotal * taxrate;
 
-            return subtotal;
+            return tax;
         }
 
         public Decimal total()
