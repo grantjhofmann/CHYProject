@@ -318,9 +318,10 @@ namespace CHY_Project.Controllers
 
             if (model.CreditCard1 != null && model.CreditCard1 != "")
             {
-                CreditCard oldCreditCard = currentuser.CreditCards[0];
-                if (oldCreditCard != null)
+                
+                if (currentuser.CreditCards[0] != null)
                 {
+                    CreditCard oldCreditCard = currentuser.CreditCards[0];
                     db.CreditCards.Remove(oldCreditCard);
                 }
 
@@ -359,9 +360,9 @@ namespace CHY_Project.Controllers
 
             if (model.CreditCard2 != null && model.CreditCard2 != "")
             {
-                CreditCard oldCreditCard = currentuser.CreditCards[2];
-                if (oldCreditCard != null)
+                if (currentuser.CreditCards[1] != null)
                 {
+                    CreditCard oldCreditCard = currentuser.CreditCards[1];
                     db.CreditCards.Remove(oldCreditCard);
                 }
 
