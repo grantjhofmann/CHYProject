@@ -231,7 +231,6 @@
     <Compile Include="Models\CheckoutViewModel.cs" />
     <Compile Include="Models\Content.cs" />
     <Compile Include="Models\CreditCard.cs" />
-    <Compile Include="Models\FeaturedContentViewModel.cs" />
     <Compile Include="Models\Genre.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\IdentityRoles.cs" />
@@ -299,6 +298,7 @@
     <Content Include="Views\Carts\Checkout.cshtml" />
     <Content Include="Views\Carts\_AlbumList.cshtml" />
     <Content Include="Views\Carts\_SongList.cshtml" />
+    <Content Include="Views\Account\EditInfo.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

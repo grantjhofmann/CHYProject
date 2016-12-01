@@ -260,6 +260,12 @@ namespace CHY_Project.Controllers
             return View(model);
         }
 
+        //GET: /Account/EditInfo
+        public ActionResult EditInfo()
+        {
+            return View();
+        }
+
         // GET: /Account/Index
         public async Task<ActionResult> Index(ManageMessageId? message)
         {
