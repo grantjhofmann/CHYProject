@@ -1,4 +1,5 @@
-﻿@model CHY_Project.Models.Song
+﻿@model CHY_Project.Models.SongViewModel
+@using CHY_Project.Models
 
 @{
     ViewBag.Title = "Details";
@@ -26,7 +27,7 @@
         }
     </table>
 
-    
+
 
     <dl class="dl-horizontal">
         <dt>
@@ -79,9 +80,9 @@
             </td>
             @if (Model.Album != null)
             {
-            <td>
-                @Html.ActionLink("Details", "Details", "Albums", new { id = Model.Album.ContentID }, null)
-            </td>
+                <td>
+                    @Html.ActionLink("Details", "Details", "Albums", new { id = Model.Album.ContentID }, null)
+                </td>
             }
         </tr>
     </table>
@@ -101,27 +102,41 @@
             </tr>
         }
     </table>
-    @Html.ActionLink("Review This Song", "AddReview", "Songs", new { id = Model.ContentID }, null)
-    <table class="table table-bordered">
-        <tr>
-            <th>
-                Reviews
-            </th>
-        </tr>
-        @foreach (var rating in Model.Ratings)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => rating.Stars)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => rating.Comment)
-                </td>
-            </tr>
-        }
-    </table>
+    <div class="form-group">
+        @Html.LabelFor(model => model.Stars, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Stars, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Stars, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.Comment, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Comment, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Comment, "", new { @class = "text-danger" })
+        </div>
+    </div>
+   <table class="table table-bordered">
+       <tr>
+           <th>
+               Reviews
+           </th>
+       </tr>
+       @foreach (var rating in Model.Ratings)
+       {
+           <tr>
+               <td>
+                   @Html.DisplayFor(modelItem => rating.Stars)
+               </td>
+               <td>
+                   @Html.DisplayFor(modelItem => rating.Comment)
+               </td>
+           </tr>
+                }
+   </table>
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.ContentID }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+
+                        <p>
+                            @Html.ActionLink("Edit", "Edit", new { id = Model.ContentID }) |
+                            @Html.ActionLink("Back to List", "Index")
+                        </p>

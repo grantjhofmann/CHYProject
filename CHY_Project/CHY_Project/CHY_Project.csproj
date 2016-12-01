@@ -303,6 +303,7 @@
     <Content Include="Views\Carts\Checkout.cshtml" />
     <Content Include="Views\Carts\_AlbumList.cshtml" />
     <Content Include="Views\Carts\_SongList.cshtml" />
+    <Content Include="Views\Songs\Review.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

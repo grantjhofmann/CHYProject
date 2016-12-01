@@ -43,6 +43,42 @@ namespace CHY_Project.Controllers
             return View(song);
         }
 
+        //POST: Songs/Details/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Details([Bind(Include = "ContentID,StarsInput,CommentInput")] Song song, String Stars, String Comment)
+        {
+            Rating rating = new Rating();
+            int StarsInt = Int32.Parse(Stars);
+            Song songToChange = db.Songs.Find(song.ContentID);
+            songToChange.Ratings.Clear();
+
+            if (rating != null)
+            {
+                //TODO: handle input
+                rating.Stars = StarsInt; //convert to an integer;
+                rating.Comment = Comment;
+            }
+            if (StarsInt >=1 && StarsInt <=5)
+            {
+                //do this: make a new rating object and save it to the db
+                db.Ratings.Add(rating);
+                
+                songToChange.Ratings = song.Ratings;
+
+                db.Entry(songToChange).State = EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+
+            else //send them back to the same view
+            {
+                return View("Song");
+            }
+        }
+
+
+
         // GET: Songs/Create
         public ActionResult Create()
         {
