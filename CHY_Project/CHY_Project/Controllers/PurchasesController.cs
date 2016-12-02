@@ -135,5 +135,18 @@ namespace CHY_Project.Controllers
             ViewBag.MyPurchases = MyPurchases;
             return View();
         }
+
+        public ActionResult PurchaseDetails(int id)
+        {
+            Purchase purchase = db.Purchases.Find(id);
+
+            List<OrderDetail> orderdetails = db.OrderDetails.Where(x => x.Purchase == purchase).ToList();
+            foreach(OrderDetail orderdetail in orderdetails)
+            {
+
+            }
+
+            return View();
+        }
     }
 }
