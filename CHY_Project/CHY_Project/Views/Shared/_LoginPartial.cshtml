@@ -12,7 +12,8 @@
         </li>
         <li>@Html.ActionLink("Manage Roles", "Index", "RoleAdmin")</li>
         <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
-        @Html.ActionLink("Cart", "UserDetails", "Carts", new { area = "" }, new { @class = "navbar-brand" })
+        <li>@Html.ActionLink("Cart", "UserDetails", "Carts")</li>
+        <li>@Html.ActionLink("My Library", "ViewMyLibrary", "AppUsers")</li>
     </ul>
     }
 }

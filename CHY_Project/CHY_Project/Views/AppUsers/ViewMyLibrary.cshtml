@@ -1,0 +1,65 @@
+﻿
+@using CHY_Project.Models
+@{
+    ViewBag.Title = "ViewMyLibrary";
+    var m = new List<AlbumViewModel>();
+    m = ViewBag.AlbumViewModel as List<AlbumViewModel>;
+    var s = new List<SongViewModel>();
+    s = ViewBag.SongViewModel as List<SongViewModel>;
+}
+
+<h2>Your Library</h2>
+
+<h4>Full Albums</h4>
+@foreach (var item in m)
+            {
+
+    <table class="table">
+        <tr><th></th></tr>
+
+        <tr>
+            @foreach (var artist in item.Artists)
+            {
+                <td>@Html.DisplayFor(modelItem => artist.ArtistName)</td>
+            }
+        </tr>
+        <tr>
+            <td>
+                <b>@Html.DisplayFor(modelItem => item.AlbumName)</b>
+            </td>
+        </tr>
+        @foreach (var song in item.Songs)
+        {
+            <tr>
+                <td>@Html.DisplayFor(modelitem => song.SongName)</td>
+            </tr>
+        }
+    </table>
+}
+
+<br />
+
+<h4>Individual Songs</h4>
+@foreach (var thing in s)
+{
+    <table class="table">
+        <tr>
+            <th></th>
+        </tr>
+        <tr>
+            @foreach (var songartist in thing.Artists)
+            {
+                <td>@Html.DisplayFor(modelItem => songartist.ArtistName)</td>
+            }
+        </tr>
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => thing.SongName)
+            </td>
+            <td> $@Html.DisplayFor(modelItem => thing.DiscountPrice), usually $@Html.DisplayFor(modelItem => thing.RegularPrice)
+        </tr>
+
+
+    </table>
+}
+

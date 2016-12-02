@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using CHY_Project.Models;
+using Microsoft.AspNet.Identity;
 
 namespace CHY_Project.Controllers
 {
@@ -122,6 +123,57 @@ namespace CHY_Project.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
+        }
+
+        public ActionResult ViewMyLibrary ()
+        {
+            string username = User.Identity.GetUserName();
+            AppUser currentuser = db.Users.FirstOrDefault(c => c.UserName == username);
+            List<AlbumViewModel> AlbumViewModels = new List<AlbumViewModel>();
+            List<SongViewModel> SongViewModels = new List<SongViewModel>();
+            List<Purchase> UserReceived = new List<Purchase>();
+            UserReceived = db.Purchases.Where(x => x.Recipient.UserName == currentuser.UserName).ToList();
+
+            foreach (Purchase received in UserReceived)
+            {
+
+                foreach (Product modelproduct in received.Products)
+                {
+                    Album album = db.Albums.FirstOrDefault(x => x.ProductID == modelproduct.ProductID);
+
+                    if (album == null)
+                    {
+                        Song song = db.Songs.FirstOrDefault(x => x.ProductID == modelproduct.ProductID);
+                        SongViewModel songviewmodel = new SongViewModel();
+                        songviewmodel.id = song.ContentID;
+                        songviewmodel.Album = song.Album;
+                        songviewmodel.RegularPrice = song.RegularPrice;
+                        songviewmodel.DiscountPrice = song.DiscountPrice;
+                        songviewmodel.SongName = song.SongName;
+                        songviewmodel.Artists = song.Artists;
+                        SongViewModels.Add(songviewmodel);
+
+                    }
+
+                    else
+                    {
+                        AlbumViewModel albumviewmodel = new AlbumViewModel();
+                        albumviewmodel.id = album.ContentID;
+                        albumviewmodel.AlbumName = album.AlbumName;
+                        albumviewmodel.AlbumArt = album.AlbumArt;
+                        albumviewmodel.Artists = album.Artists;
+                        albumviewmodel.DiscountPrice = album.DiscountPrice;
+                        albumviewmodel.RegularPrice = album.RegularPrice;
+                        albumviewmodel.Songs = album.Songs;
+
+                        AlbumViewModels.Add(albumviewmodel);
+                    }
+                }
+            }
+            ViewBag.SongViewModel = SongViewModels;
+            ViewBag.AlbumViewModel = AlbumViewModels;
+
+            return View();
         }
     }
 }
