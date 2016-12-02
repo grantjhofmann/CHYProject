@@ -311,13 +311,10 @@
     <Content Include="Views\Carts\ConfirmCheckout.cshtml" />
     <Content Include="Views\Carts\PurchaseConfirmed.cshtml" />
     <Content Include="Views\AppUsers\ViewMyLibrary.cshtml" />
-<<<<<<< HEAD
     <Content Include="Views\Account\Error.cshtml" />
-=======
     <Content Include="Views\Reports\SongReport.cshtml" />
     <Content Include="Views\Reports\AlbumReport.cshtml" />
     <Content Include="Views\Reports\Index.cshtml" />
->>>>>>> origin/master
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
