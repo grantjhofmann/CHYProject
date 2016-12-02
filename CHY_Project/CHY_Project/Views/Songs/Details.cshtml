@@ -1,9 +1,4 @@
-<<<<<<< HEAD
 ﻿@model CHY_Project.Models.SongDetailsViewModel
-=======
-﻿@model CHY_Project.Models.SongViewModel
-@using CHY_Project.Models
->>>>>>> origin/master
 
 @{
     ViewBag.Title = "Details";
@@ -36,7 +31,7 @@
             }
         </table>
 
-
+    
 
         <dl class="dl-horizontal">
             <dt>
@@ -57,7 +52,6 @@
 
             @if (Model.DiscountPrice < Model.RegularPrice)
             {
-<<<<<<< HEAD
                 <dt>
                     @Html.DisplayNameFor(model => model.DiscountPrice)
                 </dt>
@@ -65,11 +59,6 @@
                 <dd>
                     $@Html.DisplayFor(model => model.DiscountPrice)
                 </dd>
-=======
-                <td>
-                    @Html.ActionLink("Details", "Details", "Albums", new { id = Model.Album.ContentID }, null)
-                </td>
->>>>>>> origin/master
             }
 
             <dt>
@@ -100,7 +89,6 @@
                 </td>
                 }
             </tr>
-<<<<<<< HEAD
         </table>
 
         <table class="table table-bordered">
@@ -127,16 +115,6 @@
     <div class="col-md-10">
         @Html.EditorFor(model => model.Stars, new { htmlAttributes = new { @class = "form-control" } })
         @Html.ValidationMessageFor(model => model.Stars, "", new { @class = "text-danger" })
-=======
-        }
-    </table>
-    <div class="form-group">
-        @Html.LabelFor(model => model.Stars, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.Stars, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.Stars, "", new { @class = "text-danger" })
-        </div>
->>>>>>> origin/master
     </div>
     <div class="form-group">
         @Html.LabelFor(model => model.Comment, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -145,7 +123,6 @@
             @Html.ValidationMessageFor(model => model.Comment, "", new { @class = "text-danger" })
         </div>
     </div>
-<<<<<<< HEAD
     <input type="submit" value="Add Review" id="btnSubmit" />
 }
 
@@ -154,29 +131,3 @@
     @Html.ActionLink("Edit", "Edit", new { id = Model.ContentID }) |
     @Html.ActionLink("Back to List", "Index")
 </p>
-=======
-   <table class="table table-bordered">
-       <tr>
-           <th>
-               Reviews
-           </th>
-       </tr>
-       @foreach (var rating in Model.Ratings)
-       {
-           <tr>
-               <td>
-                   @Html.DisplayFor(modelItem => rating.Stars)
-               </td>
-               <td>
-                   @Html.DisplayFor(modelItem => rating.Comment)
-               </td>
-           </tr>
-                }
-   </table>
-</div>
-
-                        <p>
-                            @Html.ActionLink("Edit", "Edit", new { id = Model.ContentID }) |
-                            @Html.ActionLink("Back to List", "Index")
-                        </p>
->>>>>>> origin/master
