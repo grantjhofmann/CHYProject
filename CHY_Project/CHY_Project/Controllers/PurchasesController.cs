@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using CHY_Project.Models;
+using Microsoft.AspNet.Identity;
 
 namespace CHY_Project.Controllers
 {
@@ -122,6 +123,17 @@ namespace CHY_Project.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
+        }
+
+        public ActionResult MyPurchases()
+        {
+            string username = User.Identity.GetUserName();
+            AppUser currentuser = db.Users.FirstOrDefault(c => c.UserName == username);
+
+            List<Purchase> MyPurchases = db.Purchases.Where(x => x.Customer.UserName == currentuser.UserName).ToList();
+
+            ViewBag.MyPurchases = MyPurchases;
+            return View();
         }
     }
 }

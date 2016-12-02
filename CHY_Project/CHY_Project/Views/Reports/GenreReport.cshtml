@@ -1,0 +1,60 @@
+﻿@model CHY_Project.Models.GenreReportViewModel
+@using CHY_Project.Models
+@{
+    ViewBag.Title = "AlbumReport";
+    var m = new List<GenreReportViewModel>();
+    m = ViewBag.TopArtists as List<GenreReportViewModel>;
+}
+
+<h2>Album Report</h2>
+<table class="table">
+    <tr>
+        <th>
+            Genre
+        </th>
+        <th>
+            Artist
+        </th>
+        <th>
+            Songs Purchased
+        </th>
+        <th>
+            Song Revenue
+        </th>
+        <th>
+            Albums Purchased
+        </th>
+        <th>
+            Album Revenue
+        </th>
+        <th>TOTAL REVENUE</th>
+    </tr>
+    @foreach (var item in m)
+    {
+
+        <tr>
+            <td>
+                <b>@Html.DisplayFor(modelItem => item.GenreName)</b>
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ArtistName)
+            </td>
+            <td>
+                $@Html.DisplayFor(modelItem => item.SongPurchases)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SongRevenue)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AlbumPurchases)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AlbumRevenue)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TotalRevenue)
+            </td>
+        </tr>
+
+    }
+</table>

@@ -1,0 +1,40 @@
+﻿@model CHY_Project.Models.Purchase
+@using CHY_Project.Models
+
+@{
+    ViewBag.Title = "MyPurchases";
+    var m = new List<Purchase>();
+    m = ViewBag.MyPurchases as List<Purchase>;
+}
+
+<h2>Your Purchases</h2>
+
+<div class="table">
+    <table class="table">
+        <tr>
+            <th>
+                Purchase Date
+            </th>
+            <th>
+                Order Recipient
+            </th>
+            <th>
+                Additional Info
+            </th>
+        </tr>
+        @foreach (var purchase in m)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(x => purchase.Date)
+                </td>
+                <td>
+                    @Html.DisplayFor(x => purchase.Recipient.UserName)
+                </td>
+                <td>
+                    @Html.ActionLink("Details", "PurchaseDetails")
+                </td>
+            </tr>
+        }
+    </table>
+</div>

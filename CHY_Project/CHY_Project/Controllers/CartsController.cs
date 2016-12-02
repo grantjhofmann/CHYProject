@@ -316,6 +316,7 @@ namespace CHY_Project.Controllers
 
             foreach (CreditCard creditcard in currentuser.CreditCards)
             {
+                creditcard.CardNumber = "Card number ending in " + creditcard.CardNumber.Substring(creditcard.CardNumber.Length - 4);
                 CreditCards.Add(creditcard);
             }
 
@@ -381,7 +382,7 @@ namespace CHY_Project.Controllers
             //EmailMessaging.SendEmail(currentuser.Email, "Welcome to Longhorn Music - Group 13!", EmailString);
             return RedirectToAction("ConfirmCheckout", new { id = purchase.CartID });
         }
-
+      
         public ActionResult ConfirmCheckout(int id)
         {
             Purchase purchase = db.Purchases.Find(id);

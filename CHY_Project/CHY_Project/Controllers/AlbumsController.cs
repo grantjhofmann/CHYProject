@@ -224,6 +224,7 @@ namespace CHY_Project.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             Album album = db.Albums.Find(id);
+            album.Artists.Clear();
             db.Contents.Remove(album);
             db.SaveChanges();
             return RedirectToAction("Index");
