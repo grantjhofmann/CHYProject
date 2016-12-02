@@ -19,7 +19,7 @@ namespace CHY_Project.Models
         //TODO: Finalize decision on Starcount datatype
         //public enum Stars { one, two, three, four, five }
 
-        [Required (ErrorMessage ="You must actually give a rating to submit.")]
+        [Required (ErrorMessage ="You must give a rating to submit.")]
         [Range(1,5, ErrorMessage = "Your rating must be a whole number between one and five.")]
         public Int32 Stars { get; set; }
 

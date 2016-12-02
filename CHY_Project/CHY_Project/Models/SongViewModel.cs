@@ -26,15 +26,10 @@ namespace CHY_Project.Models
 
         public Decimal DiscountPrice { get; set; }
 
-        public int SongRating { get; set; }
-        public string SongComment { get; set; }
-        public Boolean FeaturedSong { get; set; }
-
         public decimal AvgRating { get; set; }
 
         public virtual List<Song> Songs { get; set; }
         public virtual List<Rating> Ratings { get; set; }
-        public virtual List<Genre> Genres { get; set; }
 
 
     }

@@ -1,5 +1,4 @@
-﻿@model CHY_Project.Models.SongViewModel
-@using CHY_Project.Models
+﻿@model CHY_Project.Models.SongDetailsViewModel
 
 @{
     ViewBag.Title = "Details";
@@ -7,110 +6,115 @@
 
 <h2>Song Details</h2>
 
-<div>
-    <h4>@Html.DisplayFor(model => model.SongName)</h4>
-    <hr />
-    @Html.ActionLink("Add to Cart", "AddtoCart", "Carts", new { id = Model.ContentID }, null)
-    <table class="table table-bordered">
-        <tr>
-            <th>
-                Artists
-            </th>
-        </tr>
-        @foreach (var artist in Model.Artists)
-        {
+@using (Html.BeginForm())
+{
+    <div>
+        <h4>@Html.DisplayFor(model => model.SongName)</h4>
+        <hr />
+        @Html.ActionLink("Add to Cart", "AddtoCart", "Carts", new { id = Model.ContentID }, null)
+        <table class="table table-bordered">
             <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => artist.ArtistName)
-                </td>
-                <td>
-                    @Html.ActionLink("Details", "Details", "Artists", new { id = artist.ContentID }, null)
-                </td>
+                <th>
+                    Artists
+                </th>
             </tr>
-        }
-    </table>
+            @foreach (var artist in Model.Artists)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => artist.ArtistName)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Details", "Details", "Artists", new { id = artist.ContentID }, null)
+                    </td>
+                </tr>
+            }
+        </table>
 
+    
 
-
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.SongName)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.SongName)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.RegularPrice)
-        </dt>
-
-        <dd>
-            $@Html.DisplayFor(model => model.RegularPrice)
-        </dd>
-
-        @if (Model.DiscountPrice < Model.RegularPrice)
-        {
+        <dl class="dl-horizontal">
             <dt>
-                @Html.DisplayNameFor(model => model.DiscountPrice)
+                @Html.DisplayNameFor(model => model.SongName)
             </dt>
 
             <dd>
-                $@Html.DisplayFor(model => model.DiscountPrice)
+                @Html.DisplayFor(model => model.SongName)
             </dd>
-        }
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Featured)
-        </dt>
+            <dt>
+                @Html.DisplayNameFor(model => model.RegularPrice)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Featured)
-        </dd>
+            <dd>
+                $@Html.DisplayFor(model => model.RegularPrice)
+            </dd>
 
-
-    </dl>
-
-    <table class="table table-striped">
-        <tr>
-            <th>
-                Album
-            </th>
-        </tr>
-        <tr>
-            <td>
-                @Html.DisplayFor(model => model.Album.AlbumName)
-            </td>
-            @if (Model.Album != null)
+            @if (Model.DiscountPrice < Model.RegularPrice)
             {
+                <dt>
+                    @Html.DisplayNameFor(model => model.DiscountPrice)
+                </dt>
+
+                <dd>
+                    $@Html.DisplayFor(model => model.DiscountPrice)
+                </dd>
+            }
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Featured)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Featured)
+            </dd>
+
+
+        </dl>
+
+        <table class="table table-striped">
+            <tr>
+                <th>
+                    Album
+                </th>
+            </tr>
+            <tr>
+                <td>
+                    @Html.DisplayFor(model => model.Album.AlbumName)
+                </td>
+                @if (Model.Album != null)
+                {
                 <td>
                     @Html.ActionLink("Details", "Details", "Albums", new { id = Model.Album.ContentID }, null)
                 </td>
-            }
-        </tr>
-    </table>
-
-    <table class="table table-bordered">
-        <tr>
-            <th>
-                Genres
-            </th>
-        </tr>
-        @foreach (var genre in Model.Genres)
-            {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => genre.GenreName)
-                </td>
+                }
             </tr>
-        }
-    </table>
-    <div class="form-group">
-        @Html.LabelFor(model => model.Stars, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.Stars, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.Stars, "", new { @class = "text-danger" })
-        </div>
+        </table>
+
+        <table class="table table-bordered">
+            <tr>
+                <th>
+                    Genres
+                </th>
+            </tr>
+            @foreach (var genre in Model.Genres)
+                {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => genre.GenreName)
+                    </td>
+                </tr>
+            }
+        </table>
+    </div>
+
+
+
+
+    @Html.LabelFor(model => model.Stars, htmlAttributes: new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @Html.EditorFor(model => model.Stars, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(model => model.Stars, "", new { @class = "text-danger" })
     </div>
     <div class="form-group">
         @Html.LabelFor(model => model.Comment, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -119,27 +123,11 @@
             @Html.ValidationMessageFor(model => model.Comment, "", new { @class = "text-danger" })
         </div>
     </div>
-   <table class="table table-bordered">
-       <tr>
-           <th>
-               Reviews
-           </th>
-       </tr>
-       @foreach (var rating in Model.Ratings)
-       {
-           <tr>
-               <td>
-                   @Html.DisplayFor(modelItem => rating.Stars)
-               </td>
-               <td>
-                   @Html.DisplayFor(modelItem => rating.Comment)
-               </td>
-           </tr>
-                }
-   </table>
-</div>
+    <input type="submit" value="Add Review" id="btnSubmit" />
+}
 
-                        <p>
-                            @Html.ActionLink("Edit", "Edit", new { id = Model.ContentID }) |
-                            @Html.ActionLink("Back to List", "Index")
-                        </p>
+
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ContentID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

@@ -8,6 +8,8 @@ using System.Web;
 using System.Web.Mvc;
 using CHY_Project.Models;
 using System.Globalization;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
 
 namespace CHY_Project.Controllers
 {
@@ -29,6 +31,7 @@ namespace CHY_Project.Controllers
         }
 
         // GET: Songs/Details/5
+        [HttpGet]
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -40,44 +43,52 @@ namespace CHY_Project.Controllers
             {
                 return HttpNotFound();
             }
-            return View(song);
+
+            //Set the song's properties
+            SongDetailsViewModel songvm = new SongDetailsViewModel();
+            songvm.SongName = song.SongName;
+            songvm.ContentID = song.ContentID;
+            songvm.RegularPrice = song.RegularPrice;
+            songvm.DiscountPrice = song.DiscountPrice;
+            songvm.Featured = song.Featured;
+            foreach (Artist artist in song.Artists)
+            {
+                songvm.Artists.Add(artist);
+            }
+
+            songvm.Album = song.Album;
+
+            foreach (Genre genre in song.Genres)
+            {
+                songvm.Genres.Add(genre);
+            }
+
+            return View(songvm);
         }
 
         //POST: Songs/Details/5
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Details([Bind(Include = "ContentID,StarsInput,CommentInput")] Song song, String Stars, String Comment)
+        public ActionResult Details(SongDetailsViewModel model)
         {
-            Rating rating = new Rating();
-            int StarsInt = Int32.Parse(Stars);
-            Song songToChange = db.Songs.Find(song.ContentID);
-            songToChange.Ratings.Clear();
-
-            if (rating != null)
+            //TODO: Add logic that only allows users with this song in their library to rate/comment
+            if(model.Stars != null)
             {
-                //TODO: handle input
-                rating.Stars = StarsInt; //convert to an integer;
-                rating.Comment = Comment;
-            }
-            if (StarsInt >=1 && StarsInt <=5)
-            {
-                //do this: make a new rating object and save it to the db
+                //Set the Rating's properties
+                string username = User.Identity.GetUserName();
+                AppUser currentuser = db.Users.FirstOrDefault(u => u.UserName == username);
+                Rating rating = new Rating();
+                rating.Customer = currentuser;
+                rating.Stars = Convert.ToInt32(model.Stars); //TODO: round this maybe?
+                if (model.Comment != null)
+                {
+                    rating.Comment = model.Comment;
+                }
+                rating.Content = db.Contents.Find(model.ContentID);
                 db.Ratings.Add(rating);
-                
-                songToChange.Ratings = song.Ratings;
-
-                db.Entry(songToChange).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
             }
-
-            else //send them back to the same view
-            {
-                return View("Song");
-            }
+            return RedirectToAction("Index");
         }
-
-
 
         // GET: Songs/Create
         public ActionResult Create()
@@ -417,33 +428,5 @@ namespace CHY_Project.Controllers
             return songCount;
 
         }
-        //public ActionResult AddReview(int id)
-        //{
-        //    string username = User.Identity.GetUserName();
-        //    AppUser currentuser = db.Users.FirstOrDefault(c => c.UserName == username);
-        //    Rating rating = db.Rating.FirstOrDefault(c => c.Customer.UserName == currentuser.UserName);
-        //    //Cart cart = db.Carts.FirstOrDefault(c => c.Customer.UserName == currentuser.UserName);
-        //    if (rating == null)
-        //    {
-        //        rating = new Rating();
-        //        cart.Customer = currentuser;
-        //        cart.Products = new List<Product>();
-        //        cart.Products.Add(product);
-        //        db.Carts.Add(cart);
-        //    }
-        //    else
-        //    {
-        //        if (cart.Products.Contains(product))
-        //        {
-        //            ViewBag.Error = "Product is already in your cart";
-        //        }
-        //        else
-        //        {
-        //            cart.Products.Add(product);
-        //        }
-        //    }
-        //    db.SaveChanges();
-
-        //}
     }
 }

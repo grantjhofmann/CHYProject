@@ -16,7 +16,6 @@
 
 @foreach (var item in Model) {
     <tr>
-        <td>@Html.DisplayFor(modelItem => item.CartID)</td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.CartID }) |
             @Html.ActionLink("Details", "Details", new { id=item.CartID }) |
