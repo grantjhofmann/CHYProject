@@ -429,14 +429,67 @@ namespace CHY_Project.Controllers
             return View(purchase);
         }
 
-        public ActionResult PurchaseConfirmed()
+        public ActionResult PurchaseConfirmed(int id)
         {
+            Purchase purchase = db.Purchases.Find(id);
             string username = User.Identity.GetUserName();
             AppUser currentuser = db.Users.FirstOrDefault(c => c.UserName == username);
+            Cart cart = db.Carts.FirstOrDefault(c => c.Customer.UserName == currentuser.UserName);
+            foreach (Product product in cart.Products)
+            {
+                AppUser recipient = purchase.Recipient;
+                OrderDetail orderdetail = new OrderDetail();
+
+                orderdetail.ExtendedPrice = product.DiscountPrice;
+                orderdetail.Product = product;
+                orderdetail.Purchase = purchase;
+
+                
+                db.OrderDetails.Add(orderdetail);
+                db.SaveChanges();
+            }
+            db.Carts.Remove(cart);
             string name = currentuser.FName;
             name += currentuser.LName;
 
             ViewBag.Name = name;
+
+
+            if (purchase.Gift == true)
+            {
+                string GiverEmailString = "Dear ";
+                GiverEmailString += currentuser.FName + " " + currentuser.LName + ", <br /><br />";
+                //add new line
+
+                GiverEmailString += "Thank you for your purchase! We have sent " + purchase.Recipient.Email;
+                GiverEmailString += "<br /><br /> ";
+                GiverEmailString += "If you feel you are being charged in error, click";
+                GiverEmailString += " < a href =\"http://CHYProject.azurewebsites.net/purchases/delete/" + purchase.PurchaseID +"\">here</a>";
+                GiverEmailString += "to pursue a refund.";
+
+
+                EmailMessaging.SendEmail(currentuser.Email, "Thanks for your purchase!", GiverEmailString);
+
+                string ReceiverEmailString = "Hello";
+                ReceiverEmailString += purchase.Recipient.FName + ", <br /><br />";
+
+                ReceiverEmailString += purchase.Customer.FName + "Has sent you a gift! To see what you've got, click";
+                ReceiverEmailString += " < a href =\"http://CHYProject.azurewebsites.net/purchases/details/" + purchase.PurchaseID + "\">here</a>";
+                ReceiverEmailString += ". Happy listening!";
+
+                EmailMessaging.SendEmail(currentuser.Email, "You've got a gift!", ReceiverEmailString);
+            }
+
+            else
+            {
+                string BuyerEmailString = "Dear";
+                BuyerEmailString += purchase.Customer.FName + ",<br /><br />";
+                BuyerEmailString += "Thank you for your purchase! To review it, click < a href =\"http://CHYProject.azurewebsites.net/purchases/details/" + purchase.PurchaseID + "\">here</a>";
+                BuyerEmailString += "<br /><br />If you feel you are being charged in error, click  < a href =\"http://CHYProject.azurewebsites.net/purchases/delete/" + purchase.PurchaseID + "\">here</a>";
+                BuyerEmailString += "to pursue a refund.";
+
+                EmailMessaging.SendEmail(currentuser.Email, "Thanks for your purchase!", BuyerEmailString);
+            }
 
             return View();
         }

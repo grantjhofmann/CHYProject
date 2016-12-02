@@ -21,7 +21,7 @@ namespace CHY_Project.Messaging
 
             //Add anything that you need to the body of the message
             // /n is a new line – this will add some white space after the main body of the message
-            String finalMessage = emailBody + "\n\n Thank you for shopping with Longhorn Music - Group 13!";
+            String finalMessage = emailBody + "<br /><br />Thank you for shopping with Longhorn Music - Group 13!";
 
             //Create an email address object for the sender address
             MailAddress senderEmail = new MailAddress("longhornmusic13@gmail.com", "Longhorn Music - Group 13");
@@ -32,6 +32,7 @@ namespace CHY_Project.Messaging
             mm.Sender = senderEmail;
             mm.From = senderEmail;
             mm.To.Add(new MailAddress(toEmailAddress));
+            mm.IsBodyHtml = true;
             mm.Body = finalMessage;
             client.Send(mm);
         }

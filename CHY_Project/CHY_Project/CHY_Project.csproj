@@ -227,6 +227,10 @@
     <Compile Include="Migrations\201612011733359_wowacreditcard.Designer.cs">
       <DependentUpon>201612011733359_wowacreditcard.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201612020606078_customerpurchases.cs" />
+    <Compile Include="Migrations\201612020606078_customerpurchases.Designer.cs">
+      <DependentUpon>201612020606078_customerpurchases.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Album.cs" />
     <Compile Include="Models\AlbumViewModel.cs" />
@@ -337,6 +341,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201612011733359_wowacreditcard.resx">
       <DependentUpon>201612011733359_wowacreditcard.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201612020606078_customerpurchases.resx">
+      <DependentUpon>201612020606078_customerpurchases.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

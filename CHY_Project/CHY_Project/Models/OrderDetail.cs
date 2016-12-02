@@ -14,10 +14,10 @@ namespace CHY_Project.Models
         
         public virtual Purchase Purchase { get; set; }
 
-        [Required]
+        
         public virtual Product Product { get; set; }
 
-        [Required]
+        
         public Decimal ExtendedPrice { get; set; }
     }
 }

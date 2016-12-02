@@ -17,6 +17,7 @@ namespace CHY_Project.Models
         public String City { get; set; }
         public Int32 ZipCode { get; set; }
         public virtual List<CreditCard> CreditCards { get; set; }
+        public virtual List<Purchase> Purchases { get; set; }
         //public Int32 CreditCard1 { get; set; }
 
 
