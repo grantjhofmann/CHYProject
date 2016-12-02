@@ -1,0 +1,39 @@
+﻿@model CHY_Project.Models.AlbumReportViewModel
+@using CHY_Project.Models
+@{
+    ViewBag.Title = "AlbumReport";
+    var m = new List<AlbumReportViewModel>();
+    m = ViewBag.AlbumReports as List<AlbumReportViewModel>;
+}
+
+<h2>Album Report</h2>
+<table class="table">
+    <tr>
+        <th>
+            Album Name
+        </th>
+        <th>
+            Total Sales
+        </th>
+        <th>
+            Total Revenue Generated
+        </th>
+    </tr>
+    @foreach (var item in m)
+    {
+
+        <tr>
+            <td>
+                <b>@Html.DisplayFor(modelItem => item.AlbumName)</b>
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SalesCount)
+            </td>
+            <td>
+                $@Html.DisplayFor(modelItem => item.Revenue)
+            </td>
+        </tr>
+
+    }
+</table>
+

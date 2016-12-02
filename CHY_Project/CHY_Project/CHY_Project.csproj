@@ -189,6 +189,7 @@
     <Compile Include="Controllers\AppUsersController.cs" />
     <Compile Include="Controllers\ArtistsController.cs" />
     <Compile Include="Controllers\CartsController.cs" />
+    <Compile Include="Controllers\ReportsController.cs" />
     <Compile Include="Messaging\Email.cs" />
     <Compile Include="Controllers\GenresController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -246,6 +247,7 @@
     <Compile Include="Models\Product.cs" />
     <Compile Include="Models\Purchase.cs" />
     <Compile Include="Models\Rating.cs" />
+    <Compile Include="Models\ReportViewModels.cs" />
     <Compile Include="Models\RoleViewModels.cs" />
     <Compile Include="Models\Song.cs" />
     <Compile Include="Models\SongDetailsViewModel.cs" />
@@ -309,6 +311,9 @@
     <Content Include="Views\Carts\ConfirmCheckout.cshtml" />
     <Content Include="Views\Carts\PurchaseConfirmed.cshtml" />
     <Content Include="Views\AppUsers\ViewMyLibrary.cshtml" />
+    <Content Include="Views\Reports\SongReport.cshtml" />
+    <Content Include="Views\Reports\AlbumReport.cshtml" />
+    <Content Include="Views\Reports\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -320,6 +325,7 @@
     <Folder Include="App_Data\" />
     <Folder Include="DAL\" />
     <Folder Include="Views\Email\" />
+    <Folder Include="Views\Report\" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201611290157002_v3.resx">
