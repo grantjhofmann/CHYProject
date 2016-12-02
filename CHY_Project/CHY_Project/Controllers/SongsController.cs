@@ -68,7 +68,7 @@ namespace CHY_Project.Controllers
 
         //POST: Songs/Details/5
         [HttpPost]
-        public ActionResult Details(SongDetailsViewModel model)
+        public ActionResult Details(SongDetailsViewModel model, int id)
         {
             //TODO: Add logic that only allows users with this song in their library to rate/comment
             if(model.Stars != null)
@@ -83,7 +83,7 @@ namespace CHY_Project.Controllers
                 {
                     rating.Comment = model.Comment;
                 }
-                rating.Content = db.Contents.Find(model.ContentID);
+                rating.Content = model.Item;
                 db.Ratings.Add(rating);
                 db.SaveChanges();
             }

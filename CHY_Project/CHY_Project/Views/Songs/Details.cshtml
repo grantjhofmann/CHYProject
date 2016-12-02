@@ -109,8 +109,6 @@
     </div>
 
 
-
-
     @Html.LabelFor(model => model.Stars, htmlAttributes: new { @class = "control-label col-md-2" })
     <div class="col-md-10">
         @Html.EditorFor(model => model.Stars, new { htmlAttributes = new { @class = "form-control" } })
@@ -123,7 +121,18 @@
             @Html.ValidationMessageFor(model => model.Comment, "", new { @class = "text-danger" })
         </div>
     </div>
-    <input type="submit" value="Add Review" id="btnSubmit" />
+
+    <div class="btn-link">
+        <button type="submit"> 
+            @Html.ActionLink("Add Review", "Details", new { id = Model.Item.ContentID })
+        </button>
+    </div>
+
+    @*<div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" class="btn btn-default" value="Add Review" />
+        </div>
+    </div>*@
 }
 
 
