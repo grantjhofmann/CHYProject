@@ -90,7 +90,10 @@ namespace CHY_Project.Controllers
                     AlbumViewModels.Add(albumviewmodel);
                 }
             }
-            ViewBag.Subtotal = subtotal();
+            ViewBag.Error = TempData["Error"];
+            ViewBag.tax = tax();
+            ViewBag.total = total();
+            ViewBag.subtotal = subtotal();
             ViewBag.SongViewModel = SongViewModels;
             ViewBag.AlbumViewModel = AlbumViewModels;
             return View(cart);
@@ -205,7 +208,8 @@ namespace CHY_Project.Controllers
             {
                 if (cart.Products.Contains(product))
                 {
-                    ViewBag.Error = "Product is already in your cart";
+                    String InCart = "Product is already in your cart.";
+                    TempData["Error"] = InCart;
                 }
                 else
                 {
@@ -226,7 +230,8 @@ namespace CHY_Project.Controllers
 
             if (cart == null)
             {
-                return View("Error");
+                string Error = "There's nothin in ur cart wtf u doin";
+                TempData["Error`r"] = Error;
             }
 
             else
@@ -234,8 +239,8 @@ namespace CHY_Project.Controllers
                 cart.Products.Remove(product);
                 db.Entry(cart).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("UserDetails");
             }
+            return RedirectToAction("UserDetails");
         }
 
         public ActionResult ClearCart()
@@ -246,7 +251,8 @@ namespace CHY_Project.Controllers
 
             if (cart == null)
             {
-                return View("Error");
+                string Error = "There's nothin in ur cart wtf u doin";
+                TempData["Error"] = Error;
             }
 
             else
@@ -254,8 +260,9 @@ namespace CHY_Project.Controllers
                 cart.Products.Clear();
                 db.Entry(cart).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("USerDetails");
+                
             }
+            return RedirectToAction("UserDetails");
 
         }
         //GET
@@ -306,8 +313,10 @@ namespace CHY_Project.Controllers
 
             List <CreditCard> CreditCards = new List<CreditCard>();
 
-            CreditCards.Add(currentuser.CreditCards[1]);
-            CreditCards.Add(currentuser.CreditCards[2]);
+            foreach (CreditCard creditcard in currentuser.CreditCards)
+            {
+                CreditCards.Add(creditcard);
+            }
 
             ViewBag.CreditCards = CreditCards;
 
@@ -322,8 +331,10 @@ namespace CHY_Project.Controllers
         }
 
         [HttpPost]
-        public ActionResult Checkout ([Bind(Include = "CreditCard,Gift")] Purchase purchase, String recipientemail)
+        public ActionResult Checkout (CheckoutViewModel model, int creditCard)
         {
+
+            Purchase purchase = new Purchase();
             string username = User.Identity.GetUserName();
             AppUser currentuser = db.Users.FirstOrDefault(c => c.UserName == username);
             Cart cart = db.Carts.FirstOrDefault(c => c.Customer.UserName == currentuser.UserName);
@@ -331,37 +342,103 @@ namespace CHY_Project.Controllers
             purchase.Customer = cart.Customer;
             purchase.Date = DateTime.Today.Date;
             purchase.Products = cart.Products;
-
-            if(purchase.Gift == false)
+            CreditCard creditcard = db.CreditCards.Find(creditCard);
+            model.CreditCard = creditcard;
+            purchase.CreditCard = model.CreditCard;
+            if(model.Gift == false)
             {
+                purchase.Gift = false;
                 purchase.Recipient = currentuser;
             }
 
             else
             {
-                AppUser recipient = db.Users.FirstOrDefault(x => x.Email == recipientemail);
+                purchase.Gift = true;
+                AppUser recipient = db.Users.FirstOrDefault(x => x.Email == model.RecipientEmail);
                 purchase.Recipient = recipient;
             }
 
-            if (ModelState.IsValid)
-            {
+
                 db.Purchases.Add(purchase);
                 db.SaveChanges();
-            }
 
-            foreach(Product product in cart.Products)
+
+            //foreach(Product product in cart.Products)
+            //{
+            //    OrderDetail orderdetail = new OrderDetail();
+
+            //    orderdetail.Product = product;
+            //    orderdetail.ExtendedPrice = product.DiscountPrice;
+            //    orderdetail.Purchase = purchase;
+            //}
+            //string EmailString = "Dear ";
+            //EmailString += currentuser.FName + " " + currentuser.LName + ",";
+            ////add new line
+
+            //EmailString += "Thank you for your purchase! We appreciate your business and hope you enjoy the items you have purchased.";
+
+            //EmailMessaging.SendEmail(currentuser.Email, "Welcome to Longhorn Music - Group 13!", EmailString);
+            return RedirectToAction("ConfirmCheckout", new { id = purchase.CartID });
+        }
+
+        public ActionResult ConfirmCheckout(int id)
+        {
+            Purchase purchase = db.Purchases.Find(id);
+            List<AlbumViewModel> AlbumViewModels = new List<AlbumViewModel>();
+            List<SongViewModel> SongViewModels = new List<SongViewModel>();
+            foreach (Product modelproduct in purchase.Products)
             {
-                OrderDetail orderdetail = new OrderDetail();
+                Album album = db.Albums.FirstOrDefault(x => x.ProductID == modelproduct.ProductID);
 
-                orderdetail.Product = product;
-                orderdetail.ExtendedPrice = product.DiscountPrice;
-                orderdetail.Purchase = purchase;
+                if (album == null)
+                {
+                    Song song = db.Songs.FirstOrDefault(x => x.ProductID == modelproduct.ProductID);
+                    SongViewModel songviewmodel = new SongViewModel();
+                    songviewmodel.id = song.ContentID;
+                    songviewmodel.Album = song.Album;
+                    songviewmodel.RegularPrice = song.RegularPrice;
+                    songviewmodel.DiscountPrice = song.DiscountPrice;
+                    songviewmodel.SongName = song.SongName;
+                    songviewmodel.Artists = song.Artists;
+                    SongViewModels.Add(songviewmodel);
+
+                }
+
+                else
+                {
+                    AlbumViewModel albumviewmodel = new AlbumViewModel();
+                    albumviewmodel.id = album.ContentID;
+                    albumviewmodel.AlbumName = album.AlbumName;
+                    albumviewmodel.AlbumArt = album.AlbumArt;
+                    albumviewmodel.Artists = album.Artists;
+                    albumviewmodel.DiscountPrice = album.DiscountPrice;
+                    albumviewmodel.RegularPrice = album.RegularPrice;
+                    albumviewmodel.Songs = album.Songs;
+
+                    AlbumViewModels.Add(albumviewmodel);
+                }
             }
+            ViewBag.SongViewModel = SongViewModels;
+            ViewBag.AlbumViewModel = AlbumViewModels;
 
+            ViewBag.tax = tax();
+            ViewBag.total = total();
+            ViewBag.subtotal = subtotal();
+            ViewBag.recipient = purchase.Recipient.Email;
 
-            EmailMessaging.SendEmail(currentuser.Email, "Welcome to Longhorn Music - Group 13!", "Thank you for signing up with Longhorn Music. You are now a registered user.");
+            return View(purchase);
+        }
+
+        public ActionResult PurchaseConfirmed()
+        {
+            string username = User.Identity.GetUserName();
+            AppUser currentuser = db.Users.FirstOrDefault(c => c.UserName == username);
+            string name = currentuser.FName;
+            name += currentuser.LName;
+
+            ViewBag.Name = name;
+
             return View();
-            
         }
 
         public Decimal subtotal ()
@@ -375,7 +452,7 @@ namespace CHY_Project.Controllers
             {
                 subtotal += product.DiscountPrice; ;
             }
-
+            subtotal = Math.Round(subtotal, 2);
             return subtotal;
         }
 
@@ -394,6 +471,7 @@ namespace CHY_Project.Controllers
 
             decimal tax = subtotal * taxrate;
 
+            tax = Math.Round(tax, 2);
             return tax;
         }
 
@@ -412,7 +490,7 @@ namespace CHY_Project.Controllers
             decimal total;
             decimal taxrate = 1.0825m;
             total = subtotal * taxrate;
-
+            total = Math.Round(total, 2);
             return total;
         }
     }

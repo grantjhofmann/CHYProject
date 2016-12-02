@@ -1,0 +1,129 @@
+﻿@model CHY_Project.Models.Purchase
+@using CHY_Project.Models
+
+@{
+    ViewBag.Title = "ConfirmCheckout";
+    var m = new List<AlbumViewModel>();
+    m = ViewBag.AlbumViewModel as List<AlbumViewModel>;
+    var s = new List<SongViewModel>();
+    s = ViewBag.SongViewModel as List<SongViewModel>;
+}
+
+<h2>Confirm Your Order</h2>
+<div>
+    <h2>Order Summary</h2>
+    <div class="col-md-10"></div>
+@foreach (var item in m)
+            {
+
+                <table class="table">
+                    <tr><th>Album:</th></tr>
+
+                    <tr>
+                        @foreach (var artist in item.Artists)
+                        {
+                            <td>@Html.DisplayFor(modelItem => artist.ArtistName)</td>
+                        }
+                    </tr>
+                    <tr>
+                    <td>
+                        <b>@Html.DisplayFor(modelItem => item.AlbumName)</b>
+                        | $@Html.DisplayFor(modelItem => item.DiscountPrice), usually $@Html.DisplayFor(modelItem => item.RegularPrice)
+                    </td>
+                    </tr>
+                    @foreach (var song in item.Songs)
+                    {
+                        <tr>
+                            <td>@Html.DisplayFor(modelitem => song.SongName)</td>
+                        </tr>
+                    }
+                </table>
+            }
+
+<br />
+
+
+@foreach (var thing in s)
+{
+    <table class="table">
+        <tr>
+            <th>Individual Song:</th>
+        </tr>
+        <tr>
+            @foreach (var songartist in thing.Artists)
+            {
+                <td>@Html.DisplayFor(modelItem => songartist.ArtistName)</td>
+            }
+        </tr>
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => thing.SongName)
+            </td>
+            <td> $@Html.DisplayFor(modelItem => thing.DiscountPrice), usually $@Html.DisplayFor(modelItem => thing.RegularPrice)
+        </tr>
+            
+
+    </table>
+}
+</div>
+
+<div>
+    <table class="table-bordered">
+        <tr>
+            <td>SUBTOTAL: </td>
+            <td>$@ViewBag.subtotal</td>
+        </tr>
+        <tr>
+            <td>TAX: </td>
+            <td>$@ViewBag.tax</td>
+        </tr>
+        <tr>
+            <td>TOTAL: </td>
+            <td>$@ViewBag.total</td>
+        </tr>
+    </table>
+</div>
+<br />
+<br />
+    <div>
+        <div>Gift?</div>
+        <div class="col-md-10">
+            @Html.DisplayFor(modelitem => Model.Gift)
+        </div>
+    </div>
+<br />
+<br />
+<br />
+<br />
+    <div>
+        <div>Adding to account:</div>
+        <div class="col-md-10">
+            @Html.DisplayFor(modelitem => Model.Recipient.Email)
+        </div>
+    </div>
+<br />
+<br />
+    <div class="alert-info">YOUR INFO</div>
+
+    <div>
+        <div>Name:</div>
+        <div class="col-md-10">
+            @Html.DisplayFor(modelitem => Model.Customer.FName) 
+            @Html.DisplayFor(modelitem => Model.Customer.LName)
+        </div>
+    </div>
+<br />
+    <div>
+        <div>Billing Address: </div>
+        <div class="col-md-10">
+            @Html.DisplayFor(modelitem => Model.Customer.StreetAddress) 
+            @Html.DisplayFor(modelitem => Model.Customer.ZipCode)
+        </div>
+    </div>
+
+<br />
+    <div class="btn-link"><button type="button"> @Html.ActionLink("CONFIRM PURCHASE","PurchaseConfirmed", new { id = Model.PurchaseID})</button></div>
+
+        @*<div class="btn-lg"><button type="submit">PURCHASE</button></div>*@
+
+

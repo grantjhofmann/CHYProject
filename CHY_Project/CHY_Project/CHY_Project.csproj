@@ -302,6 +302,8 @@
     <Content Include="Views\Carts\_SongList.cshtml" />
     <Content Include="Views\Account\EditInfo.cshtml" />
     <Content Include="Views\Account\ViewInfo.cshtml" />
+    <Content Include="Views\Carts\ConfirmCheckout.cshtml" />
+    <Content Include="Views\Carts\PurchaseConfirmed.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

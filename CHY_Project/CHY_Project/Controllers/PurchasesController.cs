@@ -17,7 +17,7 @@ namespace CHY_Project.Controllers
         // GET: Purchases
         public ActionResult Index()
         {
-            return View(db.Carts.ToList());
+            return View(db.Purchases.ToList());
         }
 
         // GET: Purchases/Details/5

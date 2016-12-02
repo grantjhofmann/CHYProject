@@ -16,7 +16,6 @@
 
 @using (Html.BeginForm())
 {
-    @Html.EditorForModel()
     
 
     <h4>Cart Summary</h4>
@@ -25,7 +24,7 @@
 
         <div class="form-group">
             @Html.LabelFor(model => model.Gift, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
+            <div>
                 <div class="checkbox">
                     @Html.EditorFor(model => model.Gift) <br />
                     @Html.ValidationMessageFor(model => model.Gift, "", new { @class = "text-danger" }) <br />
@@ -36,7 +35,7 @@
 
         <div class="form-group">
             @Html.LabelFor(model => model.RecipientEmail, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
+            <div>
                 @Html.EditorFor(model => model.RecipientEmail, new { htmlAttributes = new { @class = "form-control" } })<br />
                 @Html.ValidationMessageFor(model => model.RecipientEmail, "", new { @class = "text-danger" })
             </div>
@@ -72,7 +71,7 @@
                     </tr>
                     <tr>
                         <td>
-                            @Html.ActionLink("Details", "Details", new { id = item.id }) |
+                            @Html.ActionLink("Details", "Details","Album", new { id = item.id }) |
                             @Html.ActionLink("Remove from Cart", "RemoveFromCart", new { id = Html.DisplayFor(modelItem => item.id) })
 
                         </td>
@@ -112,7 +111,6 @@
                     </tr>
                     <tr>
                         <td>
-                            @Html.ActionLink("Details", "Details", new { id = thing.id }) |
                             @Html.ActionLink("Remove from Cart", "RemoveFromCart", new { id = Html.DisplayFor(modelItem => thing.id) })
                         </td>
                     </tr>
@@ -137,7 +135,7 @@
                 </tr>
             </table>
         </div>
-        <div class="btn"><button type="submit">PURCHASE</button></div>
+        <div class="btn"><button type="submit">REVIEW YOUR ORDER</button></div>
     </body>
 }
 
