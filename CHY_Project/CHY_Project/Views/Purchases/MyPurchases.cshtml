@@ -32,7 +32,7 @@
                     @Html.DisplayFor(x => purchase.Recipient.UserName)
                 </td>
                 <td>
-                    @Html.ActionLink("Details", "PurchaseDetails")
+                    @Html.ActionLink("Details", "PurchaseDetails" , new { id = purchase.CartID }))
                 </td>
             </tr>
         }
