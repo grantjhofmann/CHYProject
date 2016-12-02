@@ -8,6 +8,8 @@ using System.Web;
 using System.Web.Mvc;
 using CHY_Project.Models;
 using System.Globalization;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
 
 namespace CHY_Project.Controllers
 {
@@ -29,6 +31,7 @@ namespace CHY_Project.Controllers
         }
 
         // GET: Songs/Details/5
+        [HttpGet]
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -40,7 +43,51 @@ namespace CHY_Project.Controllers
             {
                 return HttpNotFound();
             }
-            return View(song);
+
+            //Set the song's properties
+            SongDetailsViewModel songvm = new SongDetailsViewModel();
+            songvm.SongName = song.SongName;
+            songvm.ContentID = song.ContentID;
+            songvm.RegularPrice = song.RegularPrice;
+            songvm.DiscountPrice = song.DiscountPrice;
+            songvm.Featured = song.Featured;
+            foreach (Artist artist in song.Artists)
+            {
+                songvm.Artists.Add(artist);
+            }
+
+            songvm.Album = song.Album;
+
+            foreach (Genre genre in song.Genres)
+            {
+                songvm.Genres.Add(genre);
+            }
+
+            return View(songvm);
+        }
+
+        //POST: Songs/Details/5
+        [HttpPost]
+        public ActionResult Details(SongDetailsViewModel model)
+        {
+            //TODO: Add logic that only allows users with this song in their library to rate/comment
+            if(model.Stars != null)
+            {
+                //Set the Rating's properties
+                string username = User.Identity.GetUserName();
+                AppUser currentuser = db.Users.FirstOrDefault(u => u.UserName == username);
+                Rating rating = new Rating();
+                rating.Customer = currentuser;
+                rating.Stars = Convert.ToInt32(model.Stars); //TODO: round this maybe?
+                if (model.Comment != null)
+                {
+                    rating.Comment = model.Comment;
+                }
+                rating.Content = db.Contents.Find(model.ContentID);
+                db.Ratings.Add(rating);
+                db.SaveChanges();
+            }
+            return RedirectToAction("Index");
         }
 
         // GET: Songs/Create
