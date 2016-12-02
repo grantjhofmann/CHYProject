@@ -482,5 +482,10 @@ namespace CHY_Project.Controllers
             }
             return RedirectToAction("Index", "Home");
         }
+
+        public ActionResult Error()
+        {
+            return View();
+        }
     }
 }

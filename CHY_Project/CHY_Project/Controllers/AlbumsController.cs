@@ -43,7 +43,7 @@ namespace CHY_Project.Controllers
             }
             return View(album);
         }
-
+        [Authorize (Roles ="Manager")]
         // GET: Albums/Create
         public ActionResult Create()
         {
@@ -53,7 +53,7 @@ namespace CHY_Project.Controllers
             ViewBag.AllSongs = GetAllSongs();
             return View();
         }
-
+        [Authorize(Roles = "Manager")]
         // POST: Albums/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
@@ -128,7 +128,7 @@ namespace CHY_Project.Controllers
             ViewBag.AllSongs = GetAllSongs();
             return View(album);
         }
-
+        [Authorize(Roles = "Manager")]
         // GET: Albums/Edit/5
         public ActionResult Edit(int? id)
         {
@@ -202,7 +202,7 @@ namespace CHY_Project.Controllers
             ViewBag.AllSongs = GetAllSongs();
             return View(album);
         }
-
+        [Authorize(Roles = "Manager")]
         // GET: Albums/Delete/5
         public ActionResult Delete(int? id)
         {

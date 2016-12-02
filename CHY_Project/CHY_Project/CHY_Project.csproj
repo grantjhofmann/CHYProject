@@ -309,6 +309,7 @@
     <Content Include="Views\Carts\ConfirmCheckout.cshtml" />
     <Content Include="Views\Carts\PurchaseConfirmed.cshtml" />
     <Content Include="Views\AppUsers\ViewMyLibrary.cshtml" />
+    <Content Include="Views\Account\Error.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -44,7 +44,7 @@ namespace CHY_Project.Controllers
             }
             return View(artist);
         }
-
+        [Authorize(Roles = "Manager")]
         // GET: Artists/Create
         public ActionResult Create()
         {
@@ -83,7 +83,7 @@ namespace CHY_Project.Controllers
             ViewBag.AllGenres = GetAllGenres();
             return View(artist);
         }
-
+        [Authorize(Roles = "Manager")]
         // GET: Artists/Edit/5
         public ActionResult Edit(int? id)
         {
@@ -133,7 +133,7 @@ namespace CHY_Project.Controllers
             ViewBag.AllGenres = GetAllGenres(artist);
             return View(artist);
         }
-
+        [Authorize(Roles = "Manager")]
         // GET: Artists/Delete/5
         public ActionResult Delete(int? id)
         {

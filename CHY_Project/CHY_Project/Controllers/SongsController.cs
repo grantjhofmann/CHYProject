@@ -89,7 +89,7 @@ namespace CHY_Project.Controllers
             }
             return RedirectToAction("Index");
         }
-
+        [Authorize(Roles = "Manager")]
         // GET: Songs/Create
         public ActionResult Create()
         {
@@ -154,7 +154,7 @@ namespace CHY_Project.Controllers
             ViewBag.AllArtists = GetAllArtists();
             return View(song);
         }
-
+        [Authorize(Roles = "Manager")]
         // GET: Songs/Edit/5
         public ActionResult Edit(int? id)
         {
@@ -217,7 +217,7 @@ namespace CHY_Project.Controllers
             ViewBag.AllArtists = GetAllArtists(song);
             return View(song);
         }
-
+        [Authorize(Roles = "Manager")]
         // GET: Songs/Delete/5
         public ActionResult Delete(int? id)
         {
@@ -232,7 +232,7 @@ namespace CHY_Project.Controllers
             }
             return View(song);
         }
-
+        [Authorize(Roles = "Manager")]
         // POST: Songs/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]

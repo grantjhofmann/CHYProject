@@ -125,6 +125,7 @@ namespace CHY_Project.Controllers
             base.Dispose(disposing);
         }
 
+        [Authorize (Roles = "Customer")]
         public ActionResult ViewMyLibrary ()
         {
             string username = User.Identity.GetUserName();

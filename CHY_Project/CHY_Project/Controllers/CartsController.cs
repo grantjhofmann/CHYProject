@@ -12,6 +12,7 @@ using CHY_Project.Messaging;
 
 namespace CHY_Project.Controllers
 {
+    [Authorize(Roles="Customer")]
     public class CartsController : Controller
     {
         //TODO: Restrict by Role
@@ -91,9 +92,9 @@ namespace CHY_Project.Controllers
                 }
             }
             ViewBag.Error = TempData["Error"];
-            ViewBag.tax = tax();
-            ViewBag.total = total();
-            ViewBag.subtotal = subtotal();
+            ViewBag.tax = tax(cart);
+            ViewBag.total = total(cart);
+            ViewBag.subtotal = subtotal(cart);
             ViewBag.SongViewModel = SongViewModels;
             ViewBag.AlbumViewModel = AlbumViewModels;
             return View(cart);
@@ -322,9 +323,9 @@ namespace CHY_Project.Controllers
 
             checkout.Products = cart.Products;
 
-            ViewBag.tax = tax();
-            ViewBag.total = total();
-            ViewBag.subtotal = subtotal();
+            ViewBag.tax = tax(cart);
+            ViewBag.total = total(cart);
+            ViewBag.subtotal = subtotal(cart);
             return View(checkout);
 
             //TODO: make this not suck
@@ -421,9 +422,9 @@ namespace CHY_Project.Controllers
             ViewBag.SongViewModel = SongViewModels;
             ViewBag.AlbumViewModel = AlbumViewModels;
 
-            ViewBag.tax = tax();
-            ViewBag.total = total();
-            ViewBag.subtotal = subtotal();
+            ViewBag.tax = tax(purchase);
+            ViewBag.total = total(purchase);
+            ViewBag.subtotal = subtotal(purchase);
             ViewBag.recipient = purchase.Recipient.Email;
 
             return View(purchase);
@@ -495,56 +496,78 @@ namespace CHY_Project.Controllers
             return View();
         }
 
-        public Decimal subtotal ()
+        public Decimal subtotal (Cart cart)
         {
             string userid = User.Identity.GetUserId();
             AppUser currentuser = db.Users.Find(userid);
-            Cart cart = db.Carts.FirstOrDefault(c => c.Customer.Id == currentuser.Id);
+            
             decimal subtotal;
             subtotal = 0;
-            foreach (Product product in cart.Products)
+            if (cart.Products != null)
             {
-                subtotal += product.DiscountPrice; ;
+                foreach (Product product in cart.Products)
+                {
+                    subtotal += product.DiscountPrice; ;
+                }
+                subtotal = Math.Round(subtotal, 2);
             }
-            subtotal = Math.Round(subtotal, 2);
+            else
+            {
+                subtotal = 0.00m;
+            }
             return subtotal;
         }
 
-        public Decimal tax()
+        public Decimal tax(Cart cart)
         {
             string userid = User.Identity.GetUserId();
             AppUser currentuser = db.Users.Find(userid);
-            Cart cart = db.Carts.FirstOrDefault(c => c.Customer.Id == currentuser.Id);
+            
             decimal subtotal;
             subtotal = 0;
-            foreach (Product product in cart.Products)
+            decimal tax;
+            if (cart.Products != null)
             {
-                subtotal += product.DiscountPrice; ;
+                foreach (Product product in cart.Products)
+                {
+                    subtotal += product.DiscountPrice; ;
+                }
+                decimal taxrate = .0825m;
+
+                tax = subtotal * taxrate;
+
+                tax = Math.Round(tax, 2);
             }
-            decimal taxrate = .0825m;
-
-            decimal tax = subtotal * taxrate;
-
-            tax = Math.Round(tax, 2);
+            else
+            {
+                tax = 0.00m;
+            }
             return tax;
         }
 
-        public Decimal total()
+        public Decimal total(Cart cart)
         {
             string userid = User.Identity.GetUserId();
             AppUser currentuser = db.Users.Find(userid);
-            Cart cart = db.Carts.FirstOrDefault(c => c.Customer.Id == currentuser.Id);
+            
             decimal subtotal;
-            subtotal = 0;
-            foreach (Product product in cart.Products)
+            subtotal = 0.00m;
+            decimal total;
+            if (cart.Products != null)
             {
-                subtotal += product.DiscountPrice; ;
+                foreach (Product product in cart.Products)
+                {
+                    subtotal += product.DiscountPrice;
+                }
+                decimal taxrate = 1.0825m;
+                total = subtotal * taxrate;
+                total = Math.Round(total, 2);
             }
 
-            decimal total;
-            decimal taxrate = 1.0825m;
-            total = subtotal * taxrate;
-            total = Math.Round(total, 2);
+            else
+            {
+                total = 0.00m;
+            }
             return total;
         }
     }

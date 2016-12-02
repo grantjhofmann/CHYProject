@@ -11,11 +11,11 @@ using CHY_Project.Models;
 
 namespace CHY_Project.Controllers
 {
+    [Authorize(Roles = "Manager")]
     public class GenresController : Controller
     {
         //TODO: Restrict by Role
         private AppDbContext db = new AppDbContext();
-
         // GET: Genres
         public ActionResult Index()
         {
