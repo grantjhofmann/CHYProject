@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using CHY_Project.Models;
 using Microsoft.AspNet.Identity;
+using CHY_Project.Messaging;
 
 namespace CHY_Project.Controllers
 {
@@ -358,7 +359,7 @@ namespace CHY_Project.Controllers
             }
 
 
-
+            EmailMessaging.SendEmail(currentuser.Email, "Welcome to Longhorn Music - Group 13!", "Thank you for signing up with Longhorn Music. You are now a registered user.");
             return View();
             
         }
