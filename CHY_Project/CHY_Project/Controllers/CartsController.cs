@@ -449,6 +449,7 @@ namespace CHY_Project.Controllers
                 db.SaveChanges();
             }
             db.Carts.Remove(cart);
+            db.SaveChanges();
             string name = currentuser.FName;
             name += currentuser.LName;
 
@@ -458,7 +459,7 @@ namespace CHY_Project.Controllers
             if (purchase.Gift == true)
             {
                 string GiverEmailString = "Dear ";
-                GiverEmailString += currentuser.FName + " " + currentuser.LName + ", <br /><br />";
+                GiverEmailString += " " + currentuser.FName + " " + currentuser.LName + ", <br /><br />";
                 //add new line
 
                 GiverEmailString += "Thank you for your purchase! We have sent " + purchase.Recipient.Email;
