@@ -1,0 +1,39 @@
+﻿@model CHY_Project.Models.SongReportViewModel
+@using CHY_Project.Models
+@{
+    ViewBag.Title = "SongReport";
+    var m = new List<SongReportViewModel>();
+    m = ViewBag.SongReports as List<SongReportViewModel>;
+}
+
+<h2>Song Report</h2>
+<table class="table">
+    <tr>
+        <th>
+            Song Name
+        </th>
+        <th>
+            Total Sales
+        </th>
+        <th>
+            Total Revenue Generated
+        </th>
+    </tr>
+    @foreach (var item in m)
+    {
+
+        <tr>
+            <td>
+                <b>@Html.DisplayFor(modelItem => item.SongName)</b>
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SalesCount)
+            </td> 
+            <td>
+                $@Html.DisplayFor(modelItem => item.Revenue)
+            </td>
+        </tr>
+
+    }
+    </table>
+
