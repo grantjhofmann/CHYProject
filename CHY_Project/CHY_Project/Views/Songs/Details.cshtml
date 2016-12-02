@@ -23,6 +23,9 @@
                 <td>
                     @Html.DisplayFor(modelItem => artist.ArtistName)
                 </td>
+                <td>
+                    @Html.ActionLink("Details", "Details", "Artists", new { id = artist.ContentID }, null)
+                </td>
             </tr>
         }
     </table>

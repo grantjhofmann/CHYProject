@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using CHY_Project.Models;
 using Microsoft.AspNet.Identity;
+using CHY_Project.Messaging;
 
 namespace CHY_Project.Controllers
 {
@@ -53,6 +54,45 @@ namespace CHY_Project.Controllers
                 db.SaveChanges();
             }
 
+            //differentiate between songs and albums
+            List<AlbumViewModel> AlbumViewModels = new List<AlbumViewModel>();
+            List<SongViewModel> SongViewModels = new List<SongViewModel>();
+
+            foreach (Product modelproduct in cart.Products)
+            {
+                Album album = db.Albums.FirstOrDefault(x => x.ProductID == modelproduct.ProductID);
+
+                if (album == null)
+                {
+                    Song song = db.Songs.FirstOrDefault(x => x.ProductID == modelproduct.ProductID);
+                    SongViewModel songviewmodel = new SongViewModel();
+                    songviewmodel.id = song.ContentID;
+                    songviewmodel.Album = song.Album;
+                    songviewmodel.RegularPrice = song.RegularPrice;
+                    songviewmodel.DiscountPrice = song.DiscountPrice;
+                    songviewmodel.SongName = song.SongName;
+                    songviewmodel.Artists = song.Artists;
+                    SongViewModels.Add(songviewmodel);
+
+                }
+
+                else
+                {
+                    AlbumViewModel albumviewmodel = new AlbumViewModel();
+                    albumviewmodel.id = album.ContentID;
+                    albumviewmodel.AlbumName = album.AlbumName;
+                    albumviewmodel.AlbumArt = album.AlbumArt;
+                    albumviewmodel.Artists = album.Artists;
+                    albumviewmodel.DiscountPrice = album.DiscountPrice;
+                    albumviewmodel.RegularPrice = album.RegularPrice;
+                    albumviewmodel.Songs = album.Songs;
+
+                    AlbumViewModels.Add(albumviewmodel);
+                }
+            }
+            ViewBag.Subtotal = subtotal();
+            ViewBag.SongViewModel = SongViewModels;
+            ViewBag.AlbumViewModel = AlbumViewModels;
             return View(cart);
         }
 
@@ -174,44 +214,6 @@ namespace CHY_Project.Controllers
             }
             db.SaveChanges();
 
-            //differentiate between songs and albums
-            List<AlbumViewModel> AlbumViewModels = new List<AlbumViewModel>();
-            List<SongViewModel> SongViewModels = new List<SongViewModel>();
-
-            foreach (Product modelproduct in cart.Products)
-            {
-                Album album = db.Albums.FirstOrDefault(x => x.ProductID == modelproduct.ProductID);
-
-                if (album == null)
-                {
-                    Song song = db.Songs.FirstOrDefault(x => x.ProductID == modelproduct.ProductID);
-                    SongViewModel songviewmodel = new SongViewModel();
-                    songviewmodel.id = song.ContentID;
-                    songviewmodel.Album = song.Album;
-                    songviewmodel.RegularPrice = song.RegularPrice;
-                    songviewmodel.DiscountPrice = song.DiscountPrice;
-                    songviewmodel.SongName = song.SongName;
-
-                    SongViewModels.Add(songviewmodel);
-
-                }
-
-                else
-                {
-                    AlbumViewModel albumviewmodel = new AlbumViewModel();
-                    albumviewmodel.id = album.ContentID;
-                    albumviewmodel.AlbumName = album.AlbumName;
-                    albumviewmodel.AlbumArt = album.AlbumArt;
-                    albumviewmodel.Artists = album.Artists;
-                    albumviewmodel.DiscountPrice = album.DiscountPrice;
-                    albumviewmodel.RegularPrice = album.RegularPrice;
-                    albumviewmodel.Songs = album.Songs;
-
-                    AlbumViewModels.Add(albumviewmodel);
-                }
-            }
-            ViewBag.SongViewModel = SongViewModels;
-            ViewBag.AlbumViewModel = AlbumViewModels;
             return RedirectToAction("UserDetails");
         }
 
@@ -263,20 +265,60 @@ namespace CHY_Project.Controllers
             AppUser currentuser = db.Users.FirstOrDefault(c => c.UserName == username);
             Cart cart = db.Carts.FirstOrDefault(c => c.Customer.UserName == currentuser.UserName);
 
+            List<AlbumViewModel> AlbumViewModels = new List<AlbumViewModel>();
+            List<SongViewModel> SongViewModels = new List<SongViewModel>();
+
+            foreach (Product modelproduct in cart.Products)
+            {
+                Album album = db.Albums.FirstOrDefault(x => x.ProductID == modelproduct.ProductID);
+
+                if (album == null)
+                {
+                    Song song = db.Songs.FirstOrDefault(x => x.ProductID == modelproduct.ProductID);
+                    SongViewModel songviewmodel = new SongViewModel();
+                    songviewmodel.id = song.ContentID;
+                    songviewmodel.Album = song.Album;
+                    songviewmodel.RegularPrice = song.RegularPrice;
+                    songviewmodel.DiscountPrice = song.DiscountPrice;
+                    songviewmodel.SongName = song.SongName;
+                    songviewmodel.Artists = song.Artists;
+                    SongViewModels.Add(songviewmodel);
+
+                }
+
+                else
+                {
+                    AlbumViewModel albumviewmodel = new AlbumViewModel();
+                    albumviewmodel.id = album.ContentID;
+                    albumviewmodel.AlbumName = album.AlbumName;
+                    albumviewmodel.AlbumArt = album.AlbumArt;
+                    albumviewmodel.Artists = album.Artists;
+                    albumviewmodel.DiscountPrice = album.DiscountPrice;
+                    albumviewmodel.RegularPrice = album.RegularPrice;
+                    albumviewmodel.Songs = album.Songs;
+
+                    AlbumViewModels.Add(albumviewmodel);
+                }
+            }
+            ViewBag.SongViewModel = SongViewModels;
+            ViewBag.AlbumViewModel = AlbumViewModels;
             CheckoutViewModel checkout = new CheckoutViewModel();
 
             List <CreditCard> CreditCards = new List<CreditCard>();
 
-            CreditCards.Add(currentuser.CreditCard1);
-            CreditCards.Add(currentuser.CreditCard2);
+            CreditCards.Add(currentuser.CreditCards[1]);
+            CreditCards.Add(currentuser.CreditCards[2]);
 
             ViewBag.CreditCards = CreditCards;
 
             checkout.Products = cart.Products;
 
-            
-            ViewBag.totalcost = cartTotal();
+            ViewBag.tax = tax();
+            ViewBag.total = total();
+            ViewBag.subtotal = subtotal();
             return View(checkout);
+
+            //TODO: make this not suck
         }
 
         [HttpPost]
@@ -317,25 +359,61 @@ namespace CHY_Project.Controllers
             }
 
 
-
+            EmailMessaging.SendEmail(currentuser.Email, "Welcome to Longhorn Music - Group 13!", "Thank you for signing up with Longhorn Music. You are now a registered user.");
             return View();
             
         }
 
-        public Decimal cartTotal ()
+        public Decimal subtotal ()
         {
             string userid = User.Identity.GetUserId();
             AppUser currentuser = db.Users.Find(userid);
             Cart cart = db.Carts.FirstOrDefault(c => c.Customer.Id == currentuser.Id);
-            decimal total;
-            total = 0;
+            decimal subtotal;
+            subtotal = 0;
             foreach (Product product in cart.Products)
             {
-                total += product.DiscountPrice; ;
+                subtotal += product.DiscountPrice; ;
             }
+
+            return subtotal;
+        }
+
+        public Decimal tax()
+        {
+            string userid = User.Identity.GetUserId();
+            AppUser currentuser = db.Users.Find(userid);
+            Cart cart = db.Carts.FirstOrDefault(c => c.Customer.Id == currentuser.Id);
+            decimal subtotal;
+            subtotal = 0;
+            foreach (Product product in cart.Products)
+            {
+                subtotal += product.DiscountPrice; ;
+            }
+            decimal taxrate = .0825m;
+
+            decimal tax = subtotal * taxrate;
+
+            return tax;
+        }
+
+        public Decimal total()
+        {
+            string userid = User.Identity.GetUserId();
+            AppUser currentuser = db.Users.Find(userid);
+            Cart cart = db.Carts.FirstOrDefault(c => c.Customer.Id == currentuser.Id);
+            decimal subtotal;
+            subtotal = 0;
+            foreach (Product product in cart.Products)
+            {
+                subtotal += product.DiscountPrice; ;
+            }
+
+            decimal total;
+            decimal taxrate = 1.0825m;
+            total = subtotal * taxrate;
 
             return total;
         }
-
     }
 }

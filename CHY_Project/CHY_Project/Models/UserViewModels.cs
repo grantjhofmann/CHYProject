@@ -69,7 +69,34 @@ namespace CHY_Project.Models
 
         //TODO: Add additional fields to register users here.
     }
+    public class EditInfoViewModel
+    {
+        [EmailAddress]
+        [Display(Name = "Email")]
+        public string Email { get; set; }
 
+        [Display(Name = "First Name")]
+        public string Fname { get; set; }
+
+        [Display(Name = "Last Name")]
+        public string Lname { get; set; }
+
+        [Display(Name = "Street Address")]
+        public string StreetAddress { get; set; }
+
+        [Display(Name = "City")]
+        public string City { get; set; }
+
+        [Display(Name = "ZIP Code")]
+        [DataType(DataType.PostalCode)]
+        public int ZipCode { get; set; }
+
+        [Display(Name = "Credit Card")]
+        public string CreditCard1 { get; set; }
+
+        [Display(Name = "Additional Credit Card")]
+        public string CreditCard2 { get; set; }
+    }
     public class ChangePasswordViewModel
     {
         [Required]

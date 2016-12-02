@@ -11,15 +11,12 @@ namespace CHY_Project.Models
     // You can add profile data for the user by adding more properties to your AppUser class, please visit http://go.microsoft.com/fwlink/?LinkID=317594 to learn more.
     public class AppUser : IdentityUser
     {
-        //TODO: Put any additional fields that you need for your users here
-        //For example:
         public String FName { get; set; }
         public String LName { get; set; }
         public String StreetAddress { get; set; }
         public String City { get; set; }
         public Int32 ZipCode { get; set; }
-        public CreditCard CreditCard1 { get; set; }
-        public CreditCard CreditCard2 { get; set; }
+        public virtual List<CreditCard> CreditCards { get; set; }
         //public Int32 CreditCard1 { get; set; }
 
 

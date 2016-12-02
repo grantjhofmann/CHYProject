@@ -1,8 +1,11 @@
-﻿@model CHY_Project.Models.SongViewModel
+﻿
 @using CHY_Project.Models
 
-@{ var m = ViewBag.SongViewModels as List<SongViewModel>;
-    ViewBag.Title = "_SongList"}
+@{ 
+    var m = new List<SongViewModel>();
+    m = ViewBag.SongViewModels as List<SongViewModel>;
+    ViewBag.Title = "_SongList";
+}
 
 <p>Individual Songs</p>
 

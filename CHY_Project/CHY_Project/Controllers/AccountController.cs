@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using CHY_Project.Messaging;
+using System.Data.Entity;
 
 namespace CHY_Project.Controllers
 {
@@ -181,24 +182,24 @@ namespace CHY_Project.Controllers
                             Customer = currentuser
                         };
 
-                        if (model.CreditCard1.Length == 15)
+                        if (model.CreditCard2.Length == 15)
                         {
-                            creditcard1.Cardtype = Cardtype.AmericanExpress;
+                            creditcard2.Cardtype = Cardtype.AmericanExpress;
                         }
 
-                        else if (model.CreditCard1.StartsWith("54"))
+                        else if (model.CreditCard2.StartsWith("54"))
                         {
-                            creditcard1.Cardtype = Cardtype.MasterCard;
+                            creditcard2.Cardtype = Cardtype.MasterCard;
                         }
 
-                        else if (model.CreditCard1.StartsWith("4"))
+                        else if (model.CreditCard2.StartsWith("4"))
                         {
-                            creditcard1.Cardtype = Cardtype.Visa;
+                            creditcard2.Cardtype = Cardtype.Visa;
                         }
 
-                        else if (model.CreditCard1.StartsWith("6"))
+                        else if (model.CreditCard2.StartsWith("6"))
                         {
-                            creditcard1.Cardtype = Cardtype.Discover;
+                            creditcard2.Cardtype = Cardtype.Discover;
                         }
                         db.CreditCards.Add(creditcard2);
                         db.SaveChanges();
@@ -258,6 +259,148 @@ namespace CHY_Project.Controllers
             }
             AddErrors(result);
             return View(model);
+        }
+
+
+        //Account/ViewInfo
+        public ActionResult ViewInfo()
+        {
+            string username = User.Identity.GetUserName();
+            AppUser currentuser = db.Users.FirstOrDefault(u => u.UserName == username);
+
+            return View(currentuser); 
+        }
+
+        //GET: /Account/EditInfo
+        [HttpGet]
+        public ActionResult EditInfo()
+        {
+            return View();
+        }
+
+        //POST: /Account/EditInfo
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> EditInfo(EditInfoViewModel model)
+        {
+            string username = User.Identity.GetUserName();
+            AppUser currentuser = db.Users.FirstOrDefault(u => u.UserName == username);
+
+            if (model.Email != null && model.Email != "")
+            {
+                currentuser.Email = model.Email;
+            }
+
+            if (model.Fname != null && model.Fname != "")
+            {
+                currentuser.FName = model.Fname;
+            }
+
+            if (model.Lname != null && model.Lname != "")
+            {
+                currentuser.LName = model.Lname;
+            }
+
+            if (model.StreetAddress != null && model.StreetAddress != "")
+            {
+                currentuser.StreetAddress = model.StreetAddress;
+            }
+
+            if (model.City != null && model.City != "")
+            {
+                currentuser.City = model.City;
+            }
+
+            if (model.ZipCode.ToString() != null && model.ZipCode.ToString() != "")
+            {
+                currentuser.ZipCode = model.ZipCode;
+            }
+
+            if (model.CreditCard1 != null && model.CreditCard1 != "")
+            {
+                
+                if (currentuser.CreditCards.Count() >= 1)
+                {
+                    CreditCard oldCreditCard = currentuser.CreditCards[0];
+                    db.CreditCards.Remove(oldCreditCard);
+                }
+
+                CreditCard creditcard1 = new CreditCard
+                {
+                    CardNumber = model.CreditCard1,
+                    Customer = currentuser
+                };
+
+                if (model.CreditCard1.Length == 15)
+                {
+                    creditcard1.Cardtype = Cardtype.AmericanExpress;
+                }
+
+                else if (model.CreditCard1.StartsWith("54"))
+                {
+                    creditcard1.Cardtype = Cardtype.MasterCard;
+                }
+
+                else if (model.CreditCard1.StartsWith("4"))
+                {
+                    creditcard1.Cardtype = Cardtype.Visa;
+                }
+
+                else if (model.CreditCard1.StartsWith("6"))
+                {
+                    creditcard1.Cardtype = Cardtype.Discover;
+                }
+
+                if (ModelState.IsValid)
+                {
+                    db.CreditCards.Add(creditcard1);
+                    db.SaveChanges();
+                }
+            }
+
+            if (model.CreditCard2 != null && model.CreditCard2 != "")
+            {
+                if (currentuser.CreditCards.Count() >= 2)
+                {
+                    CreditCard oldCreditCard = currentuser.CreditCards[1];
+                    db.CreditCards.Remove(oldCreditCard);
+                }
+
+                CreditCard creditcard2 = new CreditCard
+                {
+                    CardNumber = model.CreditCard2,
+                    Customer = currentuser
+                };
+
+                if (model.CreditCard2.Length == 15)
+                {
+                    creditcard2.Cardtype = Cardtype.AmericanExpress;
+                }
+
+                else if (model.CreditCard2.StartsWith("54"))
+                {
+                    creditcard2.Cardtype = Cardtype.MasterCard;
+                }
+
+                else if (model.CreditCard2.StartsWith("4"))
+                {
+                    creditcard2.Cardtype = Cardtype.Visa;
+                }
+
+                else if (model.CreditCard2.StartsWith("6"))
+                {
+                    creditcard2.Cardtype = Cardtype.Discover;
+                }
+                db.CreditCards.Add(creditcard2);
+                db.SaveChanges();
+            }
+
+
+
+            db.Entry(currentuser).State = EntityState.Modified;
+            db.SaveChanges();
+
+            return RedirectToAction("Index", "Home");
         }
 
         // GET: /Account/Index
