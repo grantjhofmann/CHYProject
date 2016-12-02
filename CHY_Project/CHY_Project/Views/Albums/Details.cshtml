@@ -9,9 +9,10 @@
 <div>
     <h4>Album @Html.DisplayFor(model => model.AlbumName)</h4>
     <hr />
-
-    <img alt="@Model.AlbumName"
-         src="@Model.AlbumArt" />
+    <div class="img-thumbnail">
+        <img alt="@Model.AlbumName"
+             src="@Model.AlbumArt" />
+    </div>
     <table class="table table-bordered">
         <tr>
             <th>

@@ -13,28 +13,33 @@
 <h4>Full Albums</h4>
 @foreach (var item in m)
             {
+    <div class="img-thumbnail">
+        <img alt="@item.AlbumName"
+             src="@item.AlbumArt" />
+    </div>
+    <div class="table">
+        <table class="table">
+            <tr><th></th></tr>
 
-    <table class="table">
-        <tr><th></th></tr>
-
-        <tr>
-            @foreach (var artist in item.Artists)
-            {
-                <td>@Html.DisplayFor(modelItem => artist.ArtistName)</td>
-            }
-        </tr>
-        <tr>
-            <td>
-                <b>@Html.DisplayFor(modelItem => item.AlbumName)</b>
-            </td>
-        </tr>
-        @foreach (var song in item.Songs)
-        {
             <tr>
-                <td>@Html.DisplayFor(modelitem => song.SongName)</td>
+                @foreach (var artist in item.Artists)
+                {
+                    <td>@Html.DisplayFor(modelItem => artist.ArtistName)</td>
+                }
             </tr>
-        }
-    </table>
+            <tr>
+                <td>
+                    <b>@Html.DisplayFor(modelItem => item.AlbumName)</b>
+                </td>
+            </tr>
+            @foreach (var song in item.Songs)
+            {
+                <tr>
+                    <td>@Html.DisplayFor(modelitem => song.SongName)</td>
+                </tr>
+            }
+        </table>
+    </div>
 }
 
 <br />
